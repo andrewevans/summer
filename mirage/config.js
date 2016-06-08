@@ -1,5 +1,16 @@
 export default function() {
 
+  this.namespace = '/api/v1';
+
+  this.get('/authors', ({ authors }, request) => {
+    return authors.all();
+  });
+
+  this.get('/authors/:id', ({ authors }, request) => {
+    var id = request.params.id;
+    return authors.find(id);
+  });
+
   // These comments are here to help you get started. Feel free to delete them.
 
   /*
