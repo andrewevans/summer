@@ -1,6 +1,7 @@
 export default function(server) {
 
   server.createList('author', 10);
+  server.createList('chapter', 3);
   /*
     Seed your development database using your factories.
     This data will not be loaded in your tests.

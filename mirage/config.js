@@ -11,6 +11,15 @@ export default function() {
     return authors.find(id);
   });
 
+  this.get('/chapters', ({ chapters }, request) => {
+    return chapters.all();
+  });
+
+  this.get('/chapters/:id', ({ chapters }, request) => {
+    var id = request.params.id;
+    return chapters.find(id);
+  });
+
   // These comments are here to help you get started. Feel free to delete them.
 
   /*
