@@ -3,19 +3,23 @@ export default function() {
   this.namespace = '/api/v1';
 
   this.get('/authors', ({ authors }, request) => {
+    window.console.log("in config: /authors");
     return authors.all();
   });
 
   this.get('/authors/:id', ({ authors }, request) => {
+    window.console.log("in config: /authors/:id");
     var id = request.params.id;
     return authors.find(id);
   });
 
   this.get('/chapters', ({ chapters }, request) => {
+    window.console.log("in config: /chapters");
     return chapters.all();
   });
 
   this.get('/chapters/:id', ({ chapters }, request) => {
+    window.console.log("in config: /chapters/:id");
     var id = request.params.id;
     return chapters.find(id);
   });

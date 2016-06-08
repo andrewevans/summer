@@ -1,5 +1,6 @@
 export default function(server) {
 
+  window.console.log("in scenarios");
   server.createList('author', 10);
   server.createList('chapter', 3);
   /*
