@@ -24,6 +24,12 @@ export default function() {
     return chapters.find(id);
   });
 
+  this.get('/chapters/:chapter_id/questions', ({ questions }, request) => {
+    window.console.log("in config: /chapters/:chapter_id/questions");
+    var chapter_id = request.params.chapter_id;
+    return questions.where({ chapterId: chapter_id });
+  });
+
   // These comments are here to help you get started. Feel free to delete them.
 
   /*
