@@ -1,12 +1,16 @@
-
-<ul>
-    {{#each questions.data as |question|}}
-	    <li>{{question.attributes.title}}:
-          <ul>
-              {{#each question.attributes.options as |option|}}
-	              <li>{{option}}</li>
-              {{/each}}
-          </ul>
-      </li>
-    {{/each}}
-</ul>
+<div class="row">
+    <div class="col-xs-12">
+        <ul class="list-inline">
+          {{#each questions.data as |question|}}
+              <li>
+                {{question.attributes.title}}:
+                  <ul class="list-unstyled">
+                    {{#each question.attributes.options as |option|}}
+                        <li>{{option}}</li>
+                    {{/each}}
+                  </ul>
+              </li>
+          {{/each}}
+        </ul>
+    </div>
+</div>
