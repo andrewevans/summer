@@ -6,7 +6,9 @@
                 {{question.attributes.title}}:
                   <ul class="list-unstyled">
                     {{#each question.attributes.options as |option|}}
-                        <li>{{option}}</li>
+                        <li>
+                            {{answer-tile option=option}}
+                        </li>
                     {{/each}}
                   </ul>
               </li>
