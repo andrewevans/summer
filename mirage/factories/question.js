@@ -6,4 +6,9 @@ export default Factory.extend({
   },
   description: `Placeholder desc.`,
   type: `select`,
+  options: [
+    'Yes',
+    'No',
+    'I don\'t know',
+  ],
 });
