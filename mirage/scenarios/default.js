@@ -7,6 +7,14 @@ export default function(server) {
   server.createList('question', 5, { chapterId: 200 });
   server.createList('question', 65, { chapterId: 201 });
 
+  let member = server.schema.members.find(4); // Get member "lana"
+  member.createTag({ questionId: 1001, response: 'no', chapterId: 102 });
+  member.createTag({ questionId: 1002, response: 'yes', chapterId: 102 });
+  member.createTag({ questionId: 1003, response: 'yes', chapterId: 102 });
+  member.createTag({ questionId: 1004, response: 'maybe', chapterId: 102 });
+  member.createTag({ questionId: 1009, response: 'no', chapterId: 102 });
+  member.createTag({ questionId: 1010, response: 'no', chapterId: 102 });
+
   /*
     Seed your development database using your factories.
     This data will not be loaded in your tests.
