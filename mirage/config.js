@@ -13,6 +13,12 @@ export default function() {
     return authors.find(id);
   });
 
+  this.get('/members/:id', ({ members }, request) => {
+    window.console.log("in config: /members/:id");
+    var id = request.params.id;
+    return members.find(id);
+  });
+
   this.get('/chapters', ({ chapters }, request) => {
     window.console.log("in config: /chapters");
     return chapters.all();
