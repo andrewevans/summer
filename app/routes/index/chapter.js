@@ -16,6 +16,17 @@ export default Ember.Route.extend({
   actions: {
     saveTag(member, chapter, question, option) {
       window.console.log("Saving tag locally goes here...");
+
+      $.ajax({
+        method: "POST",
+        url: "/api/v1/responses",
+        data: {
+          memberId: member.id,
+          chapterId: chapter.data.id,
+          questionId: question.id,
+          answer: option,
+        }
+      });
     }
   }
 });
