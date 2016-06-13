@@ -12,5 +12,10 @@ export default Ember.Route.extend({
     });
 
     // return this.store.find('chapter', params.id);    // Use this.store to query the mock database
+  },
+  actions: {
+    saveTag() {
+      alert("Tag saved");
+    }
   }
 });
