@@ -36,6 +36,8 @@ export default function() {
     return questions.where({ chapterId: chapter_id });
   });
 
+  this.passthrough('/responses'); // This will be the endpoint that receives the member responses
+
   // These comments are here to help you get started. Feel free to delete them.
 
   /*
