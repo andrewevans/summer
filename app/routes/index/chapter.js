@@ -17,6 +17,13 @@ export default Ember.Route.extend({
     saveTag(member, chapter, question, option) {
       window.console.log("Saving tag locally goes here...");
 
+      this.store.createRecord('tag', {
+        member: member,
+        chapterId: chapter.data.id,
+        questionId: question.id,
+        answer: option,
+      });
+
       $.ajax({
         method: "POST",
         url: "/api/v1/responses",
