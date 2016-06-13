@@ -21,7 +21,6 @@ export default function() {
   });
 
   this.get('/members/:id', ({ members }, request) => {
-    window.console.log(request);
     window.console.log("in config: /members/:id");
     var id = request.params.id;
     return members.find(id);
