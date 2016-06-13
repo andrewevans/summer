@@ -7,7 +7,7 @@
                   <ul class="list-unstyled">
                     {{#each question.attributes.options as |option|}}
                         <li>
-                            {{answer-tile member=member chapter=chapter question=question option=option}}
+                            {{answer-tile saveTag=(route-action "saveTag" member chapter question option) member=member chapter=chapter question=question option=option}}
                         </li>
                     {{/each}}
                   </ul>

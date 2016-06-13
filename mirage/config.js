@@ -1,5 +1,7 @@
 export default function() {
 
+  this.passthrough('/members', '/members/:id');
+
   this.namespace = '/api/v1';
 
   this.get('/authors', ({ authors }, request) => {
@@ -13,7 +15,13 @@ export default function() {
     return authors.find(id);
   });
 
+  this.get('/members', ({ members }, request) => {
+    window.console.log("in config: /members");
+    return members.all();
+  });
+
   this.get('/members/:id', ({ members }, request) => {
+    window.console.log(request);
     window.console.log("in config: /members/:id");
     var id = request.params.id;
     return members.find(id);
