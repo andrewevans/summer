@@ -34,6 +34,25 @@ export default Ember.Route.extend({
           answer: option,
         }
       });
-    }
+    },
+    saveTags(member) {
+      window.console.log("Saving all tags locally goes here...");
+
+      var tags = [];
+      member.get('tags').forEach(function(tag) {
+        tags.push({
+          memberId: member.id,
+          chapterId: tag.get('chapterId'),
+          questionId: tag.get('questionId'),
+          answer: tag.get('answer'),
+        });
+      });
+
+      $.ajax({
+        method: "POST",
+        url: "/api/v1/responses",
+        data: { tags },
+      });
+    },
   }
 });
