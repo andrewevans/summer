@@ -2,6 +2,23 @@ export default function() {
 
   this.passthrough('/members', '/members/:id');
 
+  /*
+   window.console.log("in scenarios");
+  this.loadFixtures();
+  this.createList('author', 10);
+  this.createList('chapter', 3);
+  this.createList('question', 5, { chapterId: 200 });
+  this.createList('question', 65, { chapterId: 201 });
+
+  let member = this.schema.members.find(4); // Get member "lana"
+  member.createTag({ questionId: 1001, response: 'no', chapterId: 102 });
+  member.createTag({ questionId: 1002, response: 'yes', chapterId: 102 });
+  member.createTag({ questionId: 1003, response: 'yes', chapterId: 102 });
+  member.createTag({ questionId: 1004, response: 'maybe', chapterId: 102 });
+  member.createTag({ questionId: 1009, response: 'no', chapterId: 102 });
+  member.createTag({ questionId: 1010, response: 'no', chapterId: 102 });
+  */
+
   this.namespace = '/api/v1';
 
   this.get('/authors', ({ authors }, request) => {
