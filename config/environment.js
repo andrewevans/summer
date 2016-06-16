@@ -23,7 +23,6 @@ module.exports = function(environment) {
     enabled: true
   };
 
-
   if (environment === 'development') {
     // ENV.APP.LOG_RESOLVER = true;
     ENV.APP.LOG_ACTIVE_GENERATION = true;
@@ -52,8 +51,6 @@ module.exports = function(environment) {
 
     ENV.locationType = 'hash';
     ENV.APP.rootElement = '#summer-app';
-
-
   }
 
   if (environment === 'production') {
