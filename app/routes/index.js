@@ -28,6 +28,7 @@ export default Ember.Route.extend({
     });
 
     this.store.createRecord('question', {
+      id: 1010,
       title: "How old are you?",
       description: "",
       type: "select",
@@ -40,6 +41,7 @@ export default Ember.Route.extend({
       ],
     });
     this.store.createRecord('question', {
+      id: 1015,
       title: "What's Your Sex???",
       description: "",
       type: "select",
@@ -49,6 +51,7 @@ export default Ember.Route.extend({
       ],
     });
     this.store.createRecord('question', {
+      id: 1004,
       title: "Do you live in the US?",
       description: "",
       type: "select",
@@ -58,6 +61,7 @@ export default Ember.Route.extend({
       ],
     });
     this.store.createRecord('question', {
+      id: 1115,
       title: "What's Your Sex?",
       description: "",
       type: "select",
