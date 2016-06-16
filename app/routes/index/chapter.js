@@ -24,7 +24,7 @@ export default Ember.Route.extend({
         answer: option,
       });
 
-      $.ajax({
+      Ember.$.ajax({
         method: "POST",
         url: "/api/v1/responses",
         data: {
@@ -48,7 +48,7 @@ export default Ember.Route.extend({
         });
       });
 
-      $.ajax({
+      Ember.$.ajax({
         method: "POST",
         url: "/api/v1/responses",
         data: { tags },
