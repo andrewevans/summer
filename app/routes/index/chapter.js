@@ -15,11 +15,14 @@ export default Ember.Route.extend({
   },
   actions: {
     saveTag(member, chapter, question, option) {
+      // We are passing member, chapter, question here even though we already have it
+      // on the index route. This is to allow the rest of the app to create tags if needed.
+
       window.console.log("Saving tag locally goes here...");
 
       this.store.createRecord('tag', {
         member: member,
-        chapterId: chapter.data.id,
+        chapterId: chapter.id,
         questionId: question.id,
         answer: option,
       });
@@ -29,7 +32,7 @@ export default Ember.Route.extend({
         url: "/api/v1/responses",
         data: {
           memberId: member.id,
-          chapterId: chapter.data.id,
+          chapterId: chapter.id,
           questionId: question.id,
           answer: option,
         }
