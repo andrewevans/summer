@@ -1,6 +1,6 @@
 .summer.container {
-  border-top: 5px solid #92BA42;
-  border-bottom: 5px solid #92BA42;
+  border-top: 5px solid #C6D741;
+  border-bottom: 5px solid #C6D741;
 }
 
 .summer .heading {
@@ -54,15 +54,15 @@
 }
 
 .progress-bar {
-  background-color: #92BA42;
+  background-color: #C6D741;
 }
 
 .progress-bar {
-  background-image: -webkit-linear-gradient(top, #92BA42 0%, #92BA42 100%);
-  background-image: -o-linear-gradient(top, #92BA42 0%, #92BA42 100%);
-  background-image: -webkit-gradient(linear, left top, left bottom, from(#92BA42), to(#286090));
-  background-image: linear-gradient(to bottom, #92BA42 0%, #92BA42 100%);
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#92BA42', endColorstr='#92BA42', GradientType=0);
+  background-image: -webkit-linear-gradient(top, #C6D741 0%, #C6D741 100%);
+  background-image: -o-linear-gradient(top, #C6D741 0%, #C6D741 100%);
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#C6D741), to(#286090));
+  background-image: linear-gradient(to bottom, #C6D741 0%, #C6D741 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#C6D741', endColorstr='#C6D741', GradientType=0);
   background-repeat: repeat-x;
 }
 
