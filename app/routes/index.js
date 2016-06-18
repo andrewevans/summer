@@ -27,6 +27,8 @@ export default Ember.Route.extend({
       ],
     });
 
+    var chapter = this.store.peekRecord('chapter', 102);
+
     this.store.createRecord('question', {
       id: 1010,
       title: "How old are you?",
@@ -39,6 +41,18 @@ export default Ember.Route.extend({
         "35-44",
         "45 or older",
       ],
+      chapter: chapter,
+    });
+    this.store.createRecord('question', {
+      id: 1011,
+      title: "What is this?",
+      description: "",
+      type: "select",
+      options: [
+        "Something crazy",
+        "Not much",
+      ],
+      chapter: chapter,
     });
     this.store.createRecord('question', {
       id: 1015,
@@ -49,6 +63,7 @@ export default Ember.Route.extend({
         "Male",
         "Female",
       ],
+      chapter: chapter,
     });
     this.store.createRecord('question', {
       id: 1004,
@@ -59,16 +74,18 @@ export default Ember.Route.extend({
         "Yes",
         "No",
       ],
+      chapter: chapter,
     });
     this.store.createRecord('question', {
       id: 1115,
-      title: "What's Your Sex?",
+      title: "What's the question all about if this is words?",
       description: "",
       type: "select",
       options: [
         "Male",
         "Female",
       ],
+      chapter: chapter,
     });
   }),
   model() {

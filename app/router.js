@@ -10,6 +10,7 @@ Router.map(function() {
   this.route('chapters');
   this.route('index', { path: '' }, function() {
     this.route('chapter', { path: '/chapters/:id' }, function() {
+      this.route('question', { path: '/question/:sequence_num' });
       this.route('results', { path: '/results' });
     });
   });
