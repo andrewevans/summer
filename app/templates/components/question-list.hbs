@@ -8,6 +8,7 @@
                     {{#each question.options as |option|}}
                         <li class="question-answer">
                             {{answer-tile saveTag=(route-action "saveTag" member chapter question option) member=member chapter=chapter question=question option=option}}
+                          {{answer-tile/input}}
                         </li>
                     {{/each}}
                   </ul>
