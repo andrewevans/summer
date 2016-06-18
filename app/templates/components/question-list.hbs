@@ -5,12 +5,17 @@
               <li class="question">
                 <h3>{{question.title}}</h3>
                   <ul class="list-unstyled">
-                    {{#each question.options as |option|}}
-                        <li class="question-answer">
-                            {{answer-tile saveTag=(route-action "saveTag" member chapter question option) member=member chapter=chapter question=question option=option}}
-                          {{answer-tile/input}}
-                        </li>
-                    {{/each}}
+                    {{#if (if-eq question.type "input")}}
+                      <li class="question-answer">
+                          {{answer-tile/input option=option}}
+                      </li>
+                    {{else if (if-eq question.type "select")}}
+                      {{#each question.options as |option|}}
+                          <li class="question-answer">
+                              {{answer-tile saveTag=(route-action "saveTag" member chapter question option) member=member chapter=chapter question=question option=option}}
+                          </li>
+                      {{/each}}
+                    {{/if}}
                   </ul>
               </li>
           {{/each}}
