@@ -32,7 +32,7 @@ export default Ember.Route.extend({
         member: member,
         chapterId: chapter.id,
         questionId: question.id,
-        answer: option,
+        answer: option.get("value"),
         answerIndex: optionIndex,
       });
 
@@ -43,7 +43,7 @@ export default Ember.Route.extend({
           memberId: member.id,
           chapterId: chapter.id,
           questionId: question.id,
-          answer: option,
+          answer: option.get("value"),
           answerIndex: optionIndex,
         }
       });
