@@ -20,5 +20,54 @@ export default Ember.Route.extend({
     });
 
     return chapter;
-  }
+  },
+  actions: {
+    saveTag(member, chapter, question, option, optionIndex) {
+      // We are passing member, chapter, question here even though we already have it
+      // on the index route. This is to allow the rest of the app to create tags if needed.
+
+      window.console.log("Saving tag locally goes here...");
+
+      this.store.createRecord('tag', {
+        member: member,
+        chapterId: chapter.id,
+        questionId: question.id,
+        answer: option,
+        answerIndex: optionIndex,
+      });
+
+      Ember.$.ajax({
+        method: "POST",
+        url: "/api/v1/responses",
+        data: {
+          memberId: member.id,
+          chapterId: chapter.id,
+          questionId: question.id,
+          answer: option,
+          answerIndex: optionIndex,
+        }
+      });
+
+      return true;
+    },
+    saveTags(member) {
+      window.console.log("Saving all tags locally goes here...");
+
+      var tags = [];
+      member.get('tags').forEach(function(tag) {
+        tags.push({
+          memberId: member.id,
+          chapterId: tag.get('chapterId'),
+          questionId: tag.get('questionId'),
+          answer: tag.get('answer'),
+        });
+      });
+
+      Ember.$.ajax({
+        method: "POST",
+        url: "/api/v1/responses",
+        data: { tags },
+      });
+    },
+  },
 });
