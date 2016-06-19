@@ -6,5 +6,6 @@ export default Model.extend({
   value: attr(),
   text: attr(),
   userInput: attr(),
+  isSelected: attr('boolean', { default: false }),
   question: belongsTo('question'),
 });
