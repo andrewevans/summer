@@ -1,0 +1,15 @@
+<h3>{{question.title}}</h3>
+<ul class="list-unstyled">
+  {{#each question.options as |option|}}
+    {{#if (if-eq question.type "input")}}
+        <li class="question-answer">
+          {{answer-tile/input updateTag=(route-action "updateTag" member chapter question option tag) option=option tag=tag}}
+        </li>
+    {{/if}}
+    {{#if (if-eq question.type "select")}}
+        <li class="question-answer">
+          {{answer-tile saveTag=(route-action "saveTag" member chapter question option tag) clearTag=(route-action "clearTag" tag) question=question option=option tag=tag}}
+        </li>
+    {{/if}}
+  {{/each}}
+</ul>
