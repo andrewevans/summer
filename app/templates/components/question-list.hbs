@@ -13,7 +13,7 @@
                       {{/if}}
                       {{#if (if-eq question.type "select")}}
                           <li class="question-answer">
-                            {{answer-tile saveTag=(route-action "saveTag" member chapter question option tag) member=member chapter=chapter question=question option=option}}
+                            {{answer-tile saveTag=(route-action "saveTag" member chapter question option tag) option=option}}
                           </li>
                       {{/if}}
                     {{/each}}
