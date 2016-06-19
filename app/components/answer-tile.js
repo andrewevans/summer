@@ -2,21 +2,44 @@ import Ember from 'ember';
 
 export default Ember.Component.extend({
   isSelected: Ember.computed('', function() {
-    var tag = this.get('tag'),
-      option = this.get('option');
+    var option = this.get('option');
 
-    if (option.get('value') === tag.get('answer')) {
-      // This option's value matches the tag's answer,
-      // so consider it selected.
-      return true;
-    }
-
-    return false;
+    return option.get('isSelected');
   }),
   click() {
-    // Send data about this answer to API
 
-    this.toggleProperty('isSelected');
-    this.sendAction('saveTag');
+    var question = this.get('question'),
+      options = question.get('options'),
+      tag = this.get('tag'),
+      option = this.get('option');
+
+    if (option.get('isSelected')) {
+      // If it's already selected,
+      // then reset this tag
+      this.sendAction('clearTag'); //@TODO Only works for select-type questions. For select-multi, needs to search and remove
+    } else {
+      // Save/update this tag
+      this.sendAction('saveTag');
+    }
+
+    // Update options' isSelected flags
+    options.forEach(function(option) {
+      //@TODO Direct quivalence only works for single select-type questions
+      if (option.get('value') === tag.get('answer')) {
+        if (option.get('isSelected')) {
+          // If it's already selected,
+          // then make it false
+          option.set('isSelected', false);
+        } else {
+          // Flag this object as selected
+          option.set('isSelected', true);
+        }
+      } else {
+        //@TODO This only pertains to select-type single option questions
+        option.set('isSelected', false);
+      }
+    });
+
+    return true;
   }
 });
