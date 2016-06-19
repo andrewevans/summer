@@ -192,7 +192,7 @@ export default Ember.Route.extend({
       id: 1115,
       title: "Previous or current conditions",
       description: "",
-      type: "select",
+      type: "select-multi",
       chapter: chapter,
     });
 
