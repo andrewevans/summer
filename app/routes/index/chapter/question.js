@@ -19,7 +19,10 @@ export default Ember.Route.extend({
       'percentageComplete': (sequence_num/total) * 100,
     });
 
-    return chapter;
+    return Ember.RSVP.hash({
+      member: this.modelFor('index').member,
+      chapter: chapter,
+    });
   },
   actions: {
     updateTag(member, chapter, question, option, tag) {
