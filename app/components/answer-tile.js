@@ -2,8 +2,8 @@ import Ember from 'ember';
 
 export default Ember.Component.extend({
   isSelected: Ember.computed('', function() {
-    var tag = this.get('tag');
-    var option = this.get('option');
+    var tag = this.get('tag'),
+      option = this.get('option');
 
     if (option.get('value') === tag.get('answer')) {
       // This option's value matches the tag's answer,
