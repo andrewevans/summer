@@ -22,6 +22,12 @@ export default Ember.Route.extend({
     return chapter;
   },
   actions: {
+    updateTag(member, chapter, question, option, tag) {
+      // Input fields use this to update the tag it's working on
+      window.console.log("Updating tag locally goes here...");
+
+      tag.set('answer', option.get('value'));
+    },
     saveTag(member, chapter, question, option, optionIndex) {
       // We are passing member, chapter, question here even though we already have it
       // on the index route. This is to allow the rest of the app to create tags if needed.
