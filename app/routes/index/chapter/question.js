@@ -7,7 +7,8 @@ export default Ember.Route.extend({
       sequence_num = parseInt(params.sequence_num),
       next = sequence_num + 1,
       prev = sequence_num - 1,
-      total = chapter.get('questionsLength');
+      total = chapter.get('questionsLength'),
+      tag;
 
     next = (next > total ? false : next);
     prev = (prev < 1 ? false : prev);
@@ -24,11 +25,21 @@ export default Ember.Route.extend({
     // just that it's nth question on the current chapter.
     var question = chapter.get('questions').objectAt(sequence_num - 1);
 
-    var tag = this.store.createRecord('tag', {
-      member: member,
-      chapterId: chapter.id,
-      questionId: question.id,
-    });
+    var tags = member.get('tags')
+      .filterBy('chapterId', chapter.id)
+      .filterBy('questionId', question.id);
+
+    if (tags.get('length')) {
+      // The tag exists, so use that one
+      tag = tags.objectAt(0);
+    } else {
+      // The tag does not exist yet, so create it
+      tag = this.store.createRecord('tag', {
+        member: member,
+        chapterId: chapter.id,
+        questionId: question.id,
+      });
+    }
 
     return Ember.RSVP.hash({
       member: member,
