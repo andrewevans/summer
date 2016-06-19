@@ -5,8 +5,8 @@
   </div>
 </div>
 
-{{question-list member=model.member chapter=model.chapter}}
+{{outlet}}
 
-{{pagination-nav chapter=model.chapter}}
+{{pagination-nav chapter=model.chapter saveTags=(route-action "saveTags" model.member)}}
 
 {{results-list member=model.member saveTags=(route-action "saveTags" model.member)}}

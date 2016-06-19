@@ -29,197 +29,298 @@ export default Ember.Route.extend({
 
     var chapter = this.store.peekRecord('chapter', 102);
 
-    this.store.createRecord('question', {
-      id: 1011,
-      title: "Do you live in the US?",
-      description: "",
-      type: "select",
-      options: [
-        "Yes",
-        "No",
-      ],
-      chapter: chapter,
-    });
-
-    this.store.createRecord('question', {
-      id: 1015,
-      title: "What's Your Sex?",
-      description: "",
-      type: "select",
-      options: [
-        "Male",
-        "Female",
-      ],
-      chapter: chapter,
-    });
-
-    this.store.createRecord('question', {
-      id: 1010,
-      title: "How old are you?",
-      description: "",
-      type: "select",
-      options: [
-        "13 or younger",
-        "14-17",
-        "18-34",
-        "35-44",
-        "45 or older",
-      ],
-      chapter: chapter,
-    });
-
-    this.store.createRecord('question', {
-      id: 1004,
-      title: "Are you pregnant or trying to get pregnant?",
-      description: "",
-      type: "select",
-      options: [
-        "Yes, I'm pregnant",
-        "Yes, I'm trying to get pregnant",
-        "No",
-      ],
-      chapter: chapter,
-    });
-
-    this.store.createRecord('question', {
-      id: 1115,
-      title: "Previous or current conditions",
-      description: "",
-      type: "select",
-      options: [
-        "Condition 01",
-        "Condition 02",
-        "Condition 03",
-        "Condition 04",
-        "Condition 05",
-        "Condition 06",
-        "Condition 07",
-        "Condition 08",
-        "Condition 09",
-        "Condition 10",
-        "Condition 11",
-        "Condition 12",
-        "Condition 13",
-        "Condition 14",
-        "Condition 15",
-        "Condition 16",
-        "Condition 17",
-        "Condition 18",
-        "Condition 19",
-        "Condition 20",
-      ],
-      chapter: chapter,
-    });
-
-    this.store.createRecord('question', {
+    var question = this.store.createRecord('question', {
       id: 1116,
       title: "Are you expecting twins or more?",
       description: "",
       type: "select",
-      options: [
-        "Yes",
-        "No",
-        "I don't know",
-      ],
       chapter: chapter,
     });
 
-    this.store.createRecord('question', {
-      id: 1117,
-      title: "Are you expecting twins or more?",
-      description: "",
-      type: "select",
-      options: [
-        "Yes",
-        "No",
-        "I don't know",
-      ],
-      chapter: chapter,
-    });
+    question.get('options').pushObject(
+      this.store.createRecord('option', {
+        value: "yes",
+        text: "Yes",
+      })
+    );
 
-    this.store.createRecord('question', {
-      id: 1118,
-      title: "Now that you're pregnant, do you smoke cigarettes?",
-      description: "",
-      type: "select",
-      options: [
-        "1118XXXXXX",
-        "1118YYYYYY",
-      ],
-      chapter: chapter,
-    });
+    question.get('options').pushObject(
+      this.store.createRecord('option', {
+        value: "no",
+        text: "No",
+      })
+    );
 
-    this.store.createRecord('question', {
-      id: 1119,
-      title: "Now that you're pregnant, how often do you have a drink that contains alcohol?",
-      description: "",
-      type: "select",
-      options: [
-        "1119XXXX",
-        "1119YYYYY",
-      ],
-      chapter: chapter,
-    });
+    question.get('options').pushObject(
+      this.store.createRecord('option', {
+        value: "i-dont-know",
+        text: "I don't know",
+      })
+    );
 
-    this.store.createRecord('question', {
-      id: 1120,
-      title: "Now that you're pregnant, do you ever use recreational drugs or misuse prescription medication, such as pain drugs?",
-      description: "",
-      type: "select",
-      options: [
-        "1120XXXXX",
-        "1120YYYYY",
-      ],
-      chapter: chapter,
-    });
-
-    this.store.createRecord('question', {
-      id: 1121,
-      title: "When were you born?",
-      description: "",
-      type: "select",
-      options: [
-        "1121SELECT FIELDS",
-        "1121SELECT FIELDS2",
-      ],
-      chapter: chapter,
-    });
-
-    this.store.createRecord('question', {
-      id: 1122,
-      title: "How tall are you?",
-      description: "",
-      type: "select",
-      options: [
-        "1122SELECT FIELDS",
-        "1122SELECT FIELDS2",
-      ],
-      chapter: chapter,
-    });
-
-    this.store.createRecord('question', {
+    question = this.store.createRecord('question', {
       id: 1123,
       title: "How much did you weigh before you were pregnant?",
-      description: "",
-      type: "select",
-      options: [
-        "1123SELECT FIELDS",
-        "1123SELECT FIELDS2",
-      ],
+      description: "Be honest :)",
+      type: "input",
       chapter: chapter,
     });
 
-    this.store.createRecord('question', {
-      id: 1124,
-      title: "What is your ethnicity and/or ancestry?",
+    question.get('options').pushObject(
+      this.store.createRecord('option', {
+        value: '', // This has no text property because it is for an input-type question
+      })
+    );
+
+    question = this.store.createRecord('question', {
+      id: 1011,
+      title: "Do you live in the US?",
       description: "",
       type: "select",
-      options: [
-        "1124SELECT FIELDS",
-        "1124SELECT FIELDS2",
-      ],
       chapter: chapter,
     });
+
+    question.get('options').pushObject(
+      this.store.createRecord('option', {
+        value: "yes",
+        text: "Yes",
+      })
+    );
+
+    question.get('options').pushObject(
+      this.store.createRecord('option', {
+        value: "no",
+        text: "No",
+      })
+    );
+
+    question = this.store.createRecord('question', {
+      id: 1015,
+      title: "What's Your Sex?",
+      description: "",
+      type: "select",
+      chapter: chapter,
+    });
+
+    question.get('options').pushObject(
+      this.store.createRecord('option', {
+        value: "male",
+        text: "Male",
+      })
+    );
+
+    question.get('options').pushObject(
+      this.store.createRecord('option', {
+        value: "female",
+        text: "Female",
+      })
+    );
+
+    question = this.store.createRecord('question', {
+      id: 1010,
+      title: "How old are you?",
+      description: "",
+      type: "select",
+      chapter: chapter,
+    });
+
+    question.get('options').pushObject(
+      this.store.createRecord('option', {
+        value: "13-",
+        text: "13 or younger",
+      })
+    );
+
+    question.get('options').pushObject(
+      this.store.createRecord('option', {
+        value: "14-17",
+        text: "14-17",
+      })
+    );
+
+    question.get('options').pushObject(
+      this.store.createRecord('option', {
+        value: "18-34",
+        text: "18-34",
+      })
+    );
+
+    question.get('options').pushObject(
+      this.store.createRecord('option', {
+        value: "35-44",
+        text: "35-44",
+      })
+    );
+
+    question.get('options').pushObject(
+      this.store.createRecord('option', {
+        value: "45+",
+        text: "45 or older",
+      })
+    );
+
+    question = this.store.createRecord('question', {
+      id: 1004,
+      title: "Are you pregnant or trying to get pregnant?",
+      description: "",
+      type: "select",
+      chapter: chapter,
+    });
+
+    question.get('options').pushObject(
+      this.store.createRecord('option', {
+        value: "preg",
+        text: "Yes, I'm pregnant",
+      })
+    );
+
+    question.get('options').pushObject(
+      this.store.createRecord('option', {
+        value: "precon",
+        text: "Yes, I'm trying to get pregnant",
+      })
+    );
+
+    question.get('options').pushObject(
+      this.store.createRecord('option', {
+        value: "none",
+        text: "No",
+      })
+    );
+
+    question = this.store.createRecord('question', {
+      id: 1115,
+      title: "Previous or current conditions",
+      description: "",
+      type: "select",
+      chapter: chapter,
+    });
+
+    question.get('options').pushObject(
+      this.store.createRecord('option', {
+        value: "condition-01",
+        text: "Condition 01",
+      })
+    );
+
+    question.get('options').pushObject(
+      this.store.createRecord('option', {
+        value: "condition-02",
+        text: "Condition 02",
+      })
+    );
+
+    question.get('options').pushObject(
+      this.store.createRecord('option', {
+        value: "condition-03",
+        text: "Condition 03",
+      })
+    );
+
+    question.get('options').pushObject(
+      this.store.createRecord('option', {
+        value: "condition-04",
+        text: "Condition 04",
+      })
+    );
+
+    question.get('options').pushObject(
+      this.store.createRecord('option', {
+        value: "condition-04",
+        text: "Condition 04",
+      })
+    );
+
+    question.get('options').pushObject(
+      this.store.createRecord('option', {
+        value: "condition-05",
+        text: "Condition 05",
+      })
+    );
+
+    question.get('options').pushObject(
+      this.store.createRecord('option', {
+        value: "condition-05",
+        text: "Condition 05",
+      })
+    );
+
+    question.get('options').pushObject(
+      this.store.createRecord('option', {
+        value: "condition-05",
+        text: "Condition 05",
+      })
+    );
+
+    question.get('options').pushObject(
+      this.store.createRecord('option', {
+        value: "condition-05",
+        text: "Condition 05",
+      })
+    );
+
+    question.get('options').pushObject(
+      this.store.createRecord('option', {
+        value: "condition-05",
+        text: "Condition 05",
+      })
+    );
+
+    question.get('options').pushObject(
+      this.store.createRecord('option', {
+        value: "condition-05",
+        text: "Condition 05",
+      })
+    );
+
+    question.get('options').pushObject(
+      this.store.createRecord('option', {
+        value: "condition-A",
+        text: "Condition A",
+      })
+    );
+
+    question.get('options').pushObject(
+      this.store.createRecord('option', {
+        value: "condition-B",
+        text: "Condition B",
+      })
+    );
+
+    question.get('options').pushObject(
+      this.store.createRecord('option', {
+        value: "condition-C",
+        text: "Condition C",
+      })
+    );
+
+    question.get('options').pushObject(
+      this.store.createRecord('option', {
+        value: "condition-D",
+        text: "Condition D",
+      })
+    );
+
+    question.get('options').pushObject(
+      this.store.createRecord('option', {
+        value: "condition-E",
+        text: "Condition E",
+      })
+    );
+
+    question.get('options').pushObject(
+      this.store.createRecord('option', {
+        value: "condition-F",
+        text: "Condition F",
+      })
+    );
+
+    question.get('options').pushObject(
+      this.store.createRecord('option', {
+        value: "condition-G",
+        text: "Condition G",
+      })
+    );
   }),
   model() {
     return Ember.RSVP.hash({
