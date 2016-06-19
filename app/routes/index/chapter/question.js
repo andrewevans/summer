@@ -52,10 +52,15 @@ export default Ember.Route.extend({
       // Input fields use this to update the tag it's working on
       window.console.log("Updating tag locally goes here...");
 
-      tag.set('answer', option.get('value'));
+      tag.set('answer', [option.get('value')]);
     },
-    clearTag(tag) {
-      tag.set('answer', '');
+    clearTag(tag, option) {
+      var answers = tag.get('answer') || [];
+      var optionValue = option.get('value');
+
+      answers.removeAt(answers.indexOf(optionValue));
+
+      tag.set('answer', answers);
     },
     saveTag(member, chapter, question, option, tag) {
       // We are passing member, chapter, question here even though we already have it
@@ -63,11 +68,17 @@ export default Ember.Route.extend({
 
       window.console.log("Saving tag locally goes here...");
 
+      var answers = tag.get('answer') || []; // Get previous answer(s)
+
+      if (answers.indexOf(option.get('value')) === -1) {
+        answers.pushObject(option.get('value')); // If it's not already in answers, add it to answers
+      }
+
       tag.setProperties({
         member: member,
         chapterId: chapter.id,
         questionId: question.id,
-        answer: option.get("value"),
+        answer: answers,
       });
 
       Ember.$.ajax({
@@ -77,7 +88,7 @@ export default Ember.Route.extend({
           memberId: member.id,
           chapterId: chapter.id,
           questionId: question.id,
-          answer: option.get("value"),
+          answer: answers,
         }
       });
 
