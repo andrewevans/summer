@@ -3,6 +3,7 @@ import Ember from 'ember';
 export default Ember.Route.extend({
   model(params) {
     var chapter = this.modelFor('index').chapter,
+      member = this.modelFor('index').member,
       sequence_num = parseInt(params.sequence_num),
       next = sequence_num + 1,
       prev = sequence_num - 1,
@@ -19,9 +20,20 @@ export default Ember.Route.extend({
       'percentageComplete': (sequence_num/total) * 100,
     });
 
+    // We don't know the ID of the current question yet,
+    // just that it's nth question on the current chapter.
+    var question = chapter.get('questions').objectAt(sequence_num - 1);
+
+    var tag = this.store.createRecord('tag', {
+      member: member,
+      chapterId: chapter.id,
+      questionId: question.id,
+    });
+
     return Ember.RSVP.hash({
-      member: this.modelFor('index').member,
+      member: member,
       chapter: chapter,
+      tag: tag,
     });
   },
   actions: {
