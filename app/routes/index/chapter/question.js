@@ -43,7 +43,7 @@ export default Ember.Route.extend({
 
       tag.set('answer', option.get('value'));
     },
-    saveTag(member, chapter, question, option, optionIndex) {
+    saveTag(member, chapter, question, option) {
       // We are passing member, chapter, question here even though we already have it
       // on the index route. This is to allow the rest of the app to create tags if needed.
 
@@ -54,7 +54,6 @@ export default Ember.Route.extend({
         chapterId: chapter.id,
         questionId: question.id,
         answer: option.get("value"),
-        answerIndex: optionIndex,
       });
 
       Ember.$.ajax({
@@ -65,7 +64,6 @@ export default Ember.Route.extend({
           chapterId: chapter.id,
           questionId: question.id,
           answer: option.get("value"),
-          answerIndex: optionIndex,
         }
       });
 
