@@ -69,7 +69,7 @@ export default Ember.Route.extend({
       window.console.log("Saving tag locally goes here...");
       var answers = tag.get('answer') || [];
 
-      // Is this select or select-multi?
+      // Question type affects how the tag is saved
       switch (question.get('type')) {
 
         case 'select':
@@ -88,7 +88,6 @@ export default Ember.Route.extend({
           } else {
             answers.pushObject(option.get('value')); // Add option value to answer
           }
-
           break;
 
         default:

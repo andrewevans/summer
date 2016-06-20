@@ -7,7 +7,6 @@ export default Ember.Component.extend({
     return option.get('isSelected');
   }),
   click() {
-
     var question = this.get('question'),
       options = question.get('options'),
       tag = this.get('tag'),
@@ -18,11 +17,9 @@ export default Ember.Component.extend({
     answers = tag.get('answer') || [];
 
     options.forEach(function(option) {
-      //@TODO Direct quivalence only works for single select-type questions
       if (answers.indexOf(option.get('value')) !== -1) {
         option.set('isSelected', true);
       } else {
-        //@TODO This only pertains to select-type single option questions
         option.set('isSelected', false);
       }
     });
