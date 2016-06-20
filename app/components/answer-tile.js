@@ -29,14 +29,7 @@ export default Ember.Component.extend({
     options.forEach(function(option) {
       //@TODO Direct quivalence only works for single select-type questions
       if (answers.indexOf(option.get('value')) !== -1) {
-        if (option.get('isSelected')) {
-          // If it's already selected,
-          // then make it false
-          option.set('isSelected', false);
-        } else {
-          // Flag this object as selected
-          option.set('isSelected', true);
-        }
+        option.set('isSelected', true);
       } else {
         //@TODO This only pertains to select-type single option questions
         option.set('isSelected', false);
