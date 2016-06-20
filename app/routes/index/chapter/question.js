@@ -5,7 +5,10 @@ export default Ember.Route.extend({
     var member = model.member,
       chapter = model.chapter,
       tags = member.get('tags'),
-      forwardToResults = false;
+      forwardToResults = false,
+      consequences = [], //@TODO: Consequences shouldn't recalculate on every transition
+      consequence_links = this.modelFor('index').consequence_links,
+      link;
 
     var self = this;
 
@@ -44,9 +47,40 @@ export default Ember.Route.extend({
           }
           break;
 
+        case 1115:
+          if (answer.contains('condition-B')) {
+            link = consequence_links.objectAt(5);
+
+            if (! consequences.contains(link)) {
+              consequences.pushObject(link);
+            }
+          }
+
+          if (answer.contains('condition-C')) {
+            link = consequence_links.objectAt(6);
+
+            if (! consequences.contains(link)) {
+              consequences.pushObject(link);
+            }
+          }
+          break;
+
+        // Q: twins?
+        case 1116:
+          if (answer.contains('yes')) {
+            link = consequence_links.objectAt(8);
+
+            if (! consequences.contains(link)) {
+              consequences.pushObject(link);
+            }
+          }
+          break;
+
         default:
           break;
       }
+
+      member.set('consequences', consequences);
     });
 
     if (forwardToResults) {
