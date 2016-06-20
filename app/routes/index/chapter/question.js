@@ -54,14 +54,6 @@ export default Ember.Route.extend({
 
       tag.set('answer', [option.get('value')]);
     },
-    clearTag(tag, option) {
-      var answers = tag.get('answer') || [];
-      var optionValue = option.get('value');
-
-      answers.removeAt(answers.indexOf(optionValue));
-
-      tag.set('answer', answers);
-    },
     saveTag(member, chapter, question, option, tag) {
       // We are passing member, chapter, question here even though we already have it
       // on the index route. This is to allow the rest of the app to create tags if needed.

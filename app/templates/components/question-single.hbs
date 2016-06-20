@@ -7,7 +7,7 @@
         </li>
     {{else}}
         <li class="question-answer">
-          {{answer-tile saveTag=(route-action "saveTag" member chapter question option tag) clearTag=(route-action "clearTag" tag option) question=question option=option tag=tag}}
+          {{answer-tile saveTag=(route-action "saveTag" member chapter question option tag) question=question option=option tag=tag}}
         </li>
     {{/if}}
   {{/each}}
