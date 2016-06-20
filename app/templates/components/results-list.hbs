@@ -13,7 +13,11 @@
   {{#if member.tags.length}}
       <ul>
         {{#each member.tags as |tag|}}
-            <li>CH{{tag.chapterId}} | Q{{tag.questionId}} | {{tag.answer}}</li>
+            <li>CH{{tag.chapterId}} | Q{{tag.questionId}} |
+              {{#each tag.answer as |answer|}}
+                [{{answer}}]
+              {{/each}}
+            </li>
         {{/each}}
       </ul>
   {{else}}

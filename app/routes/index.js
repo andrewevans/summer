@@ -192,7 +192,7 @@ export default Ember.Route.extend({
       id: 1115,
       title: "Previous or current conditions",
       description: "",
-      type: "select",
+      type: "select-multi",
       chapter: chapter,
     });
 
@@ -221,48 +221,6 @@ export default Ember.Route.extend({
       this.store.createRecord('option', {
         value: "condition-04",
         text: "Condition 04",
-      })
-    );
-
-    question.get('options').pushObject(
-      this.store.createRecord('option', {
-        value: "condition-04",
-        text: "Condition 04",
-      })
-    );
-
-    question.get('options').pushObject(
-      this.store.createRecord('option', {
-        value: "condition-05",
-        text: "Condition 05",
-      })
-    );
-
-    question.get('options').pushObject(
-      this.store.createRecord('option', {
-        value: "condition-05",
-        text: "Condition 05",
-      })
-    );
-
-    question.get('options').pushObject(
-      this.store.createRecord('option', {
-        value: "condition-05",
-        text: "Condition 05",
-      })
-    );
-
-    question.get('options').pushObject(
-      this.store.createRecord('option', {
-        value: "condition-05",
-        text: "Condition 05",
-      })
-    );
-
-    question.get('options').pushObject(
-      this.store.createRecord('option', {
-        value: "condition-05",
-        text: "Condition 05",
       })
     );
 

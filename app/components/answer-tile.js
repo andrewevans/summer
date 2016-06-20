@@ -2,21 +2,26 @@ import Ember from 'ember';
 
 export default Ember.Component.extend({
   isSelected: Ember.computed('', function() {
-    var tag = this.get('tag'),
-      option = this.get('option');
+    var option = this.get('option');
 
-    if (option.get('value') === tag.get('answer')) {
-      // This option's value matches the tag's answer,
-      // so consider it selected.
-      return true;
-    }
-
-    return false;
+    return option.get('isSelected');
   }),
   click() {
-    // Send data about this answer to API
+    var question = this.get('question'),
+      options = question.get('options'),
+      tag = this.get('tag'),
+      answers;
 
-    this.toggleProperty('isSelected');
     this.sendAction('saveTag');
+
+    answers = tag.get('answer') || [];
+
+    options.forEach(function(option) {
+      if (answers.indexOf(option.get('value')) !== -1) {
+        option.set('isSelected', true);
+      } else {
+        option.set('isSelected', false);
+      }
+    });
   }
 });
