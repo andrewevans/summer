@@ -1,6 +1,58 @@
 import Ember from 'ember';
 
 export default Ember.Route.extend({
+  afterModel(model/*, transition*/) {
+    var member = model.member,
+      chapter = model.chapter,
+      tags = member.get('tags'),
+      forwardToResults = false;
+
+    var self = this;
+
+    tags.forEach(function(tag) {
+      var answer = tag.get('answer') || [],
+        questionId = parseInt(tag.get('questionId'));
+
+      //@TODO: This is business logic, doesn't belong here
+      switch (questionId) {
+
+        // Q: sex
+        case 1015:
+          if (answer.contains('male')) {
+            forwardToResults = true;
+          }
+          break;
+
+        // Q: age
+        case 1010:
+          if (answer.contains('13-')) {
+            forwardToResults = true;
+          }
+          break;
+
+        // Q: preg?
+        case 1004:
+          if (answer.contains('none')) {
+            forwardToResults = true;
+          }
+          break;
+
+        // Q: live in US?
+        case 1011:
+          if (answer.contains('no')) {
+            forwardToResults = true;
+          }
+          break;
+
+        default:
+          break;
+      }
+    });
+
+    if (forwardToResults) {
+      self.transitionTo('index.results', chapter.id);
+    }
+  },
   model(params) {
     var chapter = this.modelFor('index').chapter,
       member = this.modelFor('index').member,
