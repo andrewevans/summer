@@ -1,0 +1,9 @@
+<p>Here are helpful links:</p>
+
+<ul class="list-group">
+  {{#each member.consequences as |consequence|}}
+      <li class="list-group-item">
+          <a href="{{consequence.url}}" target="_blank">{{consequence.text}}</a>
+      </li>
+  {{/each}}
+</ul>

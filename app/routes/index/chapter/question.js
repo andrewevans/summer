@@ -1,6 +1,14 @@
 import Ember from 'ember';
 
 export default Ember.Route.extend({
+  afterModel(model/*, transition*/) {
+    var memberConsequences = this.get('member-consequences'),
+      member = model.member,
+      chapter = model.chapter,
+      consequence_links = this.modelFor('index').consequence_links;
+
+    memberConsequences.calculate(member, chapter, consequence_links, this);
+  },
   model(params) {
     var chapter = this.modelFor('index').chapter,
       member = this.modelFor('index').member,
