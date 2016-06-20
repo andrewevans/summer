@@ -67,19 +67,36 @@ export default Ember.Route.extend({
       // on the index route. This is to allow the rest of the app to create tags if needed.
 
       window.console.log("Saving tag locally goes here...");
+      var answers = tag.get('answer') || [];
 
-      var answers = tag.get('answer') || []; // Get previous answer(s)
+      // Is this select or select-multi?
+      switch (question.get('type')) {
 
-      if (answers.indexOf(option.get('value')) === -1) {
-        answers.pushObject(option.get('value')); // If it's not already in answers, add it to answers
+        case 'select':
+          if (answers.indexOf(option.get('value')) !== -1) { // Is this option already in the answer?
+            answers = []; // Clear the answer for single select-type questions
+          } else {
+            answers = []; // Clear the answer for single select-type questions
+
+            answers.pushObject(option.get('value')); // Add option value to answer
+          }
+          break;
+
+        case 'select-multi':
+          if (answers.indexOf(option.get('value')) !== -1) { // Is this option already in the answer?
+            answers.removeObject(option.get('value')); // Remove this specific answer from answers
+          } else {
+            answers.pushObject(option.get('value')); // Add option value to answer
+          }
+
+          break;
+
+        default:
+          Ember.Logger.debug("This is an unsupported question-type.");
+          break;
       }
 
-      tag.setProperties({
-        member: member,
-        chapterId: chapter.id,
-        questionId: question.id,
-        answer: answers,
-      });
+      tag.set('answer', answers);
 
       Ember.$.ajax({
         method: "POST",

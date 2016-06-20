@@ -11,21 +11,12 @@ export default Ember.Component.extend({
     var question = this.get('question'),
       options = question.get('options'),
       tag = this.get('tag'),
-      option = this.get('option'),
       answers;
 
-    if (option.get('isSelected')) {
-      // If it's already selected,
-      // then reset this tag
-      this.sendAction('clearTag'); //@TODO Only works for select-type questions. For select-multi, needs to search and remove
-    } else {
-      // Save/update this tag
-      this.sendAction('saveTag');
-    }
+    this.sendAction('saveTag');
 
-    answers = tag.get('answer');
+    answers = tag.get('answer') || [];
 
-    // Update options' isSelected flags
     options.forEach(function(option) {
       //@TODO Direct quivalence only works for single select-type questions
       if (answers.indexOf(option.get('value')) !== -1) {
@@ -35,7 +26,5 @@ export default Ember.Component.extend({
         option.set('isSelected', false);
       }
     });
-
-    return true;
   }
 });
