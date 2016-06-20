@@ -4,12 +4,4 @@
 
 <p><img src="http://img2.rnkr-static.com/user_node_img/50009/1000169574/870/success-kid-owns-his-mom-photo-u1.jpg" /></p>
 
-<p>Here are helpful links:</p>
-
-<ul class="list-group">
-    {{#each model.member.consequences as |consequence|}}
-        <li class="list-group-item">
-            <a href="{{consequence.url}}" target="_blank">{{consequence.text}}</a>
-        </li>
-    {{/each}}
-</ul>
+{{member-consequences member=model.member}}
