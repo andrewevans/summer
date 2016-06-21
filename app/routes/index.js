@@ -21,7 +21,7 @@ export default Ember.Route.extend({
           id: '102',
           type: 'chapter',
           attributes: {
-            title: 'Pregnancy Health Assessment!!',
+            title: 'Pregnancy Health Assessment',
             description: "We highly value your Bicycle rights next level heirloom, iPhone etsy artisan " +
             "church-key YOLO hammock offal pinterest meditation knausgaard authentic. Scenester roof party umami, " +
             "pop-up shabby chic fanny pack YOLO. Etsy actually mixtape kombucha yuccie, bicycle rights flannel venmo " +
