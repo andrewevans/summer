@@ -47,6 +47,12 @@ export default Ember.Route.extend({
         chapterId: chapter.id,
         questionId: question.id,
       });
+
+      var storage_tag = this.get('storage.tag[' + member.id + '][' + chapter.id + '][' + question.id +']');
+
+      if (storage_tag) {
+        tag.set('answer', storage_tag);
+      }
     }
 
     return Ember.RSVP.hash({
@@ -61,6 +67,9 @@ export default Ember.Route.extend({
       window.console.log("Updating tag locally goes here...");
 
       tag.set('answer', [option.get('value')]);
+
+      // Update the ember-storage (localStorage or sessionStorage) value with tag value to keep them in sync
+      this.set('storage.tag[' + member.id + '][' + chapter.id + '][' + question.id +']', tag.get('answer'));
     },
     saveTag(member, chapter, question, option, tag) {
       // We are passing member, chapter, question here even though we already have it
@@ -96,6 +105,9 @@ export default Ember.Route.extend({
       }
 
       tag.set('answer', answers);
+
+      // Update the ember-storage (localStorage or sessionStorage) value with tag value to keep them in sync
+      this.set('storage.tag[' + member.id + '][' + chapter.id + '][' + question.id +']', tag.get('answer'));
 
       Ember.$.ajax({
         method: "POST",
