@@ -1,18 +1,21 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend({
+  didReceiveAttrs() {
+    this.updateSelecteds();
+  },
   isSelected: Ember.computed('', function() {
     var option = this.get('option');
 
     return option.get('isSelected');
   }),
-  click() {
+  // updateSelecteds() and component/answer-tile's updateInputValue()
+  // need to be maintained together, because they do the same task but for different inputs.
+  updateSelecteds: function() {
     var question = this.get('question'),
       options = question.get('options'),
       tag = this.get('tag'),
       answers;
-
-    this.sendAction('saveTag');
 
     answers = tag.get('answer') || [];
 
@@ -23,5 +26,10 @@ export default Ember.Component.extend({
         option.set('isSelected', false);
       }
     });
+  },
+  click() {
+    this.sendAction('saveTag');
+
+    this.updateSelecteds();
   }
 });
