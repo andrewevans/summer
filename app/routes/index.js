@@ -22,6 +22,11 @@ export default Ember.Route.extend({
           type: 'chapter',
           attributes: {
             title: 'Pregnancy Health Assessment!!',
+            description: "We highly value your Bicycle rights next level heirloom, iPhone etsy artisan " +
+            "church-key YOLO hammock offal pinterest meditation knausgaard authentic. Scenester roof party umami, " +
+            "pop-up shabby chic fanny pack YOLO. Etsy actually mixtape kombucha yuccie, bicycle rights flannel venmo " +
+            "pug dreamcatcher green juice kogi post-ironic sriracha. Shoreditch locavore chia crucifix gluten-free " +
+            "trust fund.",
           }
         },
       ],
@@ -342,6 +347,7 @@ export default Ember.Route.extend({
       chapter: this.store.peekRecord('chapter', 102),
       questions: this.store.peekAll('question'), //@TODO: This returns ALL questions, but must only return a specific chapter's questions
       consequence_links: consequence_links,
+      chapters: this.store.peekAll('chapter'),
     });
 
   }

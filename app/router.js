@@ -11,6 +11,7 @@ Router.map(function() {
   this.route('index', { path: '' }, function() {
     this.route('chapter', { path: '/chapters/:id' }, function() {
       this.route('question', { path: '/question/:sequence_num' });
+      this.route('welcome', { path: '/welcome' });
     });
     this.route('results', { path: '/chapters/:id/results' });
   });
