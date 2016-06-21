@@ -1,7 +1,36 @@
 # Summer
 
-This README outlines the details of collaborating on this Ember application.
-A short introduction of this app could easily go here.
+> A simple flexible assessment web app that can be inserted into any webpage and retains its data through page loads. It is ready to be tied into APIs to consume and send data.
+
+[Live Demo](deeply-purpose.surge.sh/#/chapters/102/welcome)
+
+## Usage
+
+Update the data in app/routes/index.js to populate chapters, questions, answers.
+
+## Features
+
+* Can be loaded async based on environment
+* Maintains data through page loads.
+* `member` (object). Info about the user.
+* `chapter` (object). Contains questions.
+* `question` (object). Contains options. Supports single select, multi-select, and text input.
+* `option` (object). Belongs to one question.
+* `tag` (object). A unit of data about the member. Used by member_consequences to calculate outcomes
+** Certain tags cause chapter to terminate.
+** Certain tags cause consequence_links to populate for the member.
+* `member_consequences` (service). Calculates the outcome based on tag data.
+* `consequence_links` (array). List of links that can be populated by member_consequences.
+
+## What's next?
+
+* Fix bug that requires that the entire chapter be traversed to calculate correctly.
+* More flexible consequences.
+* More flexible pagination.
+* Move mock API data to Mirage. Doesn't belong in index.js.
+* Support multiple chapters.
+* Required fields.
+* Get user ID from API to allow other web apps to store the data.
 
 ## Prerequisites
 
