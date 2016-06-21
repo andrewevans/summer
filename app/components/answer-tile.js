@@ -9,6 +9,8 @@ export default Ember.Component.extend({
 
     return option.get('isSelected');
   }),
+  // updateSelecteds() and component/answer-tile's updateInputValue()
+  // need to be maintained together, because they do the same task but for different inputs.
   updateSelecteds: function() {
     var question = this.get('question'),
       options = question.get('options'),
