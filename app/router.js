@@ -13,6 +13,7 @@ Router.map(function() {
       this.route('question', { path: '/question/:sequence_num' });
     });
     this.route('results', { path: '/chapters/:id/results' });
+    this.route('welcome', { path: '/welcome' });
   });
 });
 
