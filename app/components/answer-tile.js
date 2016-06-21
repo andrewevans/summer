@@ -1,6 +1,9 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend({
+  didReceiveAttrs() {
+    this.updateSelecteds();
+  },
   isSelected: Ember.computed('', function() {
     var option = this.get('option');
 
