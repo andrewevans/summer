@@ -26,21 +26,8 @@ export default Ember.Component.extend({
     });
   },
   click() {
-    var question = this.get('question'),
-      options = question.get('options'),
-      tag = this.get('tag'),
-      answers;
-
     this.sendAction('saveTag');
 
-    answers = tag.get('answer') || [];
-
-    options.forEach(function(option) {
-      if (answers.indexOf(option.get('value')) !== -1) {
-        option.set('isSelected', true);
-      } else {
-        option.set('isSelected', false);
-      }
-    });
+    this.updateSelecteds();
   }
 });
