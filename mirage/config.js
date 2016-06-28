@@ -2,6 +2,16 @@ export default function() {
 
   this.passthrough('/members', '/members/:id');
 
+  this.get('/members', ({ members }, request) => {
+    window.console.log("in config (not namespaced): /members");
+
+    var params = request.queryParams;
+
+    var members_filtered = members.where(params);
+
+    return members_filtered.models[0];
+  });
+
   this.namespace = '/api/v1';
 
   this.get('/authors', ({ authors }, request) => {
