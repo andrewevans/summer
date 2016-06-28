@@ -12,6 +12,8 @@ export default function() {
     return members_filtered.models[0];
   });
 
+  this.get('/tags/:id');
+
   this.namespace = '/api/v1';
 
   this.get('/authors', ({ authors }, request) => {
