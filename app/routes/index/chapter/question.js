@@ -34,12 +34,14 @@ export default Ember.Route.extend({
     var question = chapter.get('questions').objectAt(sequence_num - 1);
 
     var tags = member.get('tags')
-      .filterBy('chapterId', chapter.id)
-      .filterBy('questionId', question.id);
+      .filterBy('chapterId', parseInt(chapter.id))
+      .filterBy('questionId', parseInt(question.id));
 
     if (tags.get('length')) {
       // The tag exists, so use that one
       tag = tags.objectAt(0);
+      // Update the ember-storage (localStorage or sessionStorage) value with tag value to keep them in sync
+      this.set('storage.tag[' + member.id + '][' + chapter.id + '][' + question.id +']', tag.get('answer'));
     } else {
       // The tag does not exist yet, so create it
       tag = this.store.createRecord('tag', {
