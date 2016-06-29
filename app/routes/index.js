@@ -342,8 +342,10 @@ export default Ember.Route.extend({
       url: "http://www.babycenter.com/0_pregnant-with-multiples-prenatal-care_3582.bc",
     });
 
+    var member = this.store.queryRecord('member', { id: '4' });
+
     return Ember.RSVP.hash({
-      member: this.store.peekRecord('member', 16),
+      member: member, // Get the member's record
       chapter: this.store.peekRecord('chapter', 102),
       questions: this.store.peekAll('question'), //@TODO: This returns ALL questions, but must only return a specific chapter's questions
       consequence_links: consequence_links,

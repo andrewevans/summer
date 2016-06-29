@@ -2,6 +2,28 @@ export default function() {
 
   this.passthrough('/members', '/members/:id');
 
+  this.passthrough('/ws/ajax/v1/responses');
+
+  this.get('/members', ({ members }, request) => {
+    window.console.log("in config (not namespaced): /members");
+
+    var params = request.queryParams,
+      members_filtered = members.where(params);
+
+    return members_filtered.models[0];
+  });
+
+  this.get('/tags', ({ tags }, request) => {
+    window.console.log("in config (not namespaced): /tags");
+
+    var params = request.queryParams,
+      tags_filtered = tags.where(params);
+
+    return tags_filtered;
+  });
+
+  this.get('/tags/:id');
+
   this.namespace = '/api/v1';
 
   this.get('/authors', ({ authors }, request) => {

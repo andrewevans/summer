@@ -34,12 +34,14 @@ export default Ember.Route.extend({
     var question = chapter.get('questions').objectAt(sequence_num - 1);
 
     var tags = member.get('tags')
-      .filterBy('chapterId', chapter.id)
-      .filterBy('questionId', question.id);
+      .filterBy('chapterId', parseInt(chapter.id))
+      .filterBy('questionId', parseInt(question.id));
 
     if (tags.get('length')) {
       // The tag exists, so use that one
       tag = tags.objectAt(0);
+      // Update the ember-storage (localStorage or sessionStorage) value with tag value to keep them in sync
+      this.set('storage.tag[' + member.id + '][' + chapter.id + '][' + question.id +']', tag.get('answer'));
     } else {
       // The tag does not exist yet, so create it
       tag = this.store.createRecord('tag', {
@@ -112,12 +114,30 @@ export default Ember.Route.extend({
       Ember.$.ajax({
         method: "POST",
         url: "/api/v1/responses",
-        data: {
+        contentType: "application/json",
+        data: JSON.stringify({
           memberId: member.id,
           chapterId: chapter.id,
           questionId: question.id,
           answer: answers,
-        }
+        })
+      });
+
+      Ember.$.ajax({
+        type: "POST",
+        data: JSON.stringify({
+          memberId: member.id, //@TODO: Member ID should not be sent over http
+          surveyId: chapter.id,
+          questions: [
+            {
+              "questionId": question.id,
+              "questionNumber": -1,
+              "response": answers.toString()
+            }
+          ]
+        }),
+        contentType: "application/json",
+        url: "/ws/ajax/v1/responses",
       });
 
       return true;
@@ -135,10 +155,32 @@ export default Ember.Route.extend({
         });
       });
 
+      var tags_alt;
+      var questions_alt = [];
+      var chapter_id_alt = -1; //@TODO: Due to the way the API receives data, this has to be extracted, but this assumes all of them are from the same chapter
+
+      member.get('tags').forEach(function(tag) {
+        chapter_id_alt = tag.get('chapterId'); //@TODO: Always assigns to last tag in the list
+
+        questions_alt.push({
+          "questionId": tag.get('questionId'),
+          "questionNumber": -1, //@TODO: Question number not yet needed, but it is required by API
+          "response": tag.get('answer').toString()
+        });
+      });
+
+      tags_alt = {
+        memberId: member.id, //@TODO: Member ID should not be sent over http
+        surveyId: chapter_id_alt,
+        questions: questions_alt
+      };
+
+      window.console.log(tags_alt);
       Ember.$.ajax({
         method: "POST",
-        url: "/api/v1/responses",
-        data: { tags },
+        contentType: "application/json",
+        url: "/ws/ajax/v1/responses",
+        data: JSON.stringify(tags_alt),
       });
     },
   },
