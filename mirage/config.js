@@ -12,6 +12,16 @@ export default function() {
     return members_filtered.models[0];
   });
 
+  this.get('/tags', ({ tags }, request) => {
+    window.console.log("in config (not namespaced): /tags");
+
+    var params = request.queryParams;
+
+    var tags_filtered = tags.where(params);
+
+    return tags_filtered;
+  });
+
   this.get('/tags/:id');
 
   this.namespace = '/api/v1';
