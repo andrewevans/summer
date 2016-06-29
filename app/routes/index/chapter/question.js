@@ -34,8 +34,8 @@ export default Ember.Route.extend({
     var question = chapter.get('questions').objectAt(sequence_num - 1);
 
     var tags = member.get('tags')
-      .filterBy('chapterId', chapter.id)
-      .filterBy('questionId', question.id);
+      .filterBy('chapterId', parseInt(chapter.id))
+      .filterBy('questionId', parseInt(question.id));
 
     if (tags.get('length')) {
       // The tag exists, so use that one
