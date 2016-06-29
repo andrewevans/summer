@@ -40,6 +40,8 @@ export default Ember.Route.extend({
     if (tags.get('length')) {
       // The tag exists, so use that one
       tag = tags.objectAt(0);
+      // Update the ember-storage (localStorage or sessionStorage) value with tag value to keep them in sync
+      this.set('storage.tag[' + member.id + '][' + chapter.id + '][' + question.id +']', tag.get('answer'));
     } else {
       // The tag does not exist yet, so create it
       tag = this.store.createRecord('tag', {
