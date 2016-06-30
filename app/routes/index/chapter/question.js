@@ -26,7 +26,7 @@ export default Ember.Route.extend({
       'next': next,
       'prev': prev,
       'total': total,
-      'percentageComplete': (sequence_num/total) * 100,
+      'percentageComplete': Math.floor(((sequence_num-1)/total) * 100),
     });
 
     // We don't know the ID of the current question yet,
