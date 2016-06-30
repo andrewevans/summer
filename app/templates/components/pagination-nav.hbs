@@ -7,14 +7,14 @@
         {{/link-to}}
       {{/if}}
     </div>
-    <div class="pagination col-xs-6">
+    <div class="pagination col-xs-6" style="padding: 0">
         <div class="progress">
             <div class="progress-bar" role="progressbar" aria-valuenow="{{chapter.pagination.percentageComplete}}" aria-valuemin="0" aria-valuemax="100" style="width:{{chapter.pagination.percentageComplete}}%">
               {{chapter.pagination.percentageComplete}}%
             </div>
         </div>
     </div>
-    <div class="pagination col-xs-3" style="text-align: right;">
+    <div class="pagination col-xs-3" style="text-align: right; padding-right: 0px; padding-left: 15px">
       {{#if chapter.pagination.next}}
         {{#link-to 'index.chapter.question' chapter.pagination.next classNames="bgNextArrow"}}
             <span aria-hidden="true" style="padding-right: 25px" {{action "saveTags"}}>Next</span>
