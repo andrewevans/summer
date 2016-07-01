@@ -2,6 +2,8 @@ export default function() {
 
   this.passthrough('/members', '/members/:id');
 
+  this.passthrough('/ws/ajax/v1/responses');
+
   this.get('/members', ({ members }, request) => {
     window.console.log("in config (not namespaced): /members");
 
