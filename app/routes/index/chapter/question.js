@@ -46,8 +46,8 @@ export default Ember.Route.extend({
       // The tag does not exist yet, so create it
       tag = this.store.createRecord('tag', {
         member: member,
-        chapterId: chapter.id,
-        questionId: question.id,
+        chapterId: parseInt(chapter.id),
+        questionId: parseInt(question.id),
       });
 
       var storage_tag = this.get('storage.tag[' + member.id + '][' + chapter.id + '][' + question.id +']');
