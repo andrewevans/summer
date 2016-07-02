@@ -6,18 +6,6 @@ export default Ember.Route.extend({
     this.store.push({
       data: [
         {
-          id: '16',
-          type: 'member',
-          attributes: {
-            username: 'Coeur',
-          }
-        }, {
-          id: '17',
-          type: 'member',
-          attributes: {
-            username: 'delila',
-          }
-        }, {
           id: '102',
           type: 'chapter',
           attributes: {
