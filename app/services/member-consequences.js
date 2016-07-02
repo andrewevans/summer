@@ -15,34 +15,35 @@ export default Ember.Service.extend({
       switch (questionId) {
 
         // Q: sex
-        case 1015:
+        case 2:
           if (answer.contains('male')) {
             forwardToResults = true;
           }
           break;
 
         // Q: age
-        case 1010:
+        case 3:
           if (answer.contains('13-')) {
             forwardToResults = true;
           }
           break;
 
         // Q: preg?
-        case 1004:
+        case 4:
           if (answer.contains('none')) {
             forwardToResults = true;
           }
           break;
 
         // Q: live in US?
-        case 1011:
+        case 1:
           if (answer.contains('no')) {
             forwardToResults = true;
           }
           break;
 
-        case 1115:
+        // conditions
+        case 5:
           if (answer.contains('condition-B')) {
             link = consequence_links.objectAt(5);
 
@@ -61,7 +62,7 @@ export default Ember.Service.extend({
           break;
 
         // Q: twins?
-        case 1116:
+        case 6:
           if (answer.contains('yes')) {
             link = consequence_links.objectAt(8);
 
