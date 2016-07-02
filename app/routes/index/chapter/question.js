@@ -48,6 +48,7 @@ export default Ember.Route.extend({
         member: member,
         chapterId: parseInt(chapter.id),
         questionId: parseInt(question.id),
+        answer: [],
       });
 
       var storage_tag = this.get('storage.tag[' + member.id + '][' + chapter.id + '][' + question.id +']');
