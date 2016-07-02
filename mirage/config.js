@@ -5,6 +5,8 @@ export default function() {
 
   this.get('/members/:id');
 
+  this.get('/chapters/:id');
+
   this.get('/tags', ({ tags }, request) => {
     window.console.log("in config (not namespaced): /tags");
 

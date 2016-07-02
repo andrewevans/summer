@@ -344,8 +344,7 @@ export default Ember.Route.extend({
 
     return Ember.RSVP.hash({
       member: this.store.findRecord('member', 4, { include: 'tags' }), // Get the member's record
-      chapter: this.store.peekRecord('chapter', 102),
-      questions: this.store.peekAll('question'), //@TODO: This returns ALL questions, but must only return a specific chapter's questions
+      chapter: this.store.findRecord('chapter', 102, { include: 'questions' }),
       consequence_links: consequence_links,
       chapters: this.store.peekAll('chapter'),
     });
