@@ -12,6 +12,10 @@
         <li class="question-answer">
           {{answer-tile saveTag=(route-action "saveTag" member chapter question option tag) question=question option=option tag=tag}}
         </li>
+    {{else if (if-eq question.type "select-multi")}}
+        <li class="question-answer">
+          {{answer-tile saveTag=(route-action "saveTag" member chapter question option tag) question=question option=option tag=tag}}
+        </li>
     {{/if}}
   {{/each}}
 {{/if}}
