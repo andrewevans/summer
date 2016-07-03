@@ -322,6 +322,22 @@ export default function(server) {
   });
   // End question + its options
 
+  // Create a question + its options
+  question = chapter.createQuestion({
+    title: "How far along are you in your pregnancy?",
+    type: "select-dropdown",
+  });
+
+  question.createOption({
+    value: "none",
+    text: "I am not currently pregnant",
+  });
+
+  // Populate each week's option
+  for (let i = 4; i <= 42; i++) {
+    server.create('option', { value: (i) +'-weeks', text: (i) +' weeks', question: question });
+  }
+
   /*
     Seed your development database using your factories.
     This data will not be loaded in your tests.
