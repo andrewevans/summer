@@ -102,6 +102,11 @@ export default Ember.Route.extend({
           }
           break;
 
+        case 'select-dropdown':
+          // There is no need to populate the answer as it has already been updated by emberx-select.
+          // Calling 'saveTag' for select-dropdown type of questions, so far, only updates the local storage value.
+          break;
+
         default:
           Ember.Logger.debug("This is an unsupported question-type.");
           break;
