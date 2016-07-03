@@ -1,5 +1,5 @@
 {{#x-select value=tag.answer action="selectOption" class="form-control"}}
   {{#each question.options as |option|}}
-    {{#x-option value=option.value}}{{option.text}}{{/x-option}}
+    {{#x-option value=option.value selected=option.isSelected}}{{option.text}}{{/x-option}}
   {{/each}}
 {{/x-select}}
