@@ -10,7 +10,7 @@ export default Ember.Route.extend({
     memberConsequences.calculate(member, chapter, consequence_links, this);
   },
   model(params) {
-    var chapter = this.modelFor('index').chapter,
+    var chapter = this.modelFor('index/chapter').chapter,
       member = this.modelFor('index').member,
       sequence_num = parseInt(params.sequence_num),
       next = sequence_num + 1,
