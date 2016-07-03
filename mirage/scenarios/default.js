@@ -270,23 +270,17 @@ export default function(server) {
   question = chapter.createQuestion({
     title: "Hhow tall are you?",
     description: "",
-    type: "select-multi",
+    type: "select-dropdown",
   });
 
-  question.createOption({
-    value: "average",
-    text: "Average",
-  });
+  // Populate each week's option
+  for (let feet = 3; feet <= 7; feet++) {
 
-  question.createOption({
-    value: "below-average",
-    text: "Below Average",
-  });
+    for (let inches = 0; inches <= 11; inches++) {
+      server.create('option', { value: ((feet * 12) + inches), text: feet +'ft ' + inches + ' in', question: question });
+    }
+  }
 
-  question.createOption({
-    value: "above-average",
-    text: "Above average",
-  });
   // End question + its options
 
   // Create a question + its options
@@ -321,6 +315,22 @@ export default function(server) {
     text: "Asian",
   });
   // End question + its options
+
+  // Create a question + its options
+  question = chapter.createQuestion({
+    title: "How far along are you in your pregnancy?",
+    type: "select-dropdown",
+  });
+
+  question.createOption({
+    value: "none",
+    text: "I am not currently pregnant",
+  });
+
+  // Populate each week's option
+  for (let i = 4; i <= 42; i++) {
+    server.create('option', { value: (i) +'-weeks', text: (i) +' weeks', question: question });
+  }
 
   /*
     Seed your development database using your factories.

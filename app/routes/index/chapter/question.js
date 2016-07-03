@@ -102,6 +102,14 @@ export default Ember.Route.extend({
           }
           break;
 
+        case 'select-dropdown':
+          // The tag's answer has already been updated by emberx-select. Therefore, we populate the answers with the
+          // value that it had, but in array format.
+          answers = []; // Clear the answer and turn it into an array since emberx-select updates the value as a string.
+
+          answers.pushObject(tag.get('answer')); // Add option value to answer
+          break;
+
         default:
           Ember.Logger.debug("This is an unsupported question-type.");
           break;
