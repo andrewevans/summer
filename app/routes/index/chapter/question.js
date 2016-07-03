@@ -103,8 +103,11 @@ export default Ember.Route.extend({
           break;
 
         case 'select-dropdown':
-          // There is no need to populate the answer as it has already been updated by emberx-select.
-          // Calling 'saveTag' for select-dropdown type of questions, so far, only updates the local storage value.
+          // The tag's answer has already been updated by emberx-select. Therefore, we populate the answers with the
+          // value that it had, but in array format.
+          answers = []; // Clear the answer and turn it into an array since emberx-select updates the value as a string.
+
+          answers.pushObject(tag.get('answer')); // Add option value to answer
           break;
 
         default:
