@@ -10,7 +10,7 @@ export default Ember.Route.extend({
     memberConsequences.calculate(member, chapter, consequence_links, this);
   },
   model(params) {
-    var chapter = this.modelFor('index').chapter,
+    var chapter = this.modelFor('index/chapter').chapter,
       member = this.modelFor('index').member,
       sequence_num = parseInt(params.sequence_num),
       next = sequence_num + 1,
@@ -41,6 +41,8 @@ export default Ember.Route.extend({
       // The tag exists, so use that one
       tag = tags.objectAt(0);
       // Update the ember-storage (localStorage or sessionStorage) value with tag value to keep them in sync
+      // This is only necessary if the API brought in the tag, because if it did, it has not yet been entered into
+      // localStorage yet. This may be handled by the API itself, but Mirage cannot yet utilize ember-storage.
       this.set('storage.tag[' + member.id + '][' + chapter.id + '][' + question.id +']', tag.get('answer'));
     } else {
       // The tag does not exist yet, so create it
@@ -50,12 +52,6 @@ export default Ember.Route.extend({
         questionId: parseInt(question.id),
         answer: [],
       });
-
-      var storage_tag = this.get('storage.tag[' + member.id + '][' + chapter.id + '][' + question.id +']');
-
-      if (storage_tag) {
-        tag.set('answer', storage_tag);
-      }
     }
 
     return Ember.RSVP.hash({
