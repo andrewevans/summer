@@ -4,10 +4,9 @@ var EmberApp = require('ember-cli/lib/broccoli/ember-app');
 
 module.exports = function(defaults) {
   var app = new EmberApp(defaults, {
-    lessOptions: {
-      paths: [
-        'bower_components/bootstrap/less'
-      ]
+    'ember-bootstrap': {
+      'importBootstrapCSS': false,
+      'importBootstrapFont': false
     }
 
     // Add options here
