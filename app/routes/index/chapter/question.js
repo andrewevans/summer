@@ -63,7 +63,7 @@ export default Ember.Route.extend({
   actions: {
     updateTag(member, chapter, question, option, tag) {
       // Input fields use this to update the tag it's working on
-      window.console.log("Updating tag locally goes here...");
+      Ember.Logger.log("Updating tag locally goes here...");
 
       tag.set('answer', [option.get('value')]);
 
@@ -74,7 +74,7 @@ export default Ember.Route.extend({
       // We are passing member, chapter, question here even though we already have it
       // on the index route. This is to allow the rest of the app to create tags if needed.
 
-      window.console.log("Saving tag locally goes here...");
+      Ember.Logger.log("Saving tag locally goes here...");
       var answers = tag.get('answer') || [];
 
       // Question type affects how the tag is saved
@@ -148,7 +148,7 @@ export default Ember.Route.extend({
       return true;
     },
     saveTags(member) {
-      window.console.log("Saving all tags locally goes here...");
+      Ember.Logger.log("Saving all tags locally goes here...");
 
       var tags = [];
       member.get('tags').forEach(function(tag) {

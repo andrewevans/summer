@@ -3,7 +3,7 @@ import Ember from 'ember';
 export default Ember.Route.extend({
 
   model(params) {
-    window.console.log('in routes/chapter.js');
+    Ember.Logger.log('in routes/chapter.js');
 
     return Ember.RSVP.hash({
       member: this.modelFor('index').member,
