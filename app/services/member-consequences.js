@@ -80,7 +80,7 @@ export default Ember.Service.extend({
     });
 
     if (forwardToResults) {
-      route.transitionTo('index.results', chapter.id);
+      route.transitionTo('index.chapter.results', chapter.id);
     }
 
     return;

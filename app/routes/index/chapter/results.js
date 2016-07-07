@@ -12,7 +12,7 @@ export default Ember.Route.extend({
   model() {
     return Ember.RSVP.hash({
       member: this.modelFor('index').member,
-      chapter: this.modelFor('index').chapter,
+      chapter: this.modelFor('index/chapter').chapter,
     });
   }
 });
