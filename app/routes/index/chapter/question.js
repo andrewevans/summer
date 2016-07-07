@@ -29,6 +29,20 @@ export default Ember.Route.extend({
       'percentageComplete': Math.floor(((sequence_num-1)/total) * 100),
     });
 
+    member.current_progress.sequence_num = sequence_num;
+    member.save(); // Save current progress in the member
+
+    Ember.$.ajax({
+      method: "POST",
+      url: "/api/v1/responses",
+      contentType: "application/json",
+      data: JSON.stringify({
+        member: member,
+      })
+    });
+
+    //@TODO: Send member data to /ws/ajax endpoint as well, once it is decided.
+
     // We don't know the ID of the current question yet,
     // just that it's nth question on the current chapter.
     var question = chapter.get('questions').objectAt(sequence_num - 1);
