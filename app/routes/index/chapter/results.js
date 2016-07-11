@@ -17,7 +17,7 @@ export default Ember.Route.extend({
 
     progresses.forEach(progress => {
       if (progress.chapter_id === parseInt(chapter.id)) {
-        this.get('paginationNav').update(chapter, progress, null); // Update pagination nav to null
+        this.get('paginationNav').update(member, chapter, progress, null); // Update pagination nav to null
       }
     });
 

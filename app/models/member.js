@@ -6,5 +6,6 @@ export default Model.extend({
   username: attr(),
   consequences: attr(),
   progresses: attr(),
+  pagination: attr(),
   tags: hasMany('tag'),
 });

@@ -3,10 +3,8 @@ import Ember from 'ember';
 export default Ember.Service.extend({
   /**
    * Pagination logic to update current state
-   * @param chapter
-   * @param progress
    */
-  update(chapter, progress, sequence_num) {
+  update(member, chapter, progress, sequence_num) {
     progress.sequence_num = sequence_num; // Update member's current progress for this chapter
 
     var next = progress.sequence_num + 1,
@@ -16,7 +14,7 @@ export default Ember.Service.extend({
     next = (next > total ? false : next);
     prev = (prev < 1 ? false : prev);
 
-    chapter.set('pagination', {
+    member.set('pagination', {
       'sequence_num': progress.sequence_num,
       'next': next,
       'prev': prev,

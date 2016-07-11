@@ -19,7 +19,7 @@ export default Ember.Route.extend({
 
     progresses.forEach(progress => {
       if (progress.chapter_id === parseInt(chapter.id)) {
-        this.get('paginationNav').update(chapter, progress, sequence_num); // Update pagination nav
+        this.get('paginationNav').update(member, chapter, progress, sequence_num); // Update pagination nav
       }
     });
 
@@ -65,6 +65,7 @@ export default Ember.Route.extend({
       member: member,
       chapter: chapter,
       tag: tag,
+      viewable_questions: [question],
     });
   },
   actions: {
