@@ -1,6 +1,7 @@
 import Ember from 'ember';
 
 export default Ember.Route.extend({
+  paginationNav: Ember.inject.service('pagination-nav'),
   afterModel(model/*, transition*/) {
     var memberConsequences = this.get('member-consequences'),
       member = model.member,
@@ -13,23 +14,10 @@ export default Ember.Route.extend({
     var chapter = this.modelFor('index/chapter').chapter,
       member = this.modelFor('index').member,
       sequence_num = parseInt(params.sequence_num),
-      next = sequence_num + 1,
-      prev = sequence_num - 1,
-      total = chapter.get('questionsLength'),
       tag;
 
-    next = (next > total ? false : next);
-    prev = (prev < 1 ? false : prev);
+    this.get('paginationNav').update(member, chapter, sequence_num); // Update pagination nav
 
-    chapter.set('pagination', {
-      'sequence_num': sequence_num,
-      'next': next,
-      'prev': prev,
-      'total': total,
-      'percentageComplete': Math.floor(((sequence_num-1)/total) * 100),
-    });
-
-    member.current_progress.sequence_num = sequence_num;
     member.save(); // Save current progress in the member
 
     Ember.$.ajax({
@@ -72,6 +60,7 @@ export default Ember.Route.extend({
       member: member,
       chapter: chapter,
       tag: tag,
+      viewable_questions: [question],
     });
   },
   actions: {

@@ -5,6 +5,7 @@ import { hasMany } from 'ember-data/relationships';
 export default Model.extend({
   username: attr(),
   consequences: attr(),
-  progresses: attr(),
+  progresses: attr('raw', { defaultValue: function() { return []; } }),
+  pagination: attr(),
   tags: hasMany('tag'),
 });
