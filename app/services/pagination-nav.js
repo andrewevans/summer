@@ -1,6 +1,7 @@
 import Ember from 'ember';
 
 export default Ember.Service.extend({
+  sessionStorage: Ember.inject.service('session'),
   /**
    * Pagination logic to update current state
    */
@@ -23,6 +24,9 @@ export default Ember.Service.extend({
         'total': total,
         'percentageComplete': Math.floor(((chapter_progress.sequence_num - 1) / total) * 100),
       });
+
+      // Update the ember-storage (localStorage or sessionStorage) value with the member's pagination
+      this.get('sessionStorage').set('member', member);
     }
   }
 });
