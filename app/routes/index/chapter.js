@@ -11,13 +11,19 @@ export default Ember.Route.extend({
     progresses.forEach(progress => {
       if (progress.chapter_id === parseInt(chapter.id)) {
         member.chapter_progress = true;
-        this.transitionTo('index.chapter.question', chapter.id, progress.sequence_num); // And go there
+
+        // A null sequence number is the welcome page, so don't transition to a question
+        if (progress.sequence_num) {
+          this.transitionTo('index.chapter.question', chapter.id, progress.sequence_num); // And go there
+        }
       }
     });
 
     // Check if current_progress has been discovered
     if (member.chapter_progress === false) {
-      progresses.push({ chapter_id: chapter.id, sequence_num: 0 });
+
+      // Set sequence number to null and go to welcome page
+      progresses.push({ chapter_id: parseInt(chapter.id), sequence_num: null });
       this.transitionTo('index.chapter.welcome', chapter.id); // And go to welcome page
     }
   },
