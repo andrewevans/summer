@@ -46,6 +46,5 @@ export default Ember.Route.extend({
       member: this.store.findRecord('member', 4, { include: 'tags' }), // Get the member's record
       consequence_links: this.store.findAll('consequenceLink'),
     });
-
   }
 });

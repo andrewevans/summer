@@ -34,7 +34,5 @@ export default Ember.Route.extend({
       member: this.modelFor('index').member,
       chapter: this.store.findRecord('chapter', parseInt(params.id), { include: 'questions, options' }),
     });
-
-    // return this.store.find('chapter', params.id);    // Use this.store to query the mock database
   },
 });
