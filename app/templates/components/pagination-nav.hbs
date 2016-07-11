@@ -1,22 +1,22 @@
-{{#if chapter.pagination.sequence_num}}
+{{#if member.pagination.sequence_num}}
 <div class="row">
     <div class="pagination col-xs-3">
-      {{#if chapter.pagination.prev}}
-        {{#link-to 'index.chapter.question' chapter.pagination.prev classNames="bgPrevArrow"}}
+      {{#if member.pagination.prev}}
+        {{#link-to 'index.chapter.question' member.pagination.prev classNames="bgPrevArrow"}}
             <span aria-hidden="true" style="padding-left: 25px" {{action "saveTags"}}>Back</span>
         {{/link-to}}
       {{/if}}
     </div>
     <div class="pagination col-xs-6" style="padding: 0">
         <div class="progress">
-            <div class="progress-bar" role="progressbar" aria-valuenow="{{chapter.pagination.percentageComplete}}" aria-valuemin="0" aria-valuemax="100" style="width:{{chapter.pagination.percentageComplete}}%">
-              {{chapter.pagination.percentageComplete}}%
+            <div class="progress-bar" role="progressbar" aria-valuenow="{{member.pagination.percentageComplete}}" aria-valuemin="0" aria-valuemax="100" style="width:{{member.pagination.percentageComplete}}%">
+              {{member.pagination.percentageComplete}}%
             </div>
         </div>
     </div>
     <div class="pagination col-xs-3" style="text-align: right; padding-right: 0px; padding-left: 15px">
-      {{#if chapter.pagination.next}}
-        {{#link-to 'index.chapter.question' chapter.pagination.next classNames="bgNextArrow"}}
+      {{#if member.pagination.next}}
+        {{#link-to 'index.chapter.question' member.pagination.next classNames="bgNextArrow"}}
             <span aria-hidden="true" style="padding-right: 25px" {{action "saveTags"}}>Next</span>
         {{/link-to}}
       {{else}}
