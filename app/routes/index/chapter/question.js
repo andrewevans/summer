@@ -13,15 +13,10 @@ export default Ember.Route.extend({
   model(params) {
     var chapter = this.modelFor('index/chapter').chapter,
       member = this.modelFor('index').member,
-      progresses = member.get('progresses'),
       sequence_num = parseInt(params.sequence_num),
       tag;
 
-    progresses.forEach(progress => {
-      if (progress.chapter_id === parseInt(chapter.id)) {
-        this.get('paginationNav').update(member, chapter, progress, sequence_num); // Update pagination nav
-      }
-    });
+    this.get('paginationNav').update(member, chapter, sequence_num); // Update pagination nav
 
     member.save(); // Save current progress in the member
 

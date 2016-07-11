@@ -12,14 +12,9 @@ export default Ember.Route.extend({
   },
   model() {
     var chapter = this.modelFor('index/chapter').chapter,
-      member = this.modelFor('index').member,
-      progresses = member.get('progresses');
+      member = this.modelFor('index').member;
 
-    progresses.forEach(progress => {
-      if (progress.chapter_id === parseInt(chapter.id)) {
-        this.get('paginationNav').update(member, chapter, progress, null); // Update pagination nav to null
-      }
-    });
+    this.get('paginationNav').update(member, chapter, null); // Update pagination nav to null
 
       return Ember.RSVP.hash({
       member: this.modelFor('index').member,

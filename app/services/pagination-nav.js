@@ -4,22 +4,30 @@ export default Ember.Service.extend({
   /**
    * Pagination logic to update current state
    */
-  update(member, chapter, progress, sequence_num) {
-    progress.sequence_num = sequence_num; // Update member's current progress for this chapter
+  update(member, chapter, sequence_num) {
 
-    var next = progress.sequence_num + 1,
-      prev = progress.sequence_num - 1,
-      total = chapter.get('questionsLength');
+    var progresses = member.get('progresses');
 
-    next = (next > total ? false : next);
-    prev = (prev < 1 ? false : prev);
+    // Loop through member's progresses until this chapter's progress is found
+    progresses.forEach(progress => {
+      if (progress.chapter_id === parseInt(chapter.id)) {
+        progress.sequence_num = sequence_num; // Update member's current progress for this chapter
 
-    member.set('pagination', {
-      'sequence_num': progress.sequence_num,
-      'next': next,
-      'prev': prev,
-      'total': total,
-      'percentageComplete': Math.floor(((progress.sequence_num - 1)/total) * 100),
+        var next = progress.sequence_num + 1,
+          prev = progress.sequence_num - 1,
+          total = chapter.get('questionsLength');
+
+        next = (next > total ? false : next);
+        prev = (prev < 1 ? false : prev);
+
+        member.set('pagination', {
+          'sequence_num': progress.sequence_num,
+          'next': next,
+          'prev': prev,
+          'total': total,
+          'percentageComplete': Math.floor(((progress.sequence_num - 1)/total) * 100),
+        });
+      }
     });
   }
 });
