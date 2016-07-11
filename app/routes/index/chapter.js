@@ -4,13 +4,12 @@ export default Ember.Route.extend({
   afterModel(model) {
     var member = model.member,
       chapter = model.chapter,
-      progresses = member.get('progresses');
-
-    member.chapter_progress = false; // null because the progress marker for this chapter has not been found yet
+      progresses = member.get('progresses'),
+      hasProgress = false; // null because the progress marker for this chapter has not been found yet
 
     progresses.forEach(progress => {
       if (progress.chapter_id === parseInt(chapter.id)) {
-        member.chapter_progress = true;
+        hasProgress = true;
 
         // A null sequence number is the welcome page, so don't transition to a question
         if (progress.sequence_num) {
@@ -20,7 +19,7 @@ export default Ember.Route.extend({
     });
 
     // Check if current_progress has been discovered
-    if (member.chapter_progress === false) {
+    if (hasProgress === false) {
 
       // Set sequence number to null and go to welcome page
       progresses.push({ chapter_id: parseInt(chapter.id), sequence_num: null });
