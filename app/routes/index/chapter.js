@@ -5,11 +5,9 @@ export default Ember.Route.extend({
     var member = model.member,
       chapter = model.chapter,
       progresses = member.get('progresses'),
-      chapter_progress = progresses.filterBy('chapter_id', parseInt(chapter.id)).objectAt(0), // Get first matching progress
-      hasProgress = false; // null because the progress marker for this chapter has not been found yet
+      chapter_progress = progresses.filterBy('chapter_id', parseInt(chapter.id)).objectAt(0); // Get first matching progress
 
     if (chapter_progress) {
-      hasProgress = true;
       if (chapter_progress.sequence_num) {
 
         // A non-null sequence number represents the last place visited was a question
@@ -19,9 +17,7 @@ export default Ember.Route.extend({
         // A null sequence number represents the last place visited was not a question
         this.transitionTo('index.chapter.welcome', chapter.id); // And go to welcome page
       }
-    }
-    // Check if current_progress has been discovered
-    if (hasProgress === false) {
+    } else {
 
       // Set sequence number to null and go to welcome page
       progresses.push({ chapter_id: parseInt(chapter.id), sequence_num: null });
