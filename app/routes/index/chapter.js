@@ -1,6 +1,7 @@
 import Ember from 'ember';
 
 export default Ember.Route.extend({
+  paginationNav: Ember.inject.service('pagination-nav'),
   afterModel(model) {
     var member = model.member,
       chapter = model.chapter,
@@ -19,8 +20,8 @@ export default Ember.Route.extend({
       }
     } else {
 
-      // Set sequence number to null and go to welcome page
-      progresses.push({ chapter_id: parseInt(chapter.id), sequence_num: null });
+      // Set sequence number to null and pass off control to pagination nav service
+      this.get('paginationNav').update(member, chapter, null);
       this.transitionTo('index.chapter.welcome', chapter.id); // And go to welcome page
     }
   },
