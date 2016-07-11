@@ -26,7 +26,7 @@ export default Ember.Service.extend({
       });
 
       // Update the ember-storage (localStorage or sessionStorage) value with the member's pagination
-      this.get('sessionStorage').set('member', member);
+      this.get('sessionStorage').set('sequence_num[' + member.id + '][' + chapter.id + ']', chapter_progress.sequence_num);
     }
   }
 });
