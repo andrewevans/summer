@@ -11,9 +11,14 @@ export default Ember.Route.extend({
       if (progress.chapter_id === parseInt(chapter.id)) {
         hasProgress = true;
 
-        // A null sequence number is the welcome page, so don't transition to a question
         if (progress.sequence_num) {
+
+          // A non-null sequence number represents the last place visited was a question
           this.transitionTo('index.chapter.question', chapter.id, progress.sequence_num); // And go there
+        } else {
+
+          // A null sequence number represents the last place visited was not a question
+          this.transitionTo('index.chapter.welcome', chapter.id); // And go to welcome page
         }
       }
     });
