@@ -27,17 +27,6 @@ export default function() {
 
   this.namespace = '/api/v1';
 
-  this.get('/authors', ({ authors }, request) => {
-    window.console.log("in config: /authors");
-    return authors.all();
-  });
-
-  this.get('/authors/:id', ({ authors }, request) => {
-    window.console.log("in config: /authors/:id");
-    var id = request.params.id;
-    return authors.find(id);
-  });
-
   this.get('/members', ({ members }, request) => {
     window.console.log("in config: /members");
     return members.all();
