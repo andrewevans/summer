@@ -268,7 +268,7 @@ export default function(server) {
   // Create a question + its options
   //@TODO: This question needs two input fields: feet, inches
   question = chapter.createQuestion({
-    title: "Hhow tall are you?",
+    title: "How tall are you?",
     description: "",
     type: "select-dropdown",
   });
@@ -280,7 +280,6 @@ export default function(server) {
       server.create('option', { value: ((feet * 12) + inches), text: feet +'ft ' + inches + ' in', question: question });
     }
   }
-
   // End question + its options
 
   // Create a question + its options
@@ -291,7 +290,7 @@ export default function(server) {
   });
 
   question.createOption({
-    value: "",
+    value: "", // Blank because it is a text input field
   });
 
   // Create a question + its options

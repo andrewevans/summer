@@ -48,7 +48,6 @@ module.exports = function(environment) {
     // keep test console output quieter
     ENV.APP.LOG_ACTIVE_GENERATION = false;
     ENV.APP.LOG_VIEW_LOOKUPS = false;
-
   }
 
   if (environment === 'asyncinject') {

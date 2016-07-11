@@ -1,6 +1,5 @@
 export default function() {
 
-
   this.passthrough('/ws/ajax/v1/responses');
 
   this.get('/consequence-links');
