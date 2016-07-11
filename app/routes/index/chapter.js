@@ -5,24 +5,21 @@ export default Ember.Route.extend({
     var member = model.member,
       chapter = model.chapter,
       progresses = member.get('progresses'),
+      chapter_progress = progresses.filterBy('chapter_id', parseInt(chapter.id)).objectAt(0), // Get first matching progress
       hasProgress = false; // null because the progress marker for this chapter has not been found yet
 
-    progresses.forEach(progress => {
-      if (progress.chapter_id === parseInt(chapter.id)) {
-        hasProgress = true;
+    if (chapter_progress) {
+      hasProgress = true;
+      if (chapter_progress.sequence_num) {
 
-        if (progress.sequence_num) {
+        // A non-null sequence number represents the last place visited was a question
+        this.transitionTo('index.chapter.question', chapter.id, chapter_progress.sequence_num); // And go there
+      } else {
 
-          // A non-null sequence number represents the last place visited was a question
-          this.transitionTo('index.chapter.question', chapter.id, progress.sequence_num); // And go there
-        } else {
-
-          // A null sequence number represents the last place visited was not a question
-          this.transitionTo('index.chapter.welcome', chapter.id); // And go to welcome page
-        }
+        // A null sequence number represents the last place visited was not a question
+        this.transitionTo('index.chapter.welcome', chapter.id); // And go to welcome page
       }
-    });
-
+    }
     // Check if current_progress has been discovered
     if (hasProgress === false) {
 
