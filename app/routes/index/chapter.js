@@ -11,7 +11,7 @@ export default Ember.Route.extend({
     if (! chapter_progress) {
 
       // There is no progress marker for this chapter, so create one
-      chapter_progress = { chapter_id: parseInt(chapter.id), sequence_num: null};
+      chapter_progress = { chapter_id: parseInt(chapter.id), status: 'none', sequence_num: null};
       progresses.pushObject(chapter_progress); // Add progress marker to the member
     }
 
