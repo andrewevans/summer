@@ -1,33 +1,27 @@
 import Ember from 'ember';
 
 export default Ember.Route.extend({
+  paginationNav: Ember.inject.service('pagination-nav'),
   afterModel(model) {
     var member = model.member,
       chapter = model.chapter,
       progresses = member.get('progresses'),
-      hasProgress = false; // null because the progress marker for this chapter has not been found yet
+      chapter_progress = progresses.filterBy('chapter_id', parseInt(chapter.id)).objectAt(0); // Get first matching progress
 
-    progresses.forEach(progress => {
-      if (progress.chapter_id === parseInt(chapter.id)) {
-        hasProgress = true;
+    if (! chapter_progress) {
 
-        if (progress.sequence_num) {
+      // There is no progress marker for this chapter, so create one
+      chapter_progress = { chapter_id: parseInt(chapter.id), sequence_num: null};
+      progresses.pushObject(chapter_progress); // Add progress marker to the member
+    }
 
-          // A non-null sequence number represents the last place visited was a question
-          this.transitionTo('index.chapter.question', chapter.id, progress.sequence_num); // And go there
-        } else {
+    if (chapter_progress.sequence_num) {
 
-          // A null sequence number represents the last place visited was not a question
-          this.transitionTo('index.chapter.welcome', chapter.id); // And go to welcome page
-        }
-      }
-    });
+      // A non-null sequence number represents the last place visited was a question
+      this.transitionTo('index.chapter.question', chapter.id, chapter_progress.sequence_num); // And go there
+    } else {
 
-    // Check if current_progress has been discovered
-    if (hasProgress === false) {
-
-      // Set sequence number to null and go to welcome page
-      progresses.push({ chapter_id: parseInt(chapter.id), sequence_num: null });
+      // A null sequence number represents the last place visited was not a question
       this.transitionTo('index.chapter.welcome', chapter.id); // And go to welcome page
     }
   },
