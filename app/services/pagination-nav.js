@@ -10,6 +10,15 @@ export default Ember.Service.extend({
     var progresses = member.get('progresses'),
       chapter_progress = progresses.filterBy('chapter_id', parseInt(chapter.id)).objectAt(0); // Get first matching progress
 
+    // Update status according to current status and incoming sequence_num
+    switch (chapter_progress.status) {
+      case 'none':
+        if (sequence_num !== null) {
+          chapter_progress.status = 'started';
+        }
+        break;
+    }
+
     chapter_progress.sequence_num = sequence_num; // Update member's current progress for this chapter
 
     // Update the ember-storage (localStorage or sessionStorage) value with the member's pagination
