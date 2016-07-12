@@ -16,6 +16,8 @@ export default Ember.Route.extend({
     // Cycle through all localStorage data items
     for (let i = 0; i < localStorage.length; i++) {
 
+      let key = localStorage.key(i);
+
       // Set tags according to localStorage, but don't overwrite an already existing tag because tags take precedence
       // over local storage.
       //@TODO: Set localStorage prefix and then reference it
@@ -37,6 +39,20 @@ export default Ember.Route.extend({
             questionId: questionId,
             answer: this.get('storage.tag[' + member.id + '][' + chapterId + '][' + questionId +']'),
           });
+        }
+      }
+
+      if (localStorage.key(i).indexOf('es__sequence_num') === 0){
+        let sequence_nums_local = key.split(/[[\]]{1,2}/),
+          chapterId = parseInt(sequence_nums_local[2]), // chapter ID of this progress marker
+          sequence_num = localStorage.getItem(key), // sequence_num of this progress marker
+          sequence_nums = member.get('progresses'); // member's progress markers
+
+        // Check if this sequence_num already exists on the member
+        if (! sequence_nums.filterBy('chapter_id', chapterId).get('length')) {
+
+          // If it is not, add it to member's sequence_num
+          sequence_nums.pushObject({ chapter_id: parseInt(chapterId), sequence_num: parseInt(sequence_num)});
         }
       }
     }

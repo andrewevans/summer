@@ -8,20 +8,20 @@ export default Ember.Route.extend({
       progresses = member.get('progresses'),
       chapter_progress = progresses.filterBy('chapter_id', parseInt(chapter.id)).objectAt(0); // Get first matching progress
 
-    if (chapter_progress) {
-      if (chapter_progress.sequence_num) {
+    if (! chapter_progress) {
 
-        // A non-null sequence number represents the last place visited was a question
-        this.transitionTo('index.chapter.question', chapter.id, chapter_progress.sequence_num); // And go there
-      } else {
+      // There is no progress marker for this chapter, so create one
+      chapter_progress = { chapter_id: parseInt(chapter.id), sequence_num: null};
+      progresses.pushObject(chapter_progress); // Add progress marker to the member
+    }
 
-        // A null sequence number represents the last place visited was not a question
-        this.transitionTo('index.chapter.welcome', chapter.id); // And go to welcome page
-      }
+    if (chapter_progress.sequence_num) {
+
+      // A non-null sequence number represents the last place visited was a question
+      this.transitionTo('index.chapter.question', chapter.id, chapter_progress.sequence_num); // And go there
     } else {
 
-      // Set sequence number to null and pass off control to pagination nav service
-      this.get('paginationNav').update(member, chapter, null);
+      // A null sequence number represents the last place visited was not a question
       this.transitionTo('index.chapter.welcome', chapter.id); // And go to welcome page
     }
   },
