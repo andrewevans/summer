@@ -14,6 +14,9 @@ export default Ember.Service.extend({
     switch (chapter_progress.status) {
       case 'none':
         if (sequence_num !== null) {
+
+          // This only happens if the member ends up on a question without ever having clicked the 'Start' button. This
+          // ensures the member's state is correct even if they do not follow the typical path of starting at the beginning.
           chapter_progress.status = 'started';
         }
         break;
