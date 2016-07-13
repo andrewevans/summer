@@ -21,7 +21,7 @@
         {{/link-to}}
       {{else}}
         {{#link-to 'index.chapter.results' chapter.id classNames="bgNextArrow"}}
-            <span aria-hidden="true" style="padding-right: 25px" {{action "saveTags"}}>Finish!</span>
+            <span aria-hidden="true" style="padding-right: 25px" {{action "saveTagsAndUpdateStatus"}}>Finish!</span>
         {{/link-to}}
       {{/if}}
     </div>

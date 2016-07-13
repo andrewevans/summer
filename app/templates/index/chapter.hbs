@@ -7,4 +7,4 @@
 
 {{outlet}}
 
-{{pagination-nav chapter=model.chapter member=model.member saveTags=(route-action "saveTags" model.member)}}
+{{pagination-nav chapter=model.chapter member=model.member saveTags=(route-action "saveTags" model.member) updateStatus=(route-action "updateStatus" model.member model.chapter)}}

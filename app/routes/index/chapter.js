@@ -33,4 +33,13 @@ export default Ember.Route.extend({
       chapter: this.store.findRecord('chapter', parseInt(params.id), { include: 'questions, options' }),
     });
   },
+  actions: {
+    updateStatus(member, chapter, status) {
+      Ember.Logger.log('Updating status here...');
+
+      var chapter_progress = member.get('progresses').filterBy('chapter_id', parseInt(chapter.id)).objectAt(0);
+
+      chapter_progress.status = status; // Update progress marker's status flag as 'none', 'started', 'completed', or 'unqualified'
+    },
+  },
 });
