@@ -80,6 +80,10 @@ export default Ember.Service.extend({
     });
 
     if (forwardToResults) {
+
+      let chapter_progress = member.get('progresses').filterBy('chapter_id', parseInt(chapter.id)).objectAt(0);
+      chapter_progress.status = 'unqualified'; // Update progress marker's status flag as 'unqualified'
+
       route.transitionTo('index.chapter.results', chapter.id);
     }
 
