@@ -93,6 +93,7 @@ export default Ember.Service.extend({
 
       let chapter_progress = member.get('progresses').filterBy('chapter_id', parseInt(chapter.id)).objectAt(0);
       chapter_progress.status = 'unqualified'; // Update progress marker's status flag as 'unqualified'
+      member.save(); // Explicitly save member because status is not observable
 
       route.transitionTo('index.chapter.results', chapter.id);
     }
