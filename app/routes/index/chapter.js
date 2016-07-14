@@ -15,7 +15,11 @@ export default Ember.Route.extend({
       progresses.pushObject(chapter_progress); // Add progress marker to the member
     }
 
-    if (chapter_progress.sequence_num) {
+    if (chapter_progress.status === 'unqualified') {
+
+      // An 'unqualified' member goes directly to Results page
+      this.transitionTo('index.chapter.results', chapter.id); // And go there
+    } else if (chapter_progress.sequence_num) {
 
       // A non-null sequence number represents the last place visited was a question
       this.transitionTo('index.chapter.question', chapter.id, chapter_progress.sequence_num); // And go there
