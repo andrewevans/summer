@@ -2,6 +2,16 @@ import Ember from 'ember';
 
 export default Ember.Service.extend({
   calculate(member, chapter, consequence_links, route) {
+
+    var progresses = member.get('progresses'),
+      chapter_progress = progresses.filterBy('chapter_id', parseInt(chapter.id)).objectAt(0); // Get first matching progress
+
+    if (chapter_progress.status === 'unqualified') {
+
+      // An 'unqualified' member goes directly to Results page
+      route.transitionTo('index.chapter.results', chapter.id); // And go there
+    }
+
       var tags = member.get('tags'),
       forwardToResults = false,
       consequences = [], //@TODO: Consequences shouldn't recalculate on every transition
@@ -80,6 +90,11 @@ export default Ember.Service.extend({
     });
 
     if (forwardToResults) {
+
+      let chapter_progress = member.get('progresses').filterBy('chapter_id', parseInt(chapter.id)).objectAt(0);
+      chapter_progress.status = 'unqualified'; // Update progress marker's status flag as 'unqualified'
+      member.save(); // Explicitly save member because status is not observable
+
       route.transitionTo('index.chapter.results', chapter.id);
     }
 
