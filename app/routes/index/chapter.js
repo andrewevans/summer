@@ -44,6 +44,7 @@ export default Ember.Route.extend({
       var chapter_progress = member.get('progresses').filterBy('chapter_id', parseInt(chapter.id)).objectAt(0);
 
       chapter_progress.status = status; // Update progress marker's status flag as 'none', 'started', 'completed', or 'unqualified'
+      member.save(); // Explicitly save member because status is not observable
     },
   },
 });
