@@ -1,7 +1,10 @@
+{{#if isLocked}}
+  <div>This question is locked. Your answers cannot be shown due to certain regulations.</div>
+{{/if}}
 <h3 class="moduleHeader">{{question.title}}</h3>
 <ul class="list-unstyled">
   {{#if (if-eq question.type "select-dropdown")}}
-    {{answer-tile/select saveTag=(route-action "saveTag" member chapter question option tag) question=question option=option tag=tag}}
+    {{answer-tile/select saveTag=(route-action "saveTag" member chapter question 'null' tag) question=question option=option tag=tag}}
   {{else}}
   {{#each question.options as |option|}}
     {{#if (if-eq question.type "input")}}

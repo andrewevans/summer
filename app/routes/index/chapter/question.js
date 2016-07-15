@@ -80,6 +80,14 @@ export default Ember.Route.extend({
       Ember.Logger.log("Saving tag locally goes here...");
       var answers = tag.get('answer') || [];
 
+      // Reset a tag's answer if its value is [null] (which represents a locked tag). This is necessary for the case of
+      // a select-multi question since it does not clear out the answer but instead adds to it. It must also be checked
+      // that it is an object, because emberx-select has already assigned the tag's answer with a string (which is corrected
+      // later on in this method.
+      if (typeof answers === 'object' && answers.objectAt(0) === null) {
+        answers = [];
+      }
+
       // Question type affects how the tag is saved
       switch (question.get('type')) {
 
@@ -94,6 +102,7 @@ export default Ember.Route.extend({
           break;
 
         case 'select-multi':
+          answers = answers.slice(0); // Force answers to be a new array to trigger observers to notice the change
           if (answers.indexOf(option.get('value')) !== -1) { // Is this option already in the answer?
             answers.removeObject(option.get('value')); // Remove this specific answer from answers
           } else {
