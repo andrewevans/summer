@@ -4,13 +4,6 @@
     <h1>{{model.chapter.title}}</h1>
   </div>
 </div>
-<div class="row">
-    <div class="col-xs-12">
-      {{#link-to 'index.chapter.welcome' model.chapter.id}}
-          <span aria-hidden="true" {{action "restart" model.member model.chapter}}>Restart</span>
-      {{/link-to}}
-    </div>
-</div>
 
 {{outlet}}
 
