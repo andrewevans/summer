@@ -25,6 +25,8 @@ export default function() {
 
   this.get('/tags/:id');
 
+  this.delete('/tags/:id');
+
   this.namespace = '/api/v1';
 
   this.get('/members', ({ members }, request) => {

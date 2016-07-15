@@ -46,5 +46,25 @@ export default Ember.Route.extend({
       chapter_progress.status = status; // Update progress marker's status flag as 'none', 'started', 'completed', or 'unqualified'
       member.save(); // Explicitly save member because status is not observable
     },
+    restart(member, chapter) {
+      Ember.Logger.log('Restarting chapter here...');
+
+      var chapter_progress = member.get('progresses').filterBy('chapter_id', parseInt(chapter.id)).objectAt(0);
+
+      chapter_progress.status = 'none'; // Update progress marker's status flag as 'none'
+      member.save(); // Explicitly save member because status is not observable
+
+      var chapter_tags = member.get('tags').filterBy('chapterId', parseInt(chapter.id)); // Get tags for this chapter
+
+      chapter_tags.forEach(tag => {
+
+        // Delete this tag's local storage
+        this.set('storage.tag[' + member.id + '][' + chapter.id + '][' + tag.get('questionId') +']', null);
+
+        tag.destroyRecord(); // Delete tag
+      });
+
+      this.transitionTo('index.chapter.welcome', chapter.id); // And go to welcome page
+    }
   },
 });
