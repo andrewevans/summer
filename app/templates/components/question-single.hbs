@@ -1,3 +1,6 @@
+{{#if isLocked}}
+  <div>This question is locked. Your answers cannot be shown due to certain regulations.</div>
+{{/if}}
 <h3 class="moduleHeader">{{question.title}}</h3>
 <ul class="list-unstyled">
   {{#if (if-eq question.type "select-dropdown")}}

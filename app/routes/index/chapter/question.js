@@ -80,6 +80,11 @@ export default Ember.Route.extend({
       Ember.Logger.log("Saving tag locally goes here...");
       var answers = tag.get('answer') || [];
 
+      // Reset a tag's answer if its value is [null] which represents a locked tag
+      if (answers.objectAt(0) === null) {
+        answers = [];
+      }
+
       // Question type affects how the tag is saved
       switch (question.get('type')) {
 
