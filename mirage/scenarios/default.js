@@ -6,6 +6,7 @@ export default function(server) {
 
   member.createTag({ questionId: 1, answer: ['yes'], chapterId: 102 });
   member.createTag({ questionId: 11, answer: ['127'], chapterId: 102 });
+  member.createTag({ questionId: 13, answer: [null], chapterId: 102 });
   member.createTag({ questionId: 3, answer: ['18-34'], chapterId: 102 });
   member.createTag({ questionId: 4, answer: ['xoxoxoxoxoxo'], chapterId: 105 });
 
