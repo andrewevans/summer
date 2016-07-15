@@ -41,7 +41,12 @@ export default Ember.Route.extend({
     updateStatus(member, chapter, status) {
       Ember.Logger.log('Updating status here...');
 
-      var chapter_progress = member.get('progresses').filterBy('chapter_id', parseInt(chapter.id)).objectAt(0);
+      // status is an enum, so log a warning if something else is used
+      if (['none', 'started', 'completed', 'unqualified'].indexOf(status) === -1) {
+        Ember.Logger.warn('The member is being updated with an unsupported status of: ' + status);
+      }
+
+      var chapter_progress = member.get('progresses').filterBy('chapter_id', parseInt(chapter.id)).objectAt(0); // Get first matching progress
 
       chapter_progress.status = status; // Update progress marker's status flag as 'none', 'started', 'completed', or 'unqualified'
       member.save(); // Explicitly save member because status is not observable
