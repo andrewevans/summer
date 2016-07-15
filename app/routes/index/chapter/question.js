@@ -102,6 +102,7 @@ export default Ember.Route.extend({
           break;
 
         case 'select-multi':
+          answers = answers.slice(0); // Force answers to be a new array to trigger observers to notice the change
           if (answers.indexOf(option.get('value')) !== -1) { // Is this option already in the answer?
             answers.removeObject(option.get('value')); // Remove this specific answer from answers
           } else {
