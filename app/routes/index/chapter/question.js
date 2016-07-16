@@ -64,6 +64,16 @@ export default Ember.Route.extend({
     });
   },
   actions: {
+    resetTag(member, chapter, question, option, tag) {
+      Ember.Logger.log("Resetting tag locally goes here...");
+
+      var answers = []; // Create empty answer
+
+      tag.set('answer', answers); // Reset tag
+
+      // Delete local storage for this tag
+      this.set('storage.tag[' + member.id + '][' + chapter.id + '][' + question.id +']', tag.get('answer'));
+    },
     updateTag(member, chapter, question, option, tag) {
       // Input fields use this to update the tag it's working on
       Ember.Logger.log("Updating tag locally goes here...");
