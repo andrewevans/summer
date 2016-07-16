@@ -67,9 +67,20 @@ export default Ember.Route.extend({
     resetTag(member, chapter, question, option, tag) {
       Ember.Logger.log("Resetting tag locally goes here...");
 
-      var answers = []; // Create empty answer
+      var answers = [], // Create empty answer
+      options = question.get('options');
 
       tag.set('answer', answers); // Reset tag
+
+      // Set question's options to unselected
+      options.forEach(option => {
+        option.set('isSelected', false);
+      });
+
+      // In the case of a text input question, clear the first option's value
+      if (question.get('type') === 'input') {
+        options.objectAt(0).set('value', []);
+      }
 
       // Delete local storage for this tag
       this.set('storage.tag[' + member.id + '][' + chapter.id + '][' + question.id +']', tag.get('answer'));
