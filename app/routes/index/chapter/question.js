@@ -20,17 +20,6 @@ export default Ember.Route.extend({
 
     member.save(); // Save current progress in the member
 
-    Ember.$.ajax({
-      method: "POST",
-      url: "/api/v1/responses",
-      contentType: "application/json",
-      data: JSON.stringify({
-        member: member,
-      })
-    });
-
-    //@TODO: Send member data to /ws/ajax endpoint as well, once it is decided.
-
     // We don't know the ID of the current question yet,
     // just that it's nth question on the current chapter.
     var question = chapter.get('questions').objectAt(sequence_num - 1);
@@ -148,18 +137,6 @@ export default Ember.Route.extend({
 
       // Update the ember-storage (localStorage or sessionStorage) value with tag value to keep them in sync
       this.set('storage.tag[' + member.id + '][' + chapter.id + '][' + question.id +']', tag.get('answer'));
-
-      Ember.$.ajax({
-        method: "POST",
-        url: "/api/v1/responses",
-        contentType: "application/json",
-        data: JSON.stringify({
-          memberId: member.id,
-          chapterId: chapter.id,
-          questionId: question.id,
-          answer: answers,
-        })
-      });
 
       Ember.$.ajax({
         type: "POST",
