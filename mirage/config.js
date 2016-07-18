@@ -1,6 +1,10 @@
 export default function() {
 
-  this.passthrough('/ws/ajax/v1/responses');
+  this.passthrough('/api/v1/responses'); // This will be the endpoint that receives the member responses
+
+  this.namespace = '/ws/ajax/v1'; // summer app's external API prefix
+
+  this.passthrough('/responses');
 
   this.get('/consequence-links');
 
@@ -17,8 +21,4 @@ export default function() {
   this.get('/tags/:id');
 
   this.delete('/tags/:id');
-
-  this.namespace = '/api/v1';
-
-  this.passthrough('/responses'); // This will be the endpoint that receives the member responses
 }
