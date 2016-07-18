@@ -64,6 +64,27 @@ export default Ember.Route.extend({
     });
   },
   actions: {
+    resetTag(member, chapter, question, option, tag) {
+      Ember.Logger.log("Resetting tag locally goes here...");
+
+      var answers = [], // Create empty answer
+      options = question.get('options');
+
+      tag.set('answer', answers); // Reset tag
+
+      // Set question's options to unselected
+      options.forEach(option => {
+        option.set('isSelected', false);
+      });
+
+      // In the case of a text input question, clear the first option's value
+      if (question.get('type') === 'input') {
+        options.objectAt(0).set('value', []);
+      }
+
+      // Delete local storage for this tag
+      this.set('storage.tag[' + member.id + '][' + chapter.id + '][' + question.id +']', tag.get('answer'));
+    },
     updateTag(member, chapter, question, option, tag) {
       // Input fields use this to update the tag it's working on
       Ember.Logger.log("Updating tag locally goes here...");
