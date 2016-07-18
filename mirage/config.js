@@ -18,5 +18,8 @@ export default function() {
 
   this.get('/tags/:id');
 
+  this.patch('/tags/:id'); // emberx-select does a PATCH
+  this.post('/tags');
+
   this.delete('/tags/:id');
 }
