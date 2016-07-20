@@ -1,9 +1,13 @@
-<p>Here are helpful links:</p>
+<div class="member-consequences" style="padding-top: 15px;">
+    <p style="font-family: arial; text-transform: uppercase; color: #656565; padding: 10px 15px; margin-bottom: 0; padding-bottom: 5px; letter-spacing: 1px;">Next Steps</p>
 
-<ul class="list-group">
-  {{#each member.consequences as |consequence|}}
-      <li class="list-group-item">
-          <a href="{{consequence.url}}" target="_blank">{{consequence.text}}</a>
-      </li>
-  {{/each}}
-</ul>
+    <h2 style="color: #656565; padding: 10px 15px; margin-top: 0; padding-top: 0; margin-bottom: 0;">Articles for you</h2>
+
+    <ul class="list-group">
+      {{#each member.consequences as |consequence|}}
+          <li class="list-group-item">
+              <a href="{{consequence.url}}" target="_blank">{{consequence.text}}</a>
+          </li>
+      {{/each}}
+    </ul>
+</div>

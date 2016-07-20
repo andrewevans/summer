@@ -1,27 +1,37 @@
 {{#if isLocked}}
-  <div>This question is locked. Your answers cannot be shown due to certain regulations.</div>
-  <div><span {{action (route-action "resetTag" member chapter question 'null' tag)}}>Unlock question</span></div>
+    <div class="lock-screen" style="padding-bottom: 150px">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-offset-1 col-xs-10 col-xs-offset-1 col-md-offset-3 col-md-4 col-md-offset-3">
+                    <h3 class="moduleHeader">{{question.title}}</h3>
+                    <div class="lock-btn" {{action (route-action "resetTag" member chapter question 'null' tag)}}>
+                        <img src="https://dl.dropboxusercontent.com/s/4h0sf56a7xlq9zr/lock.svg" />
+                        <h1>Tap to update your answer</h1></div>
+                </div>
+            </div>
+        </div>
+    </div>
 {{/if}}
 
 <h3 class="moduleHeader">{{question.title}}</h3>
-<ul class="list-unstyled">
+<ul class="list-unstyled" style="margin-top: 24px">
   {{#if (if-eq question.type "select-dropdown")}}
     {{answer-tile/select saveTag=(route-action "saveTag" member chapter question 'null' tag) question=question option=option tag=tag}}
   {{else}}
-  {{#each question.options as |option|}}
-    {{#if (if-eq question.type "input")}}
-        <li class="question-answer">
-          {{answer-tile/input updateTag=(route-action "updateTag" member chapter question option tag) option=option tag=tag}}
-        </li>
-    {{else if (if-eq question.type "select")}}
-        <li class="question-answer">
-          {{answer-tile saveTag=(route-action "saveTag" member chapter question option tag) question=question option=option tag=tag}}
-        </li>
-    {{else if (if-eq question.type "select-multi")}}
-        <li class="question-answer">
-          {{answer-tile saveTag=(route-action "saveTag" member chapter question option tag) question=question option=option tag=tag}}
-        </li>
-    {{/if}}
-  {{/each}}
-{{/if}}
+    {{#each question.options as |option|}}
+      {{#if (if-eq question.type "input")}}
+          <li class="question-answer">
+            {{answer-tile/input updateTag=(route-action "updateTag" member chapter question option tag) option=option tag=tag}}
+          </li>
+      {{else if (if-eq question.type "select")}}
+          <li class="question-answer">
+            {{answer-tile saveTag=(route-action "saveTag" member chapter question option tag) question=question option=option tag=tag}}
+          </li>
+      {{else if (if-eq question.type "select-multi")}}
+          <li class="question-answer">
+            {{answer-tile saveTag=(route-action "saveTag" member chapter question option tag) question=question option=option tag=tag}}
+          </li>
+      {{/if}}
+    {{/each}}
+  {{/if}}
 </ul>

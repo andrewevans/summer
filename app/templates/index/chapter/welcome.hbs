@@ -1,3 +1,12 @@
-<p>{{model.chapter.description}}</p>
+<div class="container">
+    <div class="row">
+        <div class="col-xs-offset-1 col-xs-10 col-xs-offset-1 col-md-offset-3 col-md-4 col-md-offset-3">
 
-{{#link-to "index.chapter.question" model.chapter.id 1}}<button type="button" class="active btn btn-default btn-lg btn-block" {{action "updateStatus" model.member model.chapter "started"}}>Let's get started!</button>{{/link-to}}<br />
+            <h1>{{model.chapter.title}}</h1>
+
+            <p>{{model.chapter.description}}</p>
+
+          {{#link-to "index.chapter.question" model.chapter.id 1}}<button type="button" class="active btn btn-default btn-lg btn-block" {{action "updateStatus" model.member model.chapter "started"}}>Let's get started!</button>{{/link-to}}<br />
+        </div>
+    </div>
+</div>
