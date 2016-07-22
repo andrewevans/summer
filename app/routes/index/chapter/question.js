@@ -140,24 +140,6 @@ export default Ember.Route.extend({
 
       // Update the ember-storage (localStorage or sessionStorage) value with tag value to keep them in sync
       this.set('storage.tag[' + member.id + '][' + chapter.id + '][' + question.id +']', tag.get('answer'));
-
-      Ember.$.ajax({
-        type: "POST",
-        data: JSON.stringify({
-          memberId: member.id, //@TODO: Member ID should not be sent over http
-          surveyId: chapter.id,
-          questions: [
-            {
-              "questionId": question.id,
-              "questionNumber": -1,
-              "response": answers.toString()
-            }
-          ]
-        }),
-        contentType: "application/json",
-        url: "/ws/ajax/v1/responses",
-      });
-
       return true;
     },
     saveTags(member) {
@@ -192,13 +174,6 @@ export default Ember.Route.extend({
         surveyId: chapter_id_alt,
         questions: questions_alt
       };
-
-      Ember.$.ajax({
-        method: "POST",
-        contentType: "application/json",
-        url: "/ws/ajax/v1/responses",
-        data: JSON.stringify(tags_alt),
-      });
     },
   },
 });
