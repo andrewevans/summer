@@ -4,6 +4,8 @@ export default function() {
 
   this.passthrough('/responses');
 
+  this.passthrough('/responses' , ['patch', 'post']); // custom Solarium endpoint, emberx-select does a PATCH
+
   this.get('/consequence-links');
 
   this.get('/members/:id');
@@ -17,9 +19,6 @@ export default function() {
   this.get('/questions/:id');
 
   this.get('/tags/:id');
-
-  this.patch('/tags/:id'); // emberx-select does a PATCH
-  this.post('/tags');
 
   this.delete('/tags/:id');
 }
