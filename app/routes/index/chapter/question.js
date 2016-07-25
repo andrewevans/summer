@@ -145,35 +145,11 @@ export default Ember.Route.extend({
     saveTags(member) {
       Ember.Logger.log("Saving all tags locally goes here...");
 
-      var tags = [];
-      member.get('tags').forEach(function(tag) {
-        tags.push({
-          memberId: member.id,
-          chapterId: tag.get('chapterId'),
-          questionId: tag.get('questionId'),
-          answer: tag.get('answer'),
-        });
+      var tags = member.get('tags');
+
+      tags.forEach(function(tag) {
+        tag.save(); // Persist data to API
       });
-
-      var tags_alt,
-        questions_alt = [],
-        chapter_id_alt = -1; //@TODO: Due to the way the API receives data, this has to be extracted, but this assumes all of them are from the same chapter
-
-      member.get('tags').forEach(function(tag) {
-        chapter_id_alt = tag.get('chapterId'); //@TODO: Always assigns to last tag in the list
-
-        questions_alt.push({
-          "questionId": tag.get('questionId'),
-          "questionNumber": -1, //@TODO: Question number not yet needed, but it is required by API
-          "response": tag.get('answer').toString()
-        });
-      });
-
-      tags_alt = {
-        memberId: member.id, //@TODO: Member ID should not be sent over http
-        surveyId: chapter_id_alt,
-        questions: questions_alt
-      };
     },
   },
 });
