@@ -239,12 +239,18 @@
 
   .close-btn {
     z-index: 11510;
-    position: absolute;
+    position: fixed;
     top: 25px;
     right: 25px;
     height: 26px;
     width: 26px;
     background-image: url('https://dl.dropboxusercontent.com/s/onm54kapsw9f0zd/close.svg');
+
+    @media (max-width: @screen-xs-max) {
+      top: 15px;
+      right: 15px;
+    }
+
   }
 
   .lock-screen {
