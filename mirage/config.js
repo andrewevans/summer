@@ -2,9 +2,9 @@ export default function() {
 
   this.namespace = '/ws/ajax/v1'; // summer app's external API prefix
 
-  this.passthrough('/responses');
+  this.get('/responses'); // Custom Solarium endpoint for tags
 
-  this.passthrough('/responses' , ['patch', 'post']); // custom Solarium endpoint, emberx-select does a PATCH
+  this.passthrough('/responses' , ['patch', 'post']); // Custom Solarium endpoint for tags, emberx-select does a PATCH
 
   this.get('/consequence-links');
 
