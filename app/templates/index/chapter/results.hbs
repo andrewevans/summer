@@ -3,7 +3,7 @@
         <div class="col-xs-offset-1 col-xs-10 col-xs-offset-1 col-md-offset-4 col-md-4 col-md-offset-4">
             <h2 style="color: #ffffff">Thank you for taking the time to take this survey!</h2>
 
-          {{#link-to 'index.chapter.welcome' model.chapter.id}}
+          {{#link-to 'index.chapter.welcome' model.chapter.id class="btn-link"}}
               <button type="button" {{action "restart" model.member model.chapter}} class=" btn btn-default btn-lg btn-block" style="margin-top: 25px; margin-bottom: 30px;">Retake Survey</button>
           {{/link-to}}
         </div>
