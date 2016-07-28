@@ -10,7 +10,7 @@ export default function() {
 
   this.get('/members/:id');
 
-  this.patch('/members/:id');
+  this.passthrough('/members/:id' , ['patch']);
 
   this.get('/chapters');
 
