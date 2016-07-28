@@ -4,7 +4,7 @@ export default DS.JSONSerializer.extend({
 
   // Modify "response" objects to become "tag" objects.
   // Only used for 'query' requests, such as: this.store.query('tag', { memberId: 4, chapterId: 102 }) .
-  normalizeQueryResponse(store, primaryModelClass, payload, id, requestType) {
+  normalizeQueryResponse(store, primaryModelClass, payload) {
     var tags = [],
       responses = payload.responses;
 
@@ -28,7 +28,7 @@ export default DS.JSONSerializer.extend({
 
   // Modify "tag" objects to become "response" objects.
   // Only used for sending data, such as: tag.save() .
-  serialize: function(snapshot, options) {
+  serialize: function(snapshot) {
     var json = {
       surveyId: snapshot.attr('chapterId'),
       questions: {
