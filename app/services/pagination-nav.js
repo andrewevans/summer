@@ -41,5 +41,7 @@ export default Ember.Service.extend({
       'total': total,
       'percentageComplete': Math.floor(((chapter_progress.sequence_num - 1) / total) * 100),
     });
+
+    member.save();
   }
 });

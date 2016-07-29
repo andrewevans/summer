@@ -34,14 +34,16 @@ export default Ember.Route.extend({
 
         // Only create the tag if it does not already exist.
         if (! matching_tags.get('length')) {
-          this.store.createRecord('tag', {
+          let tag_new = this.store.createRecord('tag', {
             member: member,
             chapterId: chapterId,
             questionId: questionId,
             answer: this.get('storage.tag[' + member.id + '][' + chapterId + '][' + questionId +']'),
-          }).save(); // Save this tag because it was not found on the server
+          });
 
-          //@TODO: Don't save redacted tags
+          if (tag_new.get('answer').objectAt(0) !== null) {
+            tag_new.save(); // Persist data to API (because it was not found on the server)
+          }
         }
       }
 
