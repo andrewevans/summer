@@ -20,5 +20,5 @@ export default function() {
 
   this.get('/tags/:id');
 
-  this.delete('/tags/:id');
+  this.del('/responses/:id');
 }
