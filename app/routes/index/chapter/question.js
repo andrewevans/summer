@@ -19,8 +19,6 @@ export default Ember.Route.extend({
 
     this.get('paginationNav').update(member, chapter, sequence_num); // Update pagination nav
 
-    member.save(); // Save current progress in the member
-
     // We don't know the ID of the current question yet,
     // just that it's nth question on the current chapter.
     var question = chapter.get('questions').objectAt(sequence_num - 1);
