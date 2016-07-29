@@ -14,6 +14,10 @@ export default Ember.Route.extend({
     var member = model.member,
       tags = model.tags;
 
+    tags.forEach(function(tag) {
+      tag.set('member', member); // Create tag/member relationship
+    });
+
     // Cycle through all localStorage data items
     for (let i = 0; i < localStorage.length; i++) {
 
