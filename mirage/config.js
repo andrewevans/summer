@@ -4,13 +4,13 @@ export default function() {
 
   this.get('/responses'); // Custom Solarium endpoint for tags
 
-  this.passthrough('/responses' , ['patch', 'post']); // Custom Solarium endpoint for tags, emberx-select does a PATCH
+  this.passthrough('/responses', ['patch', 'post']); // Custom Solarium endpoint for tags, emberx-select does a PATCH
 
   this.get('/consequence-links');
 
   this.get('/members/:id');
 
-  this.passthrough('/members/:id' , ['patch']);
+  this.passthrough('/members/:id', ['patch']);
 
   this.get('/chapters');
 
