@@ -10,6 +10,10 @@ export default JSONAPIAdapter.extend({
       delete query.chapterId;
     }
 
+    if (requestType === 'deleteRecord') {
+      return this.namespace + '/responses/' + id;
+    }
+
     return this.namespace + '/responses';
   },
 });
