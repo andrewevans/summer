@@ -11,7 +11,8 @@ export default Ember.Route.extend({
     }
   },
   afterModel(model) {
-    var member = model.member;
+    var member = model.member,
+      tags = model.tags;
 
     // Cycle through all localStorage data items
     for (let i = 0; i < localStorage.length; i++) {
@@ -27,18 +28,20 @@ export default Ember.Route.extend({
           questionId = parseInt(tag_local[3]);
 
         // Find the tag that this localStorage data item corresponds to, if it exists.
-        var tags = member.get('tags')
+        var matching_tags = tags
           .filterBy('chapterId', parseInt(chapterId))
           .filterBy('questionId', parseInt(questionId));
 
         // Only create the tag if it does not already exist.
-        if (! tags.get('length')) {
+        if (! matching_tags.get('length')) {
           this.store.createRecord('tag', {
             member: member,
             chapterId: chapterId,
             questionId: questionId,
             answer: this.get('storage.tag[' + member.id + '][' + chapterId + '][' + questionId +']'),
-          });
+          }).save(); // Save this tag because it was not found on the server
+
+          //@TODO: Don't save redacted tags
         }
       }
 
@@ -56,11 +59,14 @@ export default Ember.Route.extend({
         }
       }
     }
+
   },
   model() {
     return Ember.RSVP.hash({
       member: this.store.findRecord('member', 4), //@TODO: Get the member's tags using findRecord 'include'
-      tags: this.store.query('tag', { memberId: 4, chapterId: 102 }), //@TODO: Get tags via the member's relationship
+
+      // This is all the tags on the server for this member
+      tags: this.store.query('tag', { memberId: 4}), //@TODO: Get tags via the member's relationship
       consequence_links: this.store.findAll('consequenceLink'),
     });
   },

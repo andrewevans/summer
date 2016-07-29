@@ -13,6 +13,7 @@ export default Ember.Route.extend({
   model(params) {
     var chapter = this.modelFor('index/chapter').chapter,
       member = this.modelFor('index').member,
+      tags = this.modelFor('index/chapter').tags,
       sequence_num = parseInt(params.sequence_num),
       tag;
 
@@ -24,13 +25,14 @@ export default Ember.Route.extend({
     // just that it's nth question on the current chapter.
     var question = chapter.get('questions').objectAt(sequence_num - 1);
 
-    var tags = member.get('tags')
-      .filterBy('chapterId', parseInt(chapter.id))
+    // This is all the tags already received from the server plus the tags that were created from local storage, and
+    // then filtered for only this chapter, and then filtered for only this question.
+    var question_tags = tags
       .filterBy('questionId', parseInt(question.id));
 
-    if (tags.get('length')) {
+    if (question_tags.get('length')) {
       // The tag exists, so use that one
-      tag = tags.objectAt(0);
+      tag = question_tags.objectAt(0);
       // Update the ember-storage (localStorage or sessionStorage) value with tag value to keep them in sync
       // This is only necessary if the API brought in the tag, because if it did, it has not yet been entered into
       // localStorage yet. This may be handled by the API itself, but Mirage cannot yet utilize ember-storage.
