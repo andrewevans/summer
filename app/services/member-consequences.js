@@ -85,9 +85,10 @@ export default Ember.Service.extend({
         default:
           break;
       }
-
-      member.set('consequences', consequences);
     });
+
+    member.set('consequences', consequences);
+    member.save();
 
     if (forwardToResults) {
 
