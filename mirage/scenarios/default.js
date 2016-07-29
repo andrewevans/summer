@@ -4,29 +4,35 @@ export default function(server) {
 
   let member = server.schema.members.find(4); // Get member "lana"
 
-  member.createTag({ questionId: 1, answer: ['yes'], chapterId: 102 });
-  member.createTag({ questionId: 11, answer: ['127'], chapterId: 102 });
-  member.createTag({ questionId: 4, answer: [null], chapterId: 102 });
-  member.createTag({ questionId: 5, answer: [null], chapterId: 102 });
-  member.createTag({ questionId: 6, answer: [null], chapterId: 102 });
-  member.createTag({ questionId: 7, answer: [null], chapterId: 102 });
-  member.createTag({ questionId: 8, answer: [null], chapterId: 102 });
-  member.createTag({ questionId: 9, answer: [null], chapterId: 102 });
-  member.createTag({ questionId: 11, answer: ['127'], chapterId: 102 });
-  member.createTag({ questionId: 13, answer: [null], chapterId: 102 });
-  member.createTag({ questionId: 3, answer: ['18-34'], chapterId: 102 });
-  member.createTag({ questionId: 4, answer: ['xoxoxoxoxoxo'], chapterId: 105 });
+  server.create('response', {
+    memberId: 4,
+    surveyId: 102,
+    questions: {
+      questionId: 11,
+      questionNumber: -1,
+      response: ['127'],
+    },
+  });
 
-  member = server.schema.members.find(1); // Get member "citizen4"
+  server.create('response', {
+    memberId: 4,
+    surveyId: 102,
+    questions: {
+      questionId: 3,
+      questionNumber: -1,
+      response: ['18-34'],
+    },
+  });
 
-  member.createTag({ questionId: 1116, answer: ['xoxoxoxoxoxo'], chapterId: 102 });
-  member.createTag({ questionId: 1123, answer: ['xoxoxoxoxoxo'], chapterId: 105 });
-  member.createTag({ questionId: 1010, answer: ['xoxoxoxoxoxo'], chapterId: 101 });
-  member.createTag({ questionId: 1116, answer: ['xoxoxoxoxoxo'], chapterId: 102 });
-  member.createTag({ questionId: 1151, answer: ['xoxoxoxoxoxo'], chapterId: 104 });
-  member.createTag({ questionId: 1152, answer: ['xoxoxoxoxoxo'], chapterId: 104 });
-  member.createTag({ questionId: 1153, answer: ['xoxoxoxoxoxo'], chapterId: 102 });
-  member.createTag({ questionId: 1154, answer: ['xoxoxoxoxoxo'], chapterId: 102 });
+  server.create('response', {
+    memberId: 4,
+    surveyId: 102,
+    questions: {
+      questionId: 4,
+      questionNumber: -1,
+      response: [null],
+    },
+  });
 
   let chapter = server.schema.chapters.find(102);
 

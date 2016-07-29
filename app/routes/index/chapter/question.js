@@ -20,17 +20,6 @@ export default Ember.Route.extend({
 
     member.save(); // Save current progress in the member
 
-    Ember.$.ajax({
-      method: "POST",
-      url: "/api/v1/responses",
-      contentType: "application/json",
-      data: JSON.stringify({
-        member: member,
-      })
-    });
-
-    //@TODO: Send member data to /ws/ajax endpoint as well, once it is decided.
-
     // We don't know the ID of the current question yet,
     // just that it's nth question on the current chapter.
     var question = chapter.get('questions').objectAt(sequence_num - 1);
@@ -71,6 +60,7 @@ export default Ember.Route.extend({
       options = question.get('options');
 
       tag.set('answer', answers); // Reset tag
+      tag.save(); // Persist data to API
 
       // Set question's options to unselected
       options.forEach(option => {
@@ -90,6 +80,7 @@ export default Ember.Route.extend({
       Ember.Logger.log("Updating tag locally goes here...");
 
       tag.set('answer', [option.get('value')]);
+      tag.save(); // Persist data to API
 
       // Update the ember-storage (localStorage or sessionStorage) value with tag value to keep them in sync
       this.set('storage.tag[' + member.id + '][' + chapter.id + '][' + question.id +']', tag.get('answer'));
@@ -145,79 +136,19 @@ export default Ember.Route.extend({
       }
 
       tag.set('answer', answers);
+      tag.save(); // Persist data to API
 
       // Update the ember-storage (localStorage or sessionStorage) value with tag value to keep them in sync
       this.set('storage.tag[' + member.id + '][' + chapter.id + '][' + question.id +']', tag.get('answer'));
-
-      Ember.$.ajax({
-        method: "POST",
-        url: "/api/v1/responses",
-        contentType: "application/json",
-        data: JSON.stringify({
-          memberId: member.id,
-          chapterId: chapter.id,
-          questionId: question.id,
-          answer: answers,
-        })
-      });
-
-      Ember.$.ajax({
-        type: "POST",
-        data: JSON.stringify({
-          memberId: member.id, //@TODO: Member ID should not be sent over http
-          surveyId: chapter.id,
-          questions: [
-            {
-              "questionId": question.id,
-              "questionNumber": -1,
-              "response": answers.toString()
-            }
-          ]
-        }),
-        contentType: "application/json",
-        url: "/ws/ajax/v1/responses",
-      });
-
       return true;
     },
     saveTags(member) {
       Ember.Logger.log("Saving all tags locally goes here...");
 
-      var tags = [];
-      member.get('tags').forEach(function(tag) {
-        tags.push({
-          memberId: member.id,
-          chapterId: tag.get('chapterId'),
-          questionId: tag.get('questionId'),
-          answer: tag.get('answer'),
-        });
-      });
+      var tags = member.get('tags');
 
-      var tags_alt,
-        questions_alt = [],
-        chapter_id_alt = -1; //@TODO: Due to the way the API receives data, this has to be extracted, but this assumes all of them are from the same chapter
-
-      member.get('tags').forEach(function(tag) {
-        chapter_id_alt = tag.get('chapterId'); //@TODO: Always assigns to last tag in the list
-
-        questions_alt.push({
-          "questionId": tag.get('questionId'),
-          "questionNumber": -1, //@TODO: Question number not yet needed, but it is required by API
-          "response": tag.get('answer').toString()
-        });
-      });
-
-      tags_alt = {
-        memberId: member.id, //@TODO: Member ID should not be sent over http
-        surveyId: chapter_id_alt,
-        questions: questions_alt
-      };
-
-      Ember.$.ajax({
-        method: "POST",
-        contentType: "application/json",
-        url: "/ws/ajax/v1/responses",
-        data: JSON.stringify(tags_alt),
+      tags.forEach(function(tag) {
+        tag.save(); // Persist data to API
       });
     },
   },
