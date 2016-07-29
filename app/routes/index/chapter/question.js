@@ -62,7 +62,10 @@ export default Ember.Route.extend({
       options = question.get('options');
 
       tag.set('answer', answers); // Reset tag
-      tag.save(); // Persist data to API
+
+      if (tag.get('answer').objectAt(0) !== null) {
+        tag.save(); // Persist data to API
+      }
 
       // Set question's options to unselected
       options.forEach(option => {
@@ -82,7 +85,10 @@ export default Ember.Route.extend({
       Ember.Logger.log("Updating tag locally goes here...");
 
       tag.set('answer', [option.get('value')]);
-      tag.save(); // Persist data to API
+
+      if (tag.get('answer').objectAt(0) !== null) {
+        tag.save(); // Persist data to API
+      }
 
       // Update the ember-storage (localStorage or sessionStorage) value with tag value to keep them in sync
       this.set('storage.tag[' + member.id + '][' + chapter.id + '][' + question.id +']', tag.get('answer'));
@@ -138,7 +144,10 @@ export default Ember.Route.extend({
       }
 
       tag.set('answer', answers);
-      tag.save(); // Persist data to API
+
+      if (tag.get('answer').objectAt(0) !== null) {
+        tag.save(); // Persist data to API
+      }
 
       // Update the ember-storage (localStorage or sessionStorage) value with tag value to keep them in sync
       this.set('storage.tag[' + member.id + '][' + chapter.id + '][' + question.id +']', tag.get('answer'));
@@ -150,7 +159,10 @@ export default Ember.Route.extend({
       var tags = member.get('tags');
 
       tags.forEach(function(tag) {
-        tag.save(); // Persist data to API
+
+        if (tag.get('answer').objectAt(0) !== null) {
+          tag.save(); // Persist data to API
+        }
       });
     },
   },
