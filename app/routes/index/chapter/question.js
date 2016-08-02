@@ -124,6 +124,14 @@ export default Ember.Route.extend({
           if (answers.indexOf(option.get('value')) !== -1) { // Is this option already in the answer?
             answers.removeObject(option.get('value')); // Remove this specific answer from answers
           } else {
+
+            //@TODO: Don't use hardcoded strings here. There should be a method that compares answers against rules
+            answers.removeObjects(['__none-true', '__none-neutral']); // Remove special cases.
+
+            if (option.get('value').indexOf('__none') === 0) { // Is this option one of the special cases that clears the answer?
+              answers = []; // Clear the answer
+            }
+
             answers.pushObject(option.get('value')); // Add option value to answer
           }
           break;
