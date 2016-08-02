@@ -32,13 +32,15 @@ export default Ember.Route.extend({
   model(params) {
     Ember.Logger.log('in routes/chapter.js');
 
+    var member = this.modelFor('index').member;
+
     return Ember.RSVP.hash({
-      member: this.modelFor('index').member,
+      member: member,
       chapter: this.store.findRecord('chapter', parseInt(params.id), { include: 'questions, options' }),
 
       // This is all the tags already received from the server plus the tags that were created from local storage, and
       // then filtered for only this chapter.
-      tags: this.store.peekAll('tag').filterBy('chapterId', parseInt(params.id)),
+      tags: member.get('tags').filterBy('chapterId', parseInt(params.id)),
     });
   },
   actions: {

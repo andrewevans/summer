@@ -13,7 +13,7 @@ export default Ember.Route.extend({
   model(params) {
     var chapter = this.modelFor('index/chapter').chapter,
       member = this.modelFor('index').member,
-      tags = this.modelFor('index/chapter').tags,
+      tags = member.get('tags'),
       sequence_num = parseInt(params.sequence_num),
       tag;
 
