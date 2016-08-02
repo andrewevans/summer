@@ -196,6 +196,16 @@ export default function(server) {
     value: "condition-G",
     text: "Condition G",
   });
+
+  question.createOption({
+    value: "__none-true",
+    text: "None of the above",
+  });
+
+  question.createOption({
+    value: "__none-neutral",
+    text: "I prefer not to answer",
+  });
   // End question + its options
 
   // Create a question + its options
