@@ -17,6 +17,26 @@ export default Ember.Service.extend({
       consequences = [], //@TODO: Consequences shouldn't recalculate on every transition
       link;
 
+    //@TODO: This is business logic, doesn't belong here
+    // Add default links that every member sees regardless of answers
+    link = consequence_links.objectAt(9);
+
+    if (! consequences.contains(link)) {
+      consequences.pushObject(link);
+    }
+
+    link = consequence_links.objectAt(10);
+
+    if (! consequences.contains(link)) {
+      consequences.pushObject(link);
+    }
+
+    link = consequence_links.objectAt(11);
+
+    if (! consequences.contains(link)) {
+      consequences.pushObject(link);
+    }
+
     tags.forEach(function(tag) {
       var answer = tag.get('answer') || [],
         questionId = parseInt(tag.get('questionId'));

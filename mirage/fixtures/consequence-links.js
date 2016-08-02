@@ -35,5 +35,17 @@ export default [
     id: 9,
     text: "Learn how your prenatal care will change when you're carrying twins or other multiples.",
     url: "http://www.babycenter.com/0_pregnant-with-multiples-prenatal-care_3582.bc",
+  }, {
+    id: 10,
+    text: "Learn about pregnancy.",
+    url: "http://www.babycenter.com/",
+  }, {
+    id: 11,
+    text: "Learn about babies.",
+    url: "http://www.babycenter.com/",
+  }, {
+    id: 12,
+    text: "Learn about what babies think.",
+    url: "http://www.babycenter.com/",
   },
 ];
