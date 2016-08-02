@@ -281,6 +281,16 @@
     color: #cbe5e9;
   }
 
+  @media (min-width: @screen-md-min) {
+    .lock-screen h1 span {
+      display: none;
+    }
+
+    .lock-screen h1:after {
+      content: 'Click to update';
+    }
+  }
+
   .lock-btn {
     margin-top: 50px;
     text-align: center;
