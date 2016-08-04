@@ -8,4 +8,6 @@ export default Model.extend({
   type: attr(),
   options: hasMany('option'),
   chapter: belongsTo('chapter'),
+  questions: hasMany('question', { inverse: 'question' }),
+  question: belongsTo('question', { inverse: 'questions' }),
 });

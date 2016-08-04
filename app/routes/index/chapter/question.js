@@ -21,7 +21,10 @@ export default Ember.Route.extend({
 
     // We don't know the ID of the current question yet,
     // just that it's nth question on the current chapter.
-    var question = chapter.get('questions').objectAt(sequence_num - 1);
+    // And hidden questions are ignored in this flow.
+    var question = chapter.get('questions')
+      .rejectBy('type', 'hidden')
+      .objectAt(sequence_num - 1);
 
     // This is all the tags already received from the server plus the tags that were created from local storage, and
     // then filtered for only this chapter, and then filtered for only this question.
@@ -77,6 +80,18 @@ export default Ember.Route.extend({
 
       // Delete local storage for this tag
       this.set('storage.tag[' + member.id + '][' + chapter.id + '][' + question.id +']', tag.get('answer'));
+    },
+    updateTagCustom(member, chapter, question, option, tag, custom_value) {
+      Ember.Logger.log("Updating custom tag locally goes here...");
+
+      tag.set('answer', custom_value);
+
+      if (tag.get('answer').objectAt(0) !== null) {
+        tag.save(); // Persist data to API
+      }
+
+      // Update the ember-storage (localStorage or sessionStorage) value with tag value to keep them in sync
+      this.set('storage.tag[' + tag.get('member').get('id') + '][' + tag.get('chapterId') + '][' + tag.get('questionId') +']', tag.get('answer'));
     },
     updateTag(member, chapter, question, option, tag) {
       // Input fields use this to update the tag it's working on
