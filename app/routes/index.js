@@ -1,7 +1,7 @@
 import Ember from 'ember';
 
 export default Ember.Route.extend({
-  beforeModel() {
+  redirect() {
     if (this.get('router.url') === '/') {
 
       // If given no chapter, use the first chapter found
@@ -9,6 +9,8 @@ export default Ember.Route.extend({
         this.transitionTo('index.chapter.welcome', chapters.objectAt(0).id);
       });
     }
+  },
+  beforeModel() {
   },
   afterModel(model) {
     var member = model.member,

@@ -17,6 +17,14 @@
 <ul class="list-unstyled" style="margin-top: 24px">
   {{#if (if-eq question.type "select-dropdown")}}
     {{answer-tile/select saveTag=(route-action "saveTag" member chapter question 'null' tag) question=question option=option tag=tag}}
+  {{else if (if-eq question.type "custom-height")}}
+      <li class="question-answer">
+        {{component 'answer-tile/custom-height' updateTagCustom=(route-action "updateTagCustom" member chapter question 'null' tag) member=member chapter=chapter question=question tag=tag}}
+      </li>
+  {{else if (if-eq question.type "custom-extra")}}
+      <li class="question-answer">
+        {{component 'answer-tile/custom-extra' updateTagCustom=(route-action "updateTagCustom" member chapter question 'null') member=member chapter=chapter question=question tag=tag}}
+      </li>
   {{else}}
     {{#each question.options as |option|}}
       {{#if (if-eq question.type "input")}}
