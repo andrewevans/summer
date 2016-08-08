@@ -41,32 +41,9 @@ export default Ember.Component.extend({
     });
   },
   keyUp() {
-    var question = this.get('question'),
-      options = question.get('options'),
-      feet,
-      inches,
-      total_inches;
-
-    options.forEach((option) => {
-      switch (option.get('text')) {
-        case '__feet':
-          this.set('option_feet', option);
-          break;
-
-        case '__inches':
-          this.set('option_inches', option);
-          break;
-
-        default:
-          Ember.Logger.warn("Cannot create reference to option, because its option text is not recognized.");
-          break;
-      }
-    });
-
-    feet = parseInt(this.get('option_feet').get('value')) || 0;
-    inches = parseInt(this.get('option_inches').get('value')) || 0;
-
-    total_inches = (feet * 12) + inches;
+    var feet = parseInt(this.get('option_feet').get('value')) || 0,
+      inches = parseInt(this.get('option_inches').get('value')) || 0,
+      total_inches = (feet * 12) + inches;
 
     this.sendAction('updateTagCustom', [total_inches]);
   }
