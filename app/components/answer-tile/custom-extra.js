@@ -83,7 +83,7 @@ export default Ember.Component.extend({
     this.sendAction('updateTagCustom', tag, answers);
   },
   actions: {
-    saveTag(member,chapter,question,option,tag) {
+    saveTag(member, chapter, question, option, tag) {
       this.saveTagWithSpecialCases(member, chapter, question, option, tag);
     },
   },
