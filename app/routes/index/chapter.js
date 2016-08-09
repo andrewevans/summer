@@ -1,19 +1,13 @@
 import Ember from 'ember';
 
 export default Ember.Route.extend({
+  store: Ember.inject.service(),
   paginationNav: Ember.inject.service('pagination-nav'),
-  afterModel(model) {
+  redirect(model) {
     var member = model.member,
       chapter = model.chapter,
       progresses = member.get('progresses'),
       chapter_progress = progresses.filterBy('chapter_id', parseInt(chapter.id)).objectAt(0); // Get first matching progress
-
-    if (! chapter_progress) {
-
-      // There is no progress marker for this chapter, so create one
-      chapter_progress = { chapter_id: parseInt(chapter.id), status: 'none', sequence_num: null};
-      progresses.pushObject(chapter_progress); // Add progress marker to the member
-    }
 
     if (chapter_progress.status === 'unqualified') {
 
@@ -27,6 +21,55 @@ export default Ember.Route.extend({
 
       // A null sequence number represents the last place visited was not a question
       this.transitionTo('index.chapter.welcome', chapter.id); // And go to welcome page
+    }
+  },
+  afterModel(model) {
+    var member = model.member,
+      chapter = model.chapter,
+      progresses = member.get('progresses'),
+      chapter_progress = progresses.filterBy('chapter_id', parseInt(chapter.id)).objectAt(0), // Get first matching progress
+      questions_promise = chapter.get('questions');
+
+    questions_promise.then((questions) => {
+      questions.forEach((parent_question) => {
+        let child_questions = parent_question.get('questions'); // Get child questions
+
+        if (child_questions.get('length')) {
+
+          let child_question = child_questions.objectAt(0),
+            tags = member.get('tags')
+            .filterBy('chapterId', parseInt(chapter.id))
+            .filterBy('questionId', parseInt(child_question.id)),
+            tag;
+
+          // Find the corresponding tag, or create it if it doesn't exist yet
+          if (tags.get('length')) {
+
+            // The tag exists, so use it
+            // @TODO: Support having more than one child question
+            tag = tags.objectAt(0);
+          } else {
+
+            // The tag does not exist, so create it
+            tag = this.get('store').createRecord('tag', {
+              member: member,
+              chapterId: parseInt(chapter.id),
+              questionId: parseInt(child_question.id),
+              answer: [],
+            });
+          }
+
+          // Append child options to parent options
+          parent_question.get('options').pushObjects(child_question.get('options'));
+        }
+      });
+    });
+
+    if (! chapter_progress) {
+
+      // There is no progress marker for this chapter, so create one
+      chapter_progress = { chapter_id: parseInt(chapter.id), status: 'none', sequence_num: null};
+      progresses.pushObject(chapter_progress); // Add progress marker to the member
     }
   },
   model(params) {

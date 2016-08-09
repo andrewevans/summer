@@ -4,15 +4,6 @@ export default function(server) {
 
   let member = server.schema.members.find(4); // Get member "lana"
 
-  server.create('response', {
-    memberId: 4,
-    surveyId: 102,
-    questions: {
-      questionId: 11,
-      questionNumber: -1,
-      response: ['127'],
-    },
-  });
 
   server.create('response', {
     memberId: 4,
@@ -130,81 +121,95 @@ export default function(server) {
   });
   // End question + its options
 
-  // Create a question + its options
-  question = chapter.createQuestion({
+  // Create a custom question + its options
+  var question_condition = chapter.createQuestion({
     title: "Previous or current conditions",
     description: "",
-    type: "select-multi",
+    type: "custom-extra",
   });
 
-  question.createOption({
+  question_condition.createOption({
     value: "condition-01",
     text: "Condition 01",
   });
 
-  question.createOption({
+  question_condition.createOption({
     value: "condition-02",
     text: "Condition 02",
   });
 
-  question.createOption({
+  question_condition.createOption({
     value: "condition-03",
     text: "Condition 03",
   });
 
-  question.createOption({
+  question_condition.createOption({
     value: "condition-04",
     text: "Condition 04",
   });
 
-  question.createOption({
+  question_condition.createOption({
     value: "condition-05",
     text: "Condition 05",
   });
 
-  question.createOption({
+  question_condition.createOption({
     value: "condition-A",
     text: "Condition A",
   });
 
-  question.createOption({
+  question_condition.createOption({
     value: "condition-B",
     text: "Condition B",
   });
 
-  question.createOption({
+  question_condition.createOption({
     value: "condition-C",
     text: "Condition C",
   });
 
-  question.createOption({
+  question_condition.createOption({
     value: "condition-D",
     text: "Condition D",
   });
 
-  question.createOption({
+  question_condition.createOption({
     value: "condition-E",
     text: "Condition E",
   });
 
-  question.createOption({
+  question_condition.createOption({
     value: "condition-F",
     text: "Condition F",
   });
 
-  question.createOption({
+  question_condition.createOption({
     value: "condition-G",
     text: "Condition G",
   });
 
-  question.createOption({
+  question_condition.createOption({
     value: "__none-true",
     text: "None of the above",
   });
 
-  question.createOption({
+  question_condition.createOption({
     value: "__none-neutral",
     text: "I prefer not to answer",
+  });
+  // End question + its options
+
+  // Create a question + its options
+  var question_condition_extra = chapter.createQuestion({
+    title: "Any other previous or current conditions?",
+    description: "",
+    type: "hidden",
+    question: question_condition,
+  });
+
+  question_condition_extra.createOption({
+    value: "",
+    text: "__input-condition",
   });
   // End question + its options
 
@@ -295,16 +300,18 @@ export default function(server) {
   question = chapter.createQuestion({
     title: "How tall are you?",
     description: "",
-    type: "select-dropdown",
+    type: "custom-height",
   });
 
-  // Populate each week's option
-  for (let feet = 3; feet <= 7; feet++) {
+  question.createOption({
+    value: "", // Blank because it is a text input field
+    text: "__feet",
+  });
 
-    for (let inches = 0; inches <= 11; inches++) {
-      server.create('option', { value: ((feet * 12) + inches), text: feet +'ft ' + inches + ' in', question: question });
-    }
-  }
+  question.createOption({
+    value: "", // Blank because it is a text input field
+    text: "__inches",
+  });
   // End question + its options
 
   // Create a question + its options
