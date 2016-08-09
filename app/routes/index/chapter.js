@@ -46,7 +46,7 @@ export default Ember.Route.extend({
           if (tags.get('length')) {
 
             // The tag exists, so use it
-            ///this.set('tag_input_condition', tags.objectAt(0)); //@TODO: Support having more than one child question
+            // @TODO: Support having more than one child question
             tag = tags.objectAt(0);
           } else {
 
