@@ -1,0 +1,8 @@
+{{#each question.options as |option|}}
+  {{#if (if-eq option.text "__input-bmi")}}
+  {{else}}
+      <li class="question-answer">
+        {{answer-tile/input updateTag=(action "updateTag" member chapter question option tag) option=option tag=tag}}
+      </li>
+  {{/if}}
+{{/each}}

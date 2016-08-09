@@ -25,6 +25,10 @@
       <li class="question-answer">
         {{component 'answer-tile/custom-extra' updateTagCustom=(route-action "updateTagCustom" member chapter question 'null') member=member chapter=chapter question=question tag=tag}}
       </li>
+  {{else if (if-eq question.type "custom-bmi")}}
+      <li class="question-answer">
+        {{component 'answer-tile/custom-bmi' updateTag=(route-action "updateTag" member chapter question) member=member chapter=chapter question=question tag=tag}}
+      </li>
   {{else}}
     {{#each question.options as |option|}}
       {{#if (if-eq question.type "input")}}
