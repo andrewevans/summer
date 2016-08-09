@@ -49,8 +49,14 @@ export default Ember.Component.extend({
     option.set('value', answer);
 
     // Calculate BMI
+    //@TODO: Don't do business logic here
+    //@TODO: This only supports Imperial system
+    var height_inches = 70; //@TODO: Hack to stub height until there is a relationship built to bring height into here
+    var weight_pounds = parseInt(tag.get('answer').objectAt(0)) || 0;
+    var bmi_value = Math.floor((weight_pounds * 703) / Math.pow(height_inches, 2));
 
     // Save BMI with updateTagCustom with child tag
+    this.sendAction('updateTagCustom', this.get('child_question_tag'), [bmi_value]);
   },
   actions: {
     updateTag(member, chapter, question, option, tag) {
