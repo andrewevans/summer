@@ -315,15 +315,27 @@ export default function(server) {
   // End question + its options
 
   // Create a question + its options
-  question = chapter.createQuestion({
+  var question_weight = chapter.createQuestion({
     title: "How much did you weigh before you were pregnant?",
     description: "Be honest :)",
-    type: "input",
+    type: "custom-bmi",
   });
 
-  question.createOption({
+  question_weight.createOption({
     value: "", // Blank because it is a text input field
   });
+
+  var question_bmi = chapter.createQuestion({
+    title: "What is your BMI?",
+    description: "",
+    type: "hidden",
+    question: question_weight,
+  });
+
+  question_bmi.createOption({
+    value: "",
+    text: "__input-bmi",
+  })
 
   // Create a question + its options
   question = chapter.createQuestion({
