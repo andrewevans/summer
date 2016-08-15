@@ -12,7 +12,7 @@ export default Ember.Service.extend({
     // Proceed to attempt to calculate BMI only if the BMI option exists
     if (bmi_option) {
       let bmi_question = bmi_option.get('question'),
-        bmi_tag = this.get('store').peekAll('tag').filterBy('questionId', parseInt(bmi_question.get('id'))).objectAt(0),
+        bmi_tag = tags.filterBy('questionId', parseInt(bmi_question.get('id'))).objectAt(0),
         height_question = chapter.get('questions').filterBy('type', 'custom-height').objectAt(0), // Get custom height question's tag's answer
         height_tag = tags.filterBy('questionId', parseInt(height_question.id)).objectAt(0),
         height_value,
