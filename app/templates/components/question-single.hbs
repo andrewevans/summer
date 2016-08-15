@@ -31,6 +31,10 @@
           <li class="question-answer">
             {{answer-tile/input updateTag=(route-action "updateTag" member chapter question option tag) option=option tag=tag}}
           </li>
+      {{else if (if-eq question.type "custom-weight")}}
+          <li class="question-answer">
+            {{answer-tile/input updateTag=(route-action "updateTag" member chapter question option tag) option=option tag=tag}}
+          </li>
       {{else if (if-eq question.type "select")}}
           <li class="question-answer">
             {{answer-tile saveTag=(route-action "saveTag" member chapter question option tag) question=question option=option tag=tag}}
