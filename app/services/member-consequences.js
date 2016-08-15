@@ -3,6 +3,66 @@ import Ember from 'ember';
 export default Ember.Service.extend({
   store: Ember.inject.service(),
   sessionStorage: Ember.inject.service('session'),
+  calculateBmi(member, chapter, tags) {
+
+    // Get BMI option, if it exists
+    //@TODO: Questions need a separate boolean property for 'hidden' so that hidden questions can also be referenced by their 'type'
+    var bmi_option = this.get('store').peekAll('option').filterBy('text', '__input-bmi').objectAt(0);
+
+    // Proceed to attempt to calculate BMI only if the BMI option exists
+    if (bmi_option) {
+      let bmi_question = bmi_option.get('question'),
+        bmi_tag = this.get('store').peekAll('tag').filterBy('questionId', parseInt(bmi_question.get('id'))).objectAt(0),
+        height_question = chapter.get('questions').filterBy('type', 'custom-height').objectAt(0), // Get custom height question's tag's answer
+        height_tag = tags.filterBy('questionId', parseInt(height_question.id)).objectAt(0),
+        height_value,
+        weight_question = chapter.get('questions').filterBy('type', 'custom-weight').objectAt(0), // Get custom weight question
+        weight_tag = tags.filterBy('questionId', parseInt(weight_question.id)).objectAt(0),
+        weight_value;
+
+      if (height_tag) {
+        height_value = parseInt(height_tag.get('answer').objectAt(0));
+      }
+
+      if (weight_tag) {
+        weight_value = parseInt(weight_tag.get('answer').objectAt(0));
+      }
+
+      if (! bmi_tag) {
+
+        // The tag does not exist yet, so create it
+        bmi_tag = this.get('store').createRecord('tag', {
+          member: member,
+          chapterId: parseInt(chapter.id),
+          questionId: parseInt(bmi_question.get('id')),
+          answer: [],
+        });
+      }
+
+      // If both height and weight values are available, then set the BMI tag's answer
+      if (height_value && weight_value) {
+
+        // Calculate BMI
+        //@TODO: Don't do business logic here
+        //@TODO: This only supports Imperial system
+        var bmi_value = Math.floor((weight_value * 703) / Math.pow(height_value, 2));
+
+        bmi_tag.set('answer', [bmi_value]);
+      } else {
+
+        //@TODO: Since any number is technically a valid BMI, use a non-numerical value to represent the absense of a BMI value
+        bmi_tag.set('answer', [0]); // The absense of a BMI value is represented by a value of 0
+      }
+
+      //@TODO: Do all saving in the route actions to centralize where things are saved
+      bmi_tag.save();
+
+      // Update the ember-storage (localStorage or sessionStorage) value with tag value to keep them in sync
+      // This is only necessary if the API brought in the tag, because if it did, it has not yet been entered into
+      // localStorage yet. This may be handled by the API itself, but Mirage cannot yet utilize ember-storage.
+      this.get('sessionStorage').set('tag[' + member.id + '][' + chapter.id + '][' + bmi_question.get('id') +']', bmi_tag.get('answer'));
+    }
+  },
   calculate(member, chapter, consequence_links, route) {
 
     var progresses = member.get('progresses'),
@@ -109,78 +169,7 @@ export default Ember.Service.extend({
       }
     });
 
-    /*
-     Create/update BMI tag from hidden BMI question, but the BMI question can only be specifically referenced by its unique
-     option text of '__input-bmi'
-     */
-    //@TODO: Questions need a separate boolean property for 'hidden' so that hidden questions can be referenced by their 'type'
-
-    // Get BMI option, if it exists
-    var bmi_option = this.get('store').peekAll('option')
-      .filterBy('text', '__input-bmi').objectAt(0);
-
-    if (bmi_option) {
-      let bmi_question = bmi_option.get('question');
-
-      let bmi_tag = this.get('store').peekAll('tag')
-        .filterBy('questionId', parseInt(bmi_question.get('id'))).objectAt(0);
-
-      // Get custom height question's tag's answer
-      let height_question = chapter.get('questions').filterBy('type', 'custom-height').objectAt(0);
-
-      let height_tag = tags.filterBy('questionId', parseInt(height_question.id)).objectAt(0);
-
-      let height_value;
-
-      if (height_tag) {
-        height_value = parseInt(height_tag.get('answer').objectAt(0));
-      }
-
-      // Get custom weight question
-      let weight_question = chapter.get('questions').filterBy('type', 'custom-weight').objectAt(0);
-
-      let weight_tag = tags.filterBy('questionId', parseInt(weight_question.id)).objectAt(0);
-
-      let weight_value;
-
-      if (weight_tag) {
-        weight_value = parseInt(weight_tag.get('answer').objectAt(0));
-      }
-
-      if (bmi_tag) {
-        // The tag exists, so use that one
-      } else {
-        // The tag does not exist yet, so create it
-
-        bmi_tag = this.get('store').createRecord('tag', {
-          member: member,
-          chapterId: parseInt(chapter.id),
-          questionId: parseInt(bmi_question.get('id')),
-          answer: [],
-        });
-      }
-
-      // If both height and weight values are available, then get the BMI tag, or create it if it does not exist
-      if (height_value && weight_value) {
-        // Calculate BMI
-        //@TODO: Don't do business logic here
-        //@TODO: This only supports Imperial system
-        var bmi_value = Math.floor((weight_value * 703) / Math.pow(height_value, 2));
-
-        // Save BMI with updateTagCustom with child tag
-        //@TODO: Do all saving in the route actions to centralize where things are saved
-        bmi_tag.set('answer', [bmi_value]);
-      } else {
-        bmi_tag.set('answer', [0]);
-      }
-
-      bmi_tag.save();
-
-      // Update the ember-storage (localStorage or sessionStorage) value with tag value to keep them in sync
-      // This is only necessary if the API brought in the tag, because if it did, it has not yet been entered into
-      // localStorage yet. This may be handled by the API itself, but Mirage cannot yet utilize ember-storage.
-      this.get('sessionStorage').set('tag[' + member.id + '][' + chapter.id + '][' + bmi_question.get('id') +']', bmi_tag.get('answer'));
-    }
+    this.calculateBmi(member, chapter, tags);
 
     member.set('consequences', consequences);
     member.save();
