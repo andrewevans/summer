@@ -4,27 +4,6 @@ export default function(server) {
 
   let member = server.schema.members.find(4); // Get member "lana"
 
-
-  server.create('response', {
-    memberId: 4,
-    surveyId: 102,
-    questions: {
-      questionId: 3,
-      questionNumber: -1,
-      response: ['18-34'],
-    },
-  });
-
-  server.create('response', {
-    memberId: 4,
-    surveyId: 102,
-    questions: {
-      questionId: 4,
-      questionNumber: -1,
-      response: [null],
-    },
-  });
-
   let chapter = server.schema.chapters.find(102);
 
   let question;
@@ -318,7 +297,7 @@ export default function(server) {
   var question_weight = chapter.createQuestion({
     title: "How much did you weigh before you were pregnant?",
     description: "Be honest :)",
-    type: "custom-bmi",
+    type: "custom-weight",
   });
 
   question_weight.createOption({
@@ -329,7 +308,6 @@ export default function(server) {
     title: "What is your BMI?",
     description: "",
     type: "hidden",
-    question: question_weight,
   });
 
   question_bmi.createOption({
