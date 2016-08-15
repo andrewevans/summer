@@ -50,8 +50,8 @@ export default Ember.Service.extend({
         bmi_tag.set('answer', [bmi_value]);
       } else {
 
-        //@TODO: Since any number is technically a valid BMI, use a non-numerical value to represent the absense of a BMI value
-        bmi_tag.set('answer', [0]); // The absense of a BMI value is represented by a value of 0
+        // The absence of a BMI value is represented by an empty array, similar to a skipped question's tag
+        bmi_tag.set('answer', []);
       }
 
       //@TODO: Do all saving in the route actions to centralize where things are saved
