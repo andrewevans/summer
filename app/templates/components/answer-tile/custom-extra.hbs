@@ -1,7 +1,7 @@
 {{#each question.options as |option|}}
   {{#if (if-eq option.text "__input-condition")}}
-      <li class="question-answer">
-        {{answer-tile/input updateTag=(route-action "updateTag" member chapter child_question option child_question_tag) option=option tag=child_question_tag}}
+      <li class="question-answer" style="margin-bottom: 12px">
+        {{answer-tile/input updateTag=(route-action "updateTag" member chapter child_question option child_question_tag) option=option tag=child_question_tag placeholder="Other conditions"}}
       </li>
   {{else}}
       <li class="question-answer">
