@@ -14,6 +14,10 @@
   overflow: auto;
   padding-top: 200px;
 
+  .row {
+    width: auto; // Redundant to Bootstrap definition, but ensures that external styles do not override this rule
+  }
+
   @media (max-width: @screen-xs-max) {
     padding-top: 75px;
   }
