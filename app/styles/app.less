@@ -18,6 +18,10 @@
     padding-top: 75px;
   }
 
+  .row {
+    width: initial;
+  }
+
   .summer.container {
     border-top: 5px solid #35a5b6;
     border-bottom: 5px solid #35a5b6;
@@ -52,6 +56,10 @@
   p {
     font-size: 24px;
     margin-bottom: 54px;
+
+    @media (max-width: @screen-xs-max) {
+      font-size: 22px;
+    }
   }
 
   h1 {
@@ -64,12 +72,14 @@
     line-height: normal;
 
     @media (max-width: @screen-xs-max) {
-      text-align: center;
+      font-size: 44px;
     }
   }
 
   h3 {
     font-size: 2em;
+    line-height: 1.3em;
+    letter-spacing: 1px;
     color: #ffffff;
     background-image: url('https://dl.dropboxusercontent.com/s/rmjwdoxxjjetqan/q-icon.svg');
     background-position-y: 0;
@@ -279,6 +289,16 @@
   .lock-screen h3 {
     background-image: url('https://dl.dropboxusercontent.com/s/q57ctoi45tnvz8k/q-disabled.svg');
     color: #cbe5e9;
+  }
+
+  @media (min-width: @screen-md-min) {
+    .lock-screen h1 span {
+      display: none;
+    }
+
+    .lock-screen h1:after {
+      content: 'Click to update';
+    }
   }
 
   .lock-btn {
