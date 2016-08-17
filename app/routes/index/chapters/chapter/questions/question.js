@@ -52,6 +52,20 @@ export default Ember.Route.extend({
     });
   },
   actions: {
+    updateTag(member, chapter, question, option, tag) {
+
+      // Input fields use this to update the tag it's working on
+      Ember.Logger.log("Updating tag locally goes here...");
+
+      tag.set('answer', [option.get('value')]);
+
+      if (tag.get('answer').objectAt(0) !== null) {
+        tag.save(); // Persist data to API
+      }
+
+      // Update the ember-storage (localStorage or sessionStorage) value with tag value to keep them in sync
+      this.set('storage.tag[' + member.id + '][' + chapter.id + '][' + question.id +']', tag.get('answer'));
+    },
     saveTag(member, chapter, question, option, tag) {
 
       // We are passing member, chapter, question here even though we already have it
