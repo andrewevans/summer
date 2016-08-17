@@ -16,6 +16,7 @@ Router.map(function() {
       this.route('chapter', function() {
         this.route('question');
         this.route('welcome');
+        this.route('results');
       });
     });
   });
