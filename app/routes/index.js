@@ -30,13 +30,13 @@ export default Ember.Route.extend({
       //@TODO: Set localStorage prefix and then reference it
       if (localStorage.key(i).indexOf('es__tag') === 0) {
         let tag_local = localStorage.key(i).split(/[[\]]{1,2}/), // Turn key string into an array
-          chapterId = parseInt(tag_local[2]),
-          questionId = parseInt(tag_local[3]);
+          chapterId = tag_local[2],
+          questionId = tag_local[3];
 
         // Find the tag that this localStorage data item corresponds to, if it exists.
         var matching_tags = tags
-          .filterBy('chapterId', parseInt(chapterId))
-          .filterBy('questionId', parseInt(questionId));
+          .filterBy('chapterId', chapterId)
+          .filterBy('questionId', questionId);
 
         // Only create the tag if it does not already exist.
         if (! matching_tags.get('length')) {
@@ -55,7 +55,7 @@ export default Ember.Route.extend({
 
       if (localStorage.key(i).indexOf('es__sequence_num') === 0){
         let sequence_nums_local = key.split(/[[\]]{1,2}/),
-          chapterId = parseInt(sequence_nums_local[2]), // chapter ID of this progress marker
+          chapterId = sequence_nums_local[2], // chapter ID of this progress marker
           sequence_num = localStorage.getItem(key), // sequence_num of this progress marker
           sequence_nums = member.get('progresses'); // member's progress markers
 
@@ -63,7 +63,7 @@ export default Ember.Route.extend({
         if (! sequence_nums.filterBy('chapter_id', chapterId).get('length')) {
 
           // If it is not, add it to member's sequence_num
-          sequence_nums.pushObject({ chapter_id: parseInt(chapterId), sequence_num: parseInt(sequence_num)});
+          sequence_nums.pushObject({ chapter_id: chapterId, sequence_num: sequence_num});
         }
       }
     }

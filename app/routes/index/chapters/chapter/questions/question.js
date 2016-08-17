@@ -51,4 +51,76 @@ export default Ember.Route.extend({
       tag: tag,
     });
   },
+  actions: {
+    saveTag(member, chapter, question, option, tag) {
+
+      // We are passing member, chapter, question here even though we already have it
+      // on the index route. This is to allow the rest of the app to create tags if needed.
+
+      Ember.Logger.log("Saving tag locally goes here...");
+      var answers = tag.get('answer') || [];
+
+      // Reset a tag's answer if its value is [null] (which represents a locked tag). This is necessary for the case of
+      // a select-multi question since it does not clear out the answer but instead adds to it. It must also be checked
+      // that it is an object, because emberx-select has already assigned the tag's answer with a string (which is corrected
+      // later on in this method.
+      if (typeof answers === 'object' && answers.objectAt(0) === null) {
+        answers = [];
+      }
+
+      // Question type affects how the tag is saved
+      switch (question.get('type')) {
+
+        case 'select':
+          if (answers.indexOf(option.get('value')) !== -1) { // Is this option already in the answer?
+            answers = []; // Clear the answer for single select-type questions
+          } else {
+            answers = []; // Clear the answer for single select-type questions
+
+            answers.pushObject(option.get('value')); // Add option value to answer
+          }
+          break;
+
+        case 'select-multi':
+          answers = answers.slice(0); // Force answers to be a new array to trigger observers to notice the change
+          if (answers.indexOf(option.get('value')) !== -1) { // Is this option already in the answer?
+            answers.removeObject(option.get('value')); // Remove this specific answer from answers
+          } else {
+
+            //@TODO: Don't use hardcoded strings here. There should be a method that compares answers against rules
+            answers.removeObjects(['__none-true', '__none-neutral']); // Remove special cases.
+
+            if (option.get('value').indexOf('__none') === 0) { // Is this option one of the special cases that clears the answer?
+              answers = []; // Clear the answer
+            }
+
+            answers.pushObject(option.get('value')); // Add option value to answer
+          }
+          break;
+
+        case 'select-dropdown':
+
+          // The tag's answer has already been updated by emberx-select. Therefore, we populate the answers with the
+          // value that it had, but in array format.
+          answers = []; // Clear the answer and turn it into an array since emberx-select updates the value as a string.
+
+          answers.pushObject(tag.get('answer')); // Add option value to answer
+          break;
+
+        default:
+          Ember.Logger.debug("This is an unsupported question-type.");
+          break;
+      }
+
+      tag.set('answer', answers);
+
+      if (tag.get('answer').objectAt(0) !== null) {
+        tag.save(); // Persist data to API
+      }
+
+      // Update the ember-storage (localStorage or sessionStorage) value with tag value to keep them in sync
+      this.set('storage.tag[' + member.id + '][' + chapter.id + '][' + question.id +']', tag.get('answer'));
+      return true;
+    },
+  }
 });
