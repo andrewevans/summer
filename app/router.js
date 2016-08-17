@@ -13,7 +13,9 @@ Router.map(function() {
       this.route('results', { path: '/results' });
     });
     this.route('chapters', function() {
-      this.route('chapter');
+      this.route('chapter', function() {
+        this.route('question');
+      });
     });
   });
 });
