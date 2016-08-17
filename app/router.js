@@ -12,6 +12,7 @@ Router.map(function() {
       this.route('welcome', { path: '/welcome' });
       this.route('results', { path: '/results' });
     });
+    this.route('chapters');
   });
 });
 
