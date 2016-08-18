@@ -1,6 +1,7 @@
 import Ember from 'ember';
 
 export default Ember.Route.extend({
+  paginationNav: Ember.inject.service('pagination-nav'),
   model(params) {
     Ember.Logger.log('in routes: questions.js');
 
@@ -23,6 +24,8 @@ export default Ember.Route.extend({
     // Filter tags to only get this question's tag
       question_tags = tags
         .filterBy('questionId', question.id);
+
+    this.get('paginationNav').update(member, chapter, sequence_num); // Update pagination nav
 
     if (question_tags.get('length')) {
 
