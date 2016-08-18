@@ -66,12 +66,12 @@ export default Ember.Service.extend({
   calculate(member, chapter, consequence_links, route) {
 
     var progresses = member.get('progresses'),
-      chapter_progress = progresses.filterBy('chapter_id', parseInt(chapter.id)).objectAt(0); // Get first matching progress
+      chapter_progress = progresses.filterBy('chapter_id', chapter.id).objectAt(0); // Get first matching progress
 
     if (chapter_progress.status === 'unqualified') {
 
       // An 'unqualified' member goes directly to Results page
-      route.transitionTo('index.chapter.results', chapter.id); // And go there
+      route.transitionTo('index.chapters.chapter.results', chapter.id); // And go there
     }
 
     var tags = member.get('tags'),
@@ -101,41 +101,41 @@ export default Ember.Service.extend({
 
     tags.forEach(function(tag) {
       var answer = tag.get('answer') || [],
-        questionId = parseInt(tag.get('questionId'));
+        questionId = tag.get('questionId');
 
       //@TODO: This is business logic, doesn't belong here
       switch (questionId) {
 
         // Q: sex
-        case 2:
+        case '2':
           if (answer.contains('male')) {
             forwardToResults = true;
           }
           break;
 
         // Q: age
-        case 3:
+        case '3':
           if (answer.contains('13-')) {
             forwardToResults = true;
           }
           break;
 
         // Q: preg?
-        case 4:
+        case '4':
           if (answer.contains('none')) {
             forwardToResults = true;
           }
           break;
 
         // Q: live in US?
-        case 1:
+        case '1':
           if (answer.contains('no')) {
             forwardToResults = true;
           }
           break;
 
         // conditions
-        case 5:
+        case '5':
           if (answer.contains('condition-B')) {
             link = consequence_links.objectAt(5);
 
@@ -154,7 +154,7 @@ export default Ember.Service.extend({
           break;
 
         // Q: twins?
-        case 6:
+        case '6':
           if (answer.contains('yes')) {
             link = consequence_links.objectAt(8);
 
@@ -176,11 +176,11 @@ export default Ember.Service.extend({
 
     if (forwardToResults) {
 
-      let chapter_progress = member.get('progresses').filterBy('chapter_id', parseInt(chapter.id)).objectAt(0);
+      let chapter_progress = member.get('progresses').filterBy('chapter_id', chapter.id).objectAt(0);
       chapter_progress.status = 'unqualified'; // Update progress marker's status flag as 'unqualified'
       member.save(); // Explicitly save member because status is not observable
 
-      route.transitionTo('index.chapter.results', chapter.id);
+      route.transitionTo('index.chapters.chapter.results', chapter.id);
     }
 
     return;

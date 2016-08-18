@@ -3,6 +3,26 @@ import Ember from 'ember';
 export default Ember.Route.extend({
   store: Ember.inject.service(),
   paginationNav: Ember.inject.service('pagination-nav'),
+  redirect(model) {
+    var member = model.member,
+      chapter = model.chapter,
+      progresses = member.get('progresses'),
+      chapter_progress = progresses.filterBy('chapter_id', chapter.id).objectAt(0); // Get first matching progress
+
+    if (chapter_progress.status === 'unqualified') {
+
+      // An 'unqualified' member goes directly to Results page
+      this.transitionTo('index.chapters.chapter.results', chapter.id); // And go there
+    } else if (chapter_progress.sequence_num) {
+
+      // A non-null sequence number represents the last place visited was a question
+      this.transitionTo('index.chapters.chapter.questions.question', chapter.id, chapter_progress.sequence_num); // And go there
+    } else {
+
+      // A null sequence number represents the last place visited was not a question
+      this.transitionTo('index.chapters.chapter.welcome', chapter.id); // And go to welcome page
+    }
+  },
   afterModel(model) {
     var member = model.member,
       chapter = model.chapter,
