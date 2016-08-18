@@ -6,11 +6,9 @@ export default Ember.Route.extend({
 
       // If given no chapter, use the first chapter found
       this.store.findAll('chapter').then(chapters => {
-        this.transitionTo('index.chapter.welcome', chapters.objectAt(0).id);
+        this.transitionTo('index.chapters.chapter.welcome', chapters.objectAt(0).id);
       });
     }
-  },
-  beforeModel() {
   },
   afterModel(model) {
     var member = model.member,
@@ -67,7 +65,6 @@ export default Ember.Route.extend({
         }
       }
     }
-
   },
   model() {
     return Ember.RSVP.hash({
