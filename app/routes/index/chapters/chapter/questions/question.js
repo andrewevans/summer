@@ -2,6 +2,14 @@ import Ember from 'ember';
 
 export default Ember.Route.extend({
   paginationNav: Ember.inject.service('pagination-nav'),
+  afterModel(model/*, transition*/) {
+    var memberConsequences = this.get('member-consequences'),
+      member = model.member,
+      chapter = model.chapter,
+      consequence_links = this.modelFor('index').consequence_links;
+
+    memberConsequences.calculate(member, chapter, consequence_links, this);
+  },
   model(params) {
     Ember.Logger.log('in routes: questions.js');
 
@@ -150,6 +158,18 @@ export default Ember.Route.extend({
       // Update the ember-storage (localStorage or sessionStorage) value with tag value to keep them in sync
       this.set('storage.tag[' + member.id + '][' + chapter.id + '][' + question.id +']', tag.get('answer'));
       return true;
+    },
+    saveTags(member) {
+      Ember.Logger.log("Saving all tags locally goes here...");
+
+      var tags = member.get('tags');
+
+      tags.forEach(function(tag) {
+
+        if (tag.get('answer').objectAt(0) !== null) {
+          tag.save(); // Persist data to API
+        }
+      });
     },
   }
 });
