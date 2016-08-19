@@ -10,7 +10,7 @@ export default DS.JSONSerializer.extend({
     return {
       data: {
         type: 'member',
-        id: parseInt(member.id),
+        id: member.id,
         attributes: member,
       },
     };
