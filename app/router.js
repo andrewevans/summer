@@ -7,11 +7,6 @@ const Router = Ember.Router.extend({
 
 Router.map(function() {
   this.route('index', { path: '' }, function() {
-    this.route('chapter', { path: '/chapters/:id' }, function() {
-      this.route('question', { path: '/question/:sequence_num' });
-      this.route('welcome', { path: '/welcome' });
-      this.route('results', { path: '/results' });
-    });
     this.route('chapters', { path: '/assessments' }, function() {
       this.route('chapter', { path: ':id' }, function() {
         this.route('welcome');
