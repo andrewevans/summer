@@ -12,12 +12,12 @@ export default Ember.Service.extend({
     // Proceed to attempt to calculate BMI only if the BMI option exists
     if (bmi_option) {
       let bmi_question = bmi_option.get('question'),
-        bmi_tag = tags.filterBy('questionId', parseInt(bmi_question.get('id'))).objectAt(0),
+        bmi_tag = tags.filterBy('questionId', bmi_question.get('id')).objectAt(0),
         height_question = chapter.get('questions').filterBy('type', 'custom-height').objectAt(0), // Get custom height question's tag's answer
-        height_tag = tags.filterBy('questionId', parseInt(height_question.id)).objectAt(0),
+        height_tag = tags.filterBy('questionId', height_question.id).objectAt(0),
         height_value,
         weight_question = chapter.get('questions').filterBy('type', 'custom-weight').objectAt(0), // Get custom weight question
-        weight_tag = tags.filterBy('questionId', parseInt(weight_question.id)).objectAt(0),
+        weight_tag = tags.filterBy('questionId', weight_question.id).objectAt(0),
         weight_value;
 
       if (height_tag) {
@@ -33,8 +33,8 @@ export default Ember.Service.extend({
         // The tag does not exist yet, so create it
         bmi_tag = this.get('store').createRecord('tag', {
           member: member,
-          chapterId: parseInt(chapter.id),
-          questionId: parseInt(bmi_question.get('id')),
+          chapterId: chapter.id,
+          questionId: bmi_question.get('id'),
           answer: [],
         });
       }

@@ -14,8 +14,8 @@ export default Ember.Component.extend({
 
     // Find the tag corresponding to the child question
     let tags = member.get('tags')
-      .filterBy('chapterId', parseInt(chapter.id))
-      .filterBy('questionId', parseInt(child_question.id)),
+      .filterBy('chapterId', chapter.id)
+      .filterBy('questionId', child_question.id),
       tag;
 
     // Find the corresponding tag, or create it if it doesn't exist
@@ -28,8 +28,8 @@ export default Ember.Component.extend({
       // The tag does not exist yet, so create it
       tag = this.get('store').createRecord('tag', {
         member: member,
-        chapterId: parseInt(chapter.id),
-        questionId: parseInt(child_question.id),
+        chapterId: chapter.id,
+        questionId: child_question.id,
         answer: [],
       });
     }
