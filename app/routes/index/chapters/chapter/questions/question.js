@@ -26,7 +26,7 @@ export default Ember.Route.extend({
         .objectAt(sequence_num - 1),
 
     // Get all of the chapter's tags
-      tags = this.modelFor('index/chapters/chapter').tags,
+      tags = member.get('tags'),
       tag,
 
     // Filter tags to only get this question's tag
