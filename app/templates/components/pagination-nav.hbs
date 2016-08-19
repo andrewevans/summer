@@ -2,18 +2,18 @@
     <div class="row">
         <div class="col-xs-6 col-sm-6">
           {{#if member.pagination.prev}}
-            {{#link-to 'index.chapter.question' member.pagination.prev classNames="save-and-prev"}}
+            {{#link-to 'index.chapters.chapter.questions.question' member.pagination.prev classNames="save-and-prev"}}
                 <span aria-hidden="true" style="padding-left: 28px; font-size: 28px; font-weight: bold; color: #35a5b6" {{action "saveTags"}}>Prev</span>
             {{/link-to}}
           {{/if}}
         </div>
         <div class="col-xs-6 col-sm-6" style="text-align: right;">
           {{#if member.pagination.next}}
-            {{#link-to 'index.chapter.question' member.pagination.next classNames="save-and-next"}}
+            {{#link-to 'index.chapters.chapter.questions.question' member.pagination.next classNames="save-and-next"}}
                 <span aria-hidden="true" style="font-size: 28px; font-weight: bold; color: #35a5b6; padding-right: 28px" {{action "saveTags"}}>Next</span>
             {{/link-to}}
           {{else}}
-            {{#link-to 'index.chapter.results' chapter.id classNames="save-and-next"}}
+            {{#link-to 'index.chapters.chapter.results' chapter.id classNames="save-and-next"}}
                 <span aria-hidden="true" style="font-size: 28px; font-weight: bold; color: #35a5b6; padding-right: 28px" {{action "saveTagsAndUpdateStatus"}}>Finish!</span>
             {{/link-to}}
           {{/if}}

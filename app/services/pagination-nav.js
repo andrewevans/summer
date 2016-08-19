@@ -8,7 +8,7 @@ export default Ember.Service.extend({
   update(member, chapter, sequence_num) {
 
     var progresses = member.get('progresses'),
-      chapter_progress = progresses.filterBy('chapter_id', parseInt(chapter.id)).objectAt(0); // Get first matching progress
+      chapter_progress = progresses.filterBy('chapter_id', chapter.id).objectAt(0); // Get first matching progress
 
     // Update status according to current status and incoming sequence_num
     switch (chapter_progress.status) {
