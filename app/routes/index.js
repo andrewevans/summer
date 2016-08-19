@@ -68,10 +68,10 @@ export default Ember.Route.extend({
   },
   model() {
     return Ember.RSVP.hash({
-      member: this.store.findRecord('member', 4), //@TODO: Get the member's tags using findRecord 'include'
+      member: this.store.findRecord('member', '4'), //@TODO: Get the member's tags using findRecord 'include'
 
       // This is all the tags on the server for this member
-      tags: this.store.query('tag', { memberId: 4}), //@TODO: Get tags via the member's relationship
+      tags: this.store.query('tag', { memberId: '4'}), //@TODO: Get tags via the member's relationship
       consequence_links: this.store.findAll('consequenceLink'),
     });
   },

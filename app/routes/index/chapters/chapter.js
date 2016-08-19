@@ -85,7 +85,7 @@ export default Ember.Route.extend({
 
       // This is all the tags already received from the server plus the tags that were created from local storage, and
       // then filtered for only this chapter.
-      tags: member.get('tags').filterBy('chapterId', chapter.id),
+      tags: this.modelFor('index').tags.filterBy('chapterId', chapter.id),
     });
   },
   actions: {

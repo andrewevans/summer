@@ -11,10 +11,10 @@ export default DS.JSONSerializer.extend({
     responses.forEach(function(response) {
       tags.push({
         type: 'tag',
-        id: parseInt(response.id),
+        id: response.id.toString(),
         attributes: {
-          chapterId: parseInt(response.surveyId),
-          questionId: parseInt(response.questions.questionId),
+          chapterId: response.surveyId.toString(),
+          questionId: response.questions.questionId.toString(),
           answer: response.questions.response,
           questionNumber: -1,
         },
