@@ -47,7 +47,6 @@ export default Ember.Service.extend({
         }
       }
 
-
       // Save it to local storage
     }
   },
