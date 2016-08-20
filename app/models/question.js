@@ -6,6 +6,7 @@ export default Model.extend({
   title: attr(),
   description: attr(),
   type: attr(),
+  slug: attr(), // Unique string to allow a specific question to be referenced
   options: hasMany('option'),
   chapter: belongsTo('chapter'),
   questions: hasMany('question', { inverse: 'question' }), // Relationship to its child questions
