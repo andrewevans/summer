@@ -118,6 +118,12 @@ export default Ember.Service.extend({
           if (answer.contains('13-')) {
             forwardToResults = true;
           }
+
+          if (answer.contains('14-17')) {
+            tag.set('score', 1);
+          } else {
+            tag.set('score', 0);
+          }
           break;
 
         // Q: preg?
