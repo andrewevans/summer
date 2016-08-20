@@ -6,15 +6,16 @@ export default Ember.Service.extend({
   calculatePreg35(member, chapter, tags) {
 
     // Get preg-35 question, if it exists
-    var preg35_question = chapter.get('questions').filterBy('slug', 'preg-35').objectAt(0);
+    var preg35_question = chapter.get('questions').filterBy('slug', 'preg-35').objectAt(0),
+      age_question = chapter.get('questions').filterBy('slug', 'age').objectAt(0),
+      firstpreg_question = chapter.get('questions').filterBy('slug', 'first-preg').objectAt(0);
 
-      if (preg35_question) {
+    // All three questions must exist
+    if (preg35_question && age_question && firstpreg_question) {
 
       // Get age tag
       let preg35_tag = tags.filterBy('questionId', preg35_question.get('id')).objectAt(0),
-        age_question = chapter.get('questions').filterBy('slug', 'age').objectAt(0),
         age_tag = tags.filterBy('questionId', age_question.get('id')).objectAt(0),
-        firstpreg_question = chapter.get('questions').filterBy('slug', 'first-preg').objectAt(0),
         firstpreg_tag = tags.filterBy('questionId', firstpreg_question.get('id')).objectAt(0),
         age_value,
         firstpreg_value;
