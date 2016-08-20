@@ -13,7 +13,6 @@ export default Ember.Service.extend({
     // All three questions must exist
     if (preg35_question && age_question && firstpreg_question) {
 
-      // Get age tag
       let preg35_tag = tags.filterBy('questionId', preg35_question.get('id')).objectAt(0),
         age_tag = tags.filterBy('questionId', age_question.get('id')).objectAt(0),
         firstpreg_tag = tags.filterBy('questionId', firstpreg_question.get('id')).objectAt(0),
