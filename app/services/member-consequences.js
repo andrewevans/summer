@@ -12,7 +12,9 @@ export default Ember.Service.extend({
 
       // Get age tag
       let preg35_question = preg35_option.get('question'),
-        preg35_tag = tags.filterBy('questionId', preg35_question.get('id')).objectAt(0);
+        preg35_tag = tags.filterBy('questionId', preg35_question.get('id')).objectAt(0),
+        age_question = chapter.get('questions').filterBy('slug', 'preg35').objectAt(0),
+        age_tag = tags.filterBy('questionId', age_question.get('id')).objectAt(0);
 
       if (! preg35_tag) {
 
@@ -23,6 +25,9 @@ export default Ember.Service.extend({
           questionId: preg35_question.get('id'),
           answer: [],
         });
+
+        // Get age answer
+        let age_value = age_tag.get('answer');
 
         // Get first preg answer
 

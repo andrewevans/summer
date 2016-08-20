@@ -70,6 +70,7 @@ export default function(server) {
     title: "How old are you?",
     description: "",
     type: "select",
+    slug: "preg35",
   });
 
   question.createOption({
