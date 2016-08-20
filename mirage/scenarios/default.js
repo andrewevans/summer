@@ -70,6 +70,7 @@ export default function(server) {
     title: "How old are you?",
     description: "",
     type: "select",
+    slug: "age",
   });
 
   question.createOption({
@@ -334,7 +335,36 @@ export default function(server) {
   question_bmi.createOption({
     value: "",
     text: "__input-bmi",
-  })
+  });
+
+  question = chapter.createQuestion({
+    title: "Have you been pregnant before?",
+    description: "",
+    type: 'select',
+    slug: "first-preg",
+  });
+
+  question.createOption({
+    value: "yes",
+    text: "Yes",
+  });
+
+  question.createOption({
+    value: "no",
+    text: "No",
+  });
+
+  var question_preg35 = chapter.createQuestion({
+    title: "Are you 35 or older and this is your first pregnancy?",
+    description: "",
+    type: "hidden",
+    slug: "preg-35",
+  });
+
+  question_preg35.createOption({
+    value: "",
+    text: "",
+  });
 
   // Create a question + its options
   question = chapter.createQuestion({

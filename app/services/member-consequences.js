@@ -3,6 +3,53 @@ import Ember from 'ember';
 export default Ember.Service.extend({
   store: Ember.inject.service(),
   sessionStorage: Ember.inject.service('session'),
+  calculatePreg35(member, chapter, tags) {
+
+    // Get preg-35 question, if it exists
+    var preg35_question = chapter.get('questions').filterBy('slug', 'preg-35').objectAt(0),
+      age_question = chapter.get('questions').filterBy('slug', 'age').objectAt(0),
+      firstpreg_question = chapter.get('questions').filterBy('slug', 'first-preg').objectAt(0);
+
+    // All three questions must exist
+    if (preg35_question && age_question && firstpreg_question) {
+
+      let preg35_tag = tags.filterBy('questionId', preg35_question.get('id')).objectAt(0),
+        age_tag = tags.filterBy('questionId', age_question.get('id')).objectAt(0),
+        firstpreg_tag = tags.filterBy('questionId', firstpreg_question.get('id')).objectAt(0),
+        age_value,
+        firstpreg_value;
+
+      // preg35 evaluation only needs to happen if both the age tag and the firstpreg tag exist
+      if (age_tag && firstpreg_tag) {
+
+        if (! preg35_tag) {
+
+          // The tag does not exist yet, so create it
+          preg35_tag = this.get('store').createRecord('tag', {
+            member: member,
+            chapterId: chapter.id,
+            questionId: preg35_question.get('id'),
+            answer: [],
+          });
+        }
+
+        // Get age answer
+        age_value = age_tag.get('answer').objectAt(0);
+
+        // Get firstpreg answer
+        firstpreg_value = firstpreg_tag.get('answer').objectAt(0);
+
+        if ((age_value === '35-44' || age_value === '45+') && firstpreg_value === 'no') {
+          preg35_tag.set('answer', ['yes']);
+        } else {
+          preg35_tag.set('answer', []);
+        }
+
+        // Save the tag to local storage
+        this.get('sessionStorage').set('tag[' + member.id + '][' + chapter.id + '][' + preg35_question.get('id') +']', preg35_tag.get('answer'));
+      }
+    }
+  },
   calculateBmi(member, chapter, tags) {
 
     // Get BMI option, if it exists
@@ -176,6 +223,7 @@ export default Ember.Service.extend({
     });
 
     this.calculateBmi(member, chapter, tags);
+    this.calculatePreg35(member, chapter, tags);
 
     member.set('consequences', consequences);
     member.save();
