@@ -6,14 +6,31 @@ export default Ember.Service.extend({
   calculatePreg35(member, chapter, tags) {
 
     // Get preg35 option, if it exists
+    var preg35_option = this.get('store').peekAll('option').filterBy('text', '__input-preg35').objectAt(0);
 
-    // Get age tag answer
+    if (preg35_option) {
 
-    // Get first preg answer
+      // Get age tag
+      let preg35_question = preg35_option.get('question'),
+        preg35_tag = tags.filterBy('questionId', preg35_question.get('id')).objectAt(0);
 
-    // Get preg35 tag, if it exists
+      if (! preg35_tag) {
 
-    // Save it to local storage
+        // The tag does not exist yet, so create it
+        preg35_tag = this.get('store').createRecord('tag', {
+          member: member,
+          chapterId: chapter.id,
+          questionId: preg35_question.get('id'),
+          answer: [],
+        });
+
+        // Get first preg answer
+
+        // Get preg35 tag, if it exists
+      }
+
+      // Save it to local storage
+    }
   },
   calculateBmi(member, chapter, tags) {
 
