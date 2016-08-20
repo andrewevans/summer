@@ -45,9 +45,11 @@ export default Ember.Service.extend({
         } else {
           preg35_tag.set('answer', []);
         }
+
+        // Save the tag to local storage
+        this.get('sessionStorage').set('tag[' + member.id + '][' + chapter.id + '][' + preg35_question.get('id') +']', preg35_tag.get('answer'));
       }
 
-      // Save it to local storage
     }
   },
   calculateBmi(member, chapter, tags) {
