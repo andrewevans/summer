@@ -93,10 +93,6 @@ export default Ember.Route.extend({
 
       tag.set('answer', custom_value);
 
-      if (tag.get('answer').objectAt(0) !== null) {
-        tag.save(); // Persist data to API
-      }
-
       // Update the ember-storage (localStorage or sessionStorage) value with tag value to keep them in sync
       this.set('storage.tag[' + tag.get('member').get('id') + '][' + tag.get('chapterId') + '][' + tag.get('questionId') +']', tag.get('answer'));
     },
