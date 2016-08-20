@@ -5,14 +5,13 @@ export default Ember.Service.extend({
   sessionStorage: Ember.inject.service('session'),
   calculatePreg35(member, chapter, tags) {
 
-    // Get preg35 option, if it exists
-    var preg35_option = this.get('store').peekAll('option').filterBy('text', '__input-preg35').objectAt(0);
+    // Get preg-35 question, if it exists
+    var preg35_question = chapter.get('questions').filterBy('slug', 'preg-35').objectAt(0);
 
-    if (preg35_option) {
+      if (preg35_question) {
 
       // Get age tag
-      let preg35_question = preg35_option.get('question'),
-        preg35_tag = tags.filterBy('questionId', preg35_question.get('id')).objectAt(0),
+      let preg35_tag = tags.filterBy('questionId', preg35_question.get('id')).objectAt(0),
         age_question = chapter.get('questions').filterBy('slug', 'age').objectAt(0),
         age_tag = tags.filterBy('questionId', age_question.get('id')).objectAt(0),
         firstpreg_question = chapter.get('questions').filterBy('slug', 'first-preg').objectAt(0),
