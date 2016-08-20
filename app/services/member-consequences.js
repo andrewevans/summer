@@ -3,6 +3,18 @@ import Ember from 'ember';
 export default Ember.Service.extend({
   store: Ember.inject.service(),
   sessionStorage: Ember.inject.service('session'),
+  calculatePreg35(member, chapter, tags) {
+
+    // Get preg35 option, if it exists
+
+    // Get age tag answer
+
+    // Get first preg answer
+
+    // Get preg35 tag, if it exists
+
+    // Save it to local storage
+  },
   calculateBmi(member, chapter, tags) {
 
     // Get BMI option, if it exists
@@ -170,6 +182,7 @@ export default Ember.Service.extend({
     });
 
     this.calculateBmi(member, chapter, tags);
+    this.calculatePreg35(member, chapter, tags);
 
     member.set('consequences', consequences);
     member.save();
