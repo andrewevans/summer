@@ -352,6 +352,17 @@ export default function(server) {
     text: "No",
   });
 
+  var question_preg35 = chapter.createQuestion({
+    title: "Are you 35 or older and this is your first pregnancy?",
+    description: "",
+    type: "hidden",
+  });
+
+  question_preg35.createOption({
+    value: "",
+    text: "__input-preg35"
+  });
+
   // Create a question + its options
   question = chapter.createQuestion({
     title: "What is your ethnicity and/or ancestry?",
