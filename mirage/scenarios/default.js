@@ -334,7 +334,23 @@ export default function(server) {
   question_bmi.createOption({
     value: "",
     text: "__input-bmi",
-  })
+  });
+
+  question = chapter.createQuestion({
+    title: "Have you been pregnant before?",
+    description: "",
+    type: 'select',
+  });
+
+  question.createOption({
+    value: "yes",
+    text: "Yes",
+  });
+
+  question.createOption({
+    value: "no",
+    text: "No",
+  });
 
   // Create a question + its options
   question = chapter.createQuestion({
