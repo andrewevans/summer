@@ -13,7 +13,7 @@ export default Ember.Service.extend({
       // Get age tag
       let preg35_question = preg35_option.get('question'),
         preg35_tag = tags.filterBy('questionId', preg35_question.get('id')).objectAt(0),
-        age_question = chapter.get('questions').filterBy('slug', 'preg35').objectAt(0),
+        age_question = chapter.get('questions').filterBy('slug', 'age').objectAt(0),
         age_tag = tags.filterBy('questionId', age_question.get('id')).objectAt(0),
         firstpreg_question = chapter.get('questions').filterBy('slug', 'first-preg').objectAt(0),
         firstpreg_tag = tags.filterBy('questionId', firstpreg_question.get('id')).objectAt(0),

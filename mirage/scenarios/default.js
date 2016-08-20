@@ -70,7 +70,7 @@ export default function(server) {
     title: "How old are you?",
     description: "",
     type: "select",
-    slug: "preg35",
+    slug: "age",
   });
 
   question.createOption({
@@ -358,6 +358,7 @@ export default function(server) {
     title: "Are you 35 or older and this is your first pregnancy?",
     description: "",
     type: "hidden",
+    slug: "preg-35",
   });
 
   question_preg35.createOption({
