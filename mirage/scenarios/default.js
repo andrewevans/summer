@@ -363,7 +363,7 @@ export default function(server) {
 
   question_preg35.createOption({
     value: "",
-    text: "__input-preg35"
+    text: "",
   });
 
   // Create a question + its options
