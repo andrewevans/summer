@@ -341,6 +341,7 @@ export default function(server) {
     title: "Have you been pregnant before?",
     description: "",
     type: 'select',
+    slug: "first-preg",
   });
 
   question.createOption({

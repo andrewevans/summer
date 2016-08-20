@@ -14,25 +14,39 @@ export default Ember.Service.extend({
       let preg35_question = preg35_option.get('question'),
         preg35_tag = tags.filterBy('questionId', preg35_question.get('id')).objectAt(0),
         age_question = chapter.get('questions').filterBy('slug', 'preg35').objectAt(0),
-        age_tag = tags.filterBy('questionId', age_question.get('id')).objectAt(0);
+        age_tag = tags.filterBy('questionId', age_question.get('id')).objectAt(0),
+        firstpreg_question = chapter.get('questions').filterBy('slug', 'first-preg').objectAt(0),
+        firstpreg_tag = tags.filterBy('questionId', firstpreg_question.get('id')).objectAt(0),
+        age_value,
+        firstpreg_value;
 
-      if (! preg35_tag) {
+      // preg35 evaluation only needs to happen if both the age tag and the firstpreg tag exist
+      if (age_tag && firstpreg_tag) {
 
-        // The tag does not exist yet, so create it
-        preg35_tag = this.get('store').createRecord('tag', {
-          member: member,
-          chapterId: chapter.id,
-          questionId: preg35_question.get('id'),
-          answer: [],
-        });
+        if (! preg35_tag) {
+
+          // The tag does not exist yet, so create it
+          preg35_tag = this.get('store').createRecord('tag', {
+            member: member,
+            chapterId: chapter.id,
+            questionId: preg35_question.get('id'),
+            answer: [],
+          });
+        }
 
         // Get age answer
-        let age_value = age_tag.get('answer');
+        age_value = age_tag.get('answer').objectAt(0);
 
-        // Get first preg answer
+        // Get firstpreg answer
+        firstpreg_value = firstpreg_tag.get('answer').objectAt(0);
 
-        // Get preg35 tag, if it exists
+        if ((age_value === '35-44' || age_value === '45+') && firstpreg_value === 'no') {
+          preg35_tag.set('answer', ['yes']);
+        } else {
+          preg35_tag.set('answer', []);
+        }
       }
+
 
       // Save it to local storage
     }
