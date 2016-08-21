@@ -266,7 +266,7 @@ export default function(server) {
 
   question_prev_condition_extra.createOption({
     value: "",
-    text: "__input-condition",
+    text: "__input-extra",
   });
   // End question + its options
 
@@ -381,7 +381,7 @@ export default function(server) {
 
   question_condition_extra.createOption({
     value: "",
-    text: "__input-condition",
+    text: "__input-extra",
   });
   // End question + its options
 
