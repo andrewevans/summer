@@ -272,6 +272,29 @@ export default function(server) {
 
   // Create a question + its options
   question = chapter.createQuestion({
+    title: "How many miscarriages have you had?",
+    type: "select",
+    slug: "miscarriage",
+  });
+
+  question.createOption({
+    value: "0",
+    text: "None",
+  });
+
+  question.createOption({
+    value: "1",
+    text: "One",
+  });
+
+  question.createOption({
+    value: "2+",
+    text: "Two or more",
+  });
+  // End question + its options
+
+  // Create a question + its options
+  question = chapter.createQuestion({
     title: "Are you pregnant or trying to get pregnant?",
     description: "",
     type: "select",
