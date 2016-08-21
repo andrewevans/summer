@@ -382,6 +382,50 @@ export default function(server) {
   });
   // End question + its options
 
+  // Create a question + its options
+  var question_problems = chapter.createQuestion({
+    title: "In this pregnancy, have you experienced any of these health problems? (Please select all that apply.) (filter based on pregnancy stage)",
+    type: "custom-extra",
+    slug: "problems",
+  });
+
+  let preg_problems = [
+    'A baby with a diagnosed genetic abnormality or birth defect',
+    'Morning sickness with significant weight loss',
+    'Cervical insufficiency (when the cervix dilates before a baby is full-term)',
+    'Premature rupture of membranes (PROM)',
+    'Preterm labor',
+    'Uterine abnormalities, such as fibroids or septate uterus',
+    'Vaginal bleeding after 12 weeks gestation',
+  ];
+
+  for (let i = 0; i < preg_problems.length; i++) {
+    question_problems.createOption({
+      value: preg_problems[i].dasherize(),
+      text: preg_problems[i],
+    });
+  }
+
+  question_problems.createOption({
+    value: "__none-true",
+    text: "None of the above",
+  });
+  // End question + its options
+
+  // Create a question + its options
+  var question_problems_extra = chapter.createQuestion({
+    title: "Other problems (Please specify.)",
+    description: "",
+    type: "hidden",
+    question: question_problems,
+  });
+
+  question_problems_extra.createOption({
+    value: "",
+    text: "__input-extra",
+  });
+  // End question + its options
+
   // Create a custom question + its options
   var question_condition = chapter.createQuestion({
     title: "Previous or current conditions",
