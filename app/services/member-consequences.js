@@ -224,6 +224,42 @@ export default Ember.Service.extend({
           }
           break;
 
+        case 'current-conditions':
+          let preg_conditions = [
+            'Anxiety',
+            'Asthma, severe (uncontrolled symptoms)',
+            'Bleeding or clotting disorder',
+            'Cardiovascular conditions (heart disease)',
+            'Depression',
+            'Diabetes (type 1 or 2)',
+            'Epilepsy or another seizure disorder',
+            'Group B streptococcus (GBS)',
+            'Gestational diabetes',
+            'Hepatitis or another liver disease',
+            'Herpes',
+            'HIV/AIDS',
+            'Hypertension (high blood pressure)',
+            'Kidney disease',
+            'Lupus',
+            'Placenta previa',
+            'Preeclampsia, eclampsia, or HELLP syndrome',
+            'Rh sensitization',
+            'Rheumatoid arthritis',
+            'Syphilis',
+            'Sickle cell disease',
+            'Thalassemia',
+            'Thyroid disease',
+            'Tuberculosis',
+            'Urinary tract infections (frequent)',
+          ];
+
+          for (let i = 0; i < preg_conditions.length; i++) {
+            if (answer.contains(preg_conditions[i].dasherize())) {
+              tag.set('score', 1);
+            }
+          }
+          break;
+
         // Q: preg?
         case '4':
           if (answer.contains('none')) {
