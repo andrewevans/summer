@@ -151,6 +151,8 @@ export default Ember.Service.extend({
         questionId = tag.get('questionId'),
         question = chapter.get('questions').filterBy('id', questionId).objectAt(0);
 
+      tag.set('score', 0); // Tag resets to 0 score, and updates its score from business logic
+
       //@TODO: This is business logic, doesn't belong here
       switch (question.get('slug')) {
 
@@ -174,8 +176,6 @@ export default Ember.Service.extend({
 
           if (answer.contains('14-17')) {
             tag.set('score', 1);
-          } else {
-            tag.set('score', 0);
           }
           break;
 
@@ -197,9 +197,6 @@ export default Ember.Service.extend({
           break;
 
         case 'past-preg':
-
-          tag.set('score', 0);
-
           if (answer.contains('preeclampsia')) {
             tag.set('score', 1);
           }
