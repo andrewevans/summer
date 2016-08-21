@@ -39,7 +39,7 @@ export default Ember.Service.extend({
         // Get firstpreg answer
         firstpreg_value = firstpreg_tag.get('answer').objectAt(0);
 
-        if ((age_value === '35-44' || age_value === '45+') && firstpreg_value === 'no') {
+        if ((age_value === '35-44' || age_value === '45+') && firstpreg_value === 'yes') {
           preg35_tag.set('answer', ['yes']);
         } else {
           preg35_tag.set('answer', []);
@@ -148,20 +148,26 @@ export default Ember.Service.extend({
 
     tags.forEach(function(tag) {
       var answer = tag.get('answer') || [],
-        questionId = tag.get('questionId');
+        questionId = tag.get('questionId'),
+        question = chapter.get('questions').filterBy('id', questionId).objectAt(0);
 
       //@TODO: This is business logic, doesn't belong here
-      switch (questionId) {
+      switch (question.get('slug')) {
 
-        // Q: sex
-        case '2':
-          if (answer.contains('male')) {
+        case 'live-usa':
+          if (answer.contains('no')) {
+            forwardToResults = true;
+          }
+          break;
+
+        case 'preg-now':
+          if (answer.contains('no')) {
             forwardToResults = true;
           }
           break;
 
         // Q: age
-        case '3':
+        case 'age':
           if (answer.contains('13-')) {
             forwardToResults = true;
           }
@@ -173,16 +179,27 @@ export default Ember.Service.extend({
           }
           break;
 
-        // Q: preg?
-        case '4':
-          if (answer.contains('none')) {
+        // Q: twins?
+        case 'twins':
+          if (answer.contains('yes')) {
+            link = consequence_links.objectAt(8);
+
+            if (! consequences.contains(link)) {
+              consequences.pushObject(link);
+            }
+          }
+          break;
+
+        // Q: sex
+        case '2':
+          if (answer.contains('male')) {
             forwardToResults = true;
           }
           break;
 
-        // Q: live in US?
-        case '1':
-          if (answer.contains('no')) {
+        // Q: preg?
+        case '4':
+          if (answer.contains('none')) {
             forwardToResults = true;
           }
           break;
@@ -199,17 +216,6 @@ export default Ember.Service.extend({
 
           if (answer.contains('condition-C')) {
             link = consequence_links.objectAt(6);
-
-            if (! consequences.contains(link)) {
-              consequences.pushObject(link);
-            }
-          }
-          break;
-
-        // Q: twins?
-        case '6':
-          if (answer.contains('yes')) {
-            link = consequence_links.objectAt(8);
 
             if (! consequences.contains(link)) {
               consequences.pushObject(link);
