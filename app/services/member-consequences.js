@@ -260,6 +260,24 @@ export default Ember.Service.extend({
           }
           break;
 
+        case 'problems':
+          let preg_problems = [
+            'A baby with a diagnosed genetic abnormality or birth defect',
+            'Morning sickness with significant weight loss',
+            'Cervical insufficiency (when the cervix dilates before a baby is full-term)',
+            'Premature rupture of membranes (PROM)',
+            'Preterm labor',
+            'Uterine abnormalities, such as fibroids or septate uterus',
+            'Vaginal bleeding after 12 weeks gestation',
+          ];
+
+          for (let i = 0; i < preg_problems.length; i++) {
+            if (answer.contains(preg_problems[i].dasherize())) {
+              tag.set('score', 1);
+            }
+          }
+          break;
+
         // Q: preg?
         case '4':
           if (answer.contains('none')) {
