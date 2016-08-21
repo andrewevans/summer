@@ -187,13 +187,37 @@ export default Ember.Service.extend({
             if (! consequences.contains(link)) {
               consequences.pushObject(link);
             }
+
+            if (answer.contains('yes')) {
+              tag.set('score', 1);
+            } else {
+              tag.set('score', 0);
+            }
           }
           break;
 
-        // Q: sex
-        case '2':
-          if (answer.contains('male')) {
-            forwardToResults = true;
+        case 'past-preg':
+
+          tag.set('score', 0);
+
+          if (answer.contains('preeclampsia')) {
+            tag.set('score', 1);
+          }
+
+          if (answer.contains('preterm-delivery')) {
+            tag.set('score', 1);
+          }
+
+          if (answer.contains('preterm-labor')) {
+            tag.set('score', 1);
+          }
+
+          if (answer.contains('postpartum-depression')) {
+            tag.set('score', 1);
+          }
+
+          if (answer.contains('placenta')) {
+            tag.set('score', 1);
           }
           break;
 
