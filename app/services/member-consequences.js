@@ -86,6 +86,8 @@ export default Ember.Service.extend({
         });
       }
 
+      bmi_tag.set('score', 0); // Tag resets to 0 score, and updates its score from business logic
+
       // If both height and weight values are available, then set the BMI tag's answer
       if (height_value && weight_value) {
 
@@ -95,6 +97,10 @@ export default Ember.Service.extend({
         var bmi_value = Math.floor((weight_value * 703) / Math.pow(height_value, 2));
 
         bmi_tag.set('answer', [bmi_value]);
+
+        if (bmi_value > 26) {
+          bmi_tag.set('score', 1);
+        }
       } else {
 
         // The absence of a BMI value is represented by an empty array, similar to a skipped question's tag
@@ -188,11 +194,7 @@ export default Ember.Service.extend({
               consequences.pushObject(link);
             }
 
-            if (answer.contains('yes')) {
-              tag.set('score', 1);
-            } else {
-              tag.set('score', 0);
-            }
+            tag.set('score', 1);
           }
           break;
 
@@ -278,28 +280,37 @@ export default Ember.Service.extend({
           }
           break;
 
-        // Q: preg?
-        case '4':
-          if (answer.contains('none')) {
-            forwardToResults = true;
+        case 'preterm-meds':
+          if (answer.contains('yes')) {
+            tag.set('score', 1);
           }
           break;
 
-        // conditions
-        case '5':
-          if (answer.contains('condition-B')) {
-            link = consequence_links.objectAt(5);
+        case 'smoking':
+          let smoking = [
+            'Yes, but I\'m thinking about quitting.',
+            'Yes, and I don\'t plan to quit.',
+          ];
 
-            if (! consequences.contains(link)) {
-              consequences.pushObject(link);
+          for (let i = 0; i < smoking.length; i++) {
+            if (answer.contains(smoking[i].dasherize())) {
+              tag.set('score', 1);
             }
           }
+          break;
 
-          if (answer.contains('condition-C')) {
-            link = consequence_links.objectAt(6);
+        case 'drugs':
+          let drugs = [
+            'Cocaine',
+            'Heroin',
+            'Marijuana',
+            'Opioid pain medication, such as fentanyl, acetaminophen/hydrocodone, or oxycodone',
+            'Other recreational drugs',
+          ];
 
-            if (! consequences.contains(link)) {
-              consequences.pushObject(link);
+          for (let i = 0; i < drugs.length; i++) {
+            if (answer.contains(drugs[i].dasherize())) {
+              tag.set('score', 1);
             }
           }
           break;
