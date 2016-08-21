@@ -295,24 +295,90 @@ export default function(server) {
 
   // Create a question + its options
   question = chapter.createQuestion({
-    title: "Are you pregnant or trying to get pregnant?",
-    description: "",
+    title: "When did you attend your first prenatal appointment?",
     type: "select",
   });
 
   question.createOption({
-    value: "preg",
-    text: "Yes, I'm pregnant",
+    value: "first-trimester",
+    text: "First trimester",
   });
 
   question.createOption({
-    value: "precon",
-    text: "Yes, I'm trying to get pregnant",
+    value: "second-trimester",
+    text: "Second trimester",
+  });
+
+  question.createOption({
+    value: "third-trimester",
+    text: "Third trimester",
   });
 
   question.createOption({
     value: "none",
-    text: "No",
+    text: "I haven't had a prenatal appointment",
+  });
+  // End question + its options
+
+  // Create a question + its options
+  let question_conditions = chapter.createQuestion({
+    title: "Before this pregnancy, or now that you're pregnant, were you diagnosed with any of the following conditions? (Please select all that apply.)",
+    type: "custom-extra",
+    slug: "current-conditions"
+  });
+
+  let preg_conditions = [
+    'Anxiety',
+    'Asthma, severe (uncontrolled symptoms)',
+    'Bleeding or clotting disorder',
+    'Cardiovascular conditions (heart disease)',
+    'Depression',
+    'Diabetes (type 1 or 2)',
+    'Epilepsy or another seizure disorder',
+    'Group B streptococcus (GBS)',
+    'Gestational diabetes',
+    'Hepatitis or another liver disease',
+    'Herpes',
+    'HIV/AIDS',
+    'Hypertension (high blood pressure)',
+    'Kidney disease',
+    'Lupus',
+    'Placenta previa',
+    'Preeclampsia, eclampsia, or HELLP syndrome',
+    'Rh sensitization',
+    'Rheumatoid arthritis',
+    'Syphilis',
+    'Sickle cell disease',
+    'Thalassemia',
+    'Thyroid disease',
+    'Tuberculosis',
+    'Urinary tract infections (frequent)',
+  ];
+
+  for (let i = 0; i < preg_conditions.length; i++) {
+    question_conditions.createOption({
+      value: preg_conditions[i].dasherize(),
+      text: preg_conditions[i],
+    });
+  }
+
+  question_conditions.createOption({
+    value: "__none-true",
+    text: "None of the above",
+  });
+
+
+  // Create a question + its options
+  var question_conditions_extra = chapter.createQuestion({
+    title: "Other conditions (Please specify.)",
+    description: "",
+    type: "hidden",
+    question: question_conditions,
+  });
+
+  question_conditions_extra.createOption({
+    value: "",
+    text: "__input-extra",
   });
   // End question + its options
 
