@@ -218,6 +218,12 @@ export default Ember.Service.extend({
           }
           break;
 
+        case 'miscarriage':
+          if (answer.contains('2+')) {
+            tag.set('score', 1);
+          }
+          break;
+
         // Q: preg?
         case '4':
           if (answer.contains('none')) {
