@@ -31,9 +31,9 @@ export default function(server) {
 
   // Create a question + its options
   question = chapter.createQuestion({
-    title: "Do you live in the US?",
-    description: "",
+    title: "Do you live in the United States?",
     type: "select",
+    slug: "live-usa",
   });
 
   question.createOption({
@@ -49,19 +49,19 @@ export default function(server) {
 
   // Create a question + its options
   question = chapter.createQuestion({
-    title: "What's Your Sex?",
-    description: "",
+    title: "Are you currently pregnant?",
     type: "select",
+    slug: "preg-now",
   });
 
   question.createOption({
-    value: "male",
-    text: "Male",
-  });
+    value: "yes",
+    text: "Yes",
+  })
 
   question.createOption({
-    value: "female",
-    text: "Female",
+    value: "no",
+    text: "No",
   });
   // End question + its options
 
@@ -96,6 +96,177 @@ export default function(server) {
   question.createOption({
     value: "45+",
     text: "45 or older",
+  });
+  // End question + its options
+
+
+  // Create a question + its options
+  question = chapter.createQuestion({
+    title: "Congratulations! How many weeks pregnant are you?",
+    type: "select-dropdown",
+  });
+
+  // Populate each week's option
+  for (let i = 2; i <= 44; i++) {
+    server.create('option', { value: (i) +'-weeks', text: (i) +' weeks', question: question });
+  }
+
+  //@TODO: Add 'Not sure? Check with our due date calculator'
+
+  question = chapter.createQuestion({
+    title: "Is this your first pregnancy?",
+    type: 'select',
+    slug: "first-preg",
+  });
+
+  question.createOption({
+    value: "yes",
+    text: "Yes",
+  });
+
+  question.createOption({
+    value: "no",
+    text: "No",
+  });
+
+  //@TODO: 'yes' is part of preg-35 tag
+
+  //@TODO: 'skip previous pregnancy section'
+
+  // Create a question + its options
+  question = chapter.createQuestion({
+    title: "Did this pregnancy result from fertility treatments?",
+    type: "select",
+  });
+
+  question.createOption({
+    value: "yes",
+    text: "Yes",
+  })
+
+  question.createOption({
+    value: "no",
+    text: "No",
+  });
+  // End question + its options
+
+  // Create a question + its options
+  question = chapter.createQuestion({
+    title: "Are you expecting twins?",
+    type: "select",
+    slug: 'twins',
+  });
+
+  question.createOption({
+    value: "yes",
+    text: "Yes",
+  });
+
+  question.createOption({
+    value: "no",
+    text: "No",
+  });
+
+  question.createOption({
+    value: "i-dont-know",
+    text: "I don't know",
+  });
+  // End question + its options
+
+  // Create a question + its options
+  var question_prev_condition = chapter.createQuestion({
+    title: "Have you experienced any of the following in a past pregnancy or delivery? (Please select all that apply.)",
+    type: "custom-extra",
+    slug: 'past-preg',
+  });
+
+  question_prev_condition.createOption({
+    value: "genetic-issues",
+    text: "Baby born with genetic issues",
+  });
+
+  question_prev_condition.createOption({
+    value: "cholestasis",
+    text: "Cholestasis of pregnancy",
+  });
+
+  question_prev_condition.createOption({
+    value: "ectopic",
+    text: "Ectopic pregnancy",
+  });
+
+  question_prev_condition.createOption({
+    value: "miscarriage-20",
+    text: "Miscarriage before 20 weeks of gestation",
+  });
+
+  question_prev_condition.createOption({
+    value: "pounds-4",
+    text: "Newborn with a birth weight of less than 4 pounds",
+  });
+
+  question_prev_condition.createOption({
+    value: "pounds-9",
+    text: "Newborn with a birth weight of more than 9 pounds",
+  });
+
+  question_prev_condition.createOption({
+    value: "placenta",
+    text: "Placenta previa or abruption",
+  });
+
+  question_prev_condition.createOption({
+    value: "preeclampsia",
+    text: "Preeclampsia",
+  });
+
+  question_prev_condition.createOption({
+    value: "prom",
+    text: "Premature rupture of membranes (PROM)",
+  });
+
+  question_prev_condition.createOption({
+    value: "preterm-delivery",
+    text: "Preterm delivery (birth before 37 weeks of pregnancy)",
+  });
+
+  question_prev_condition.createOption({
+    value: "preterm-labor",
+    text: "Preterm labor (including a softened, shortened, or dilated cervix)",
+  });
+
+  question_prev_condition.createOption({
+    value: "postpartum-depression",
+    text: "Postpartum depression",
+  });
+
+  question_prev_condition.createOption({
+    value: "stillbirth",
+    text: "Stillbirth (a baby dying in utero at 20 weeks of pregnancy or later)",
+  });
+
+  question_prev_condition.createOption({
+    value: "uterine-abnormality",
+    text: "Uterine abnormality, such as fibroids or septate uterus",
+  });
+
+  question_prev_condition.createOption({
+    value: "__none-true",
+    text: "None of the above",
+  });
+  // End question + its options
+
+  // Create a question + its options
+  var question_prev_condition_extra = chapter.createQuestion({
+    title: "Other conditions (Please specify.)",
+    description: "",
+    type: "hidden",
+    question: question_prev_condition,
+  });
+
+  question_prev_condition_extra.createOption({
+    value: "",
+    text: "__input-condition",
   });
   // End question + its options
 
@@ -216,29 +387,6 @@ export default function(server) {
 
   // Create a question + its options
   question = chapter.createQuestion({
-    title: "Are you expecting twins or more?",
-    description: "",
-    type: "select",
-  });
-
-  question.createOption({
-    value: "i-dont-know",
-    text: "I don't know",
-  });
-
-  question.createOption({
-    value: "no",
-    text: "No",
-  });
-
-  question.createOption({
-    value: "yes",
-    text: "Yes",
-  });
-  // End question + its options
-
-  // Create a question + its options
-  question = chapter.createQuestion({
     title: "Now that you're pregnant, do you smoke cigarettes?",
     description: "",
     type: "select",
@@ -337,23 +485,6 @@ export default function(server) {
     text: "__input-bmi",
   });
 
-  question = chapter.createQuestion({
-    title: "Have you been pregnant before?",
-    description: "",
-    type: 'select',
-    slug: "first-preg",
-  });
-
-  question.createOption({
-    value: "yes",
-    text: "Yes",
-  });
-
-  question.createOption({
-    value: "no",
-    text: "No",
-  });
-
   var question_preg35 = chapter.createQuestion({
     title: "Are you 35 or older and this is your first pregnancy?",
     description: "",
@@ -387,22 +518,6 @@ export default function(server) {
     text: "Asian",
   });
   // End question + its options
-
-  // Create a question + its options
-  question = chapter.createQuestion({
-    title: "How far along are you in your pregnancy?",
-    type: "select-dropdown",
-  });
-
-  question.createOption({
-    value: "none",
-    text: "I am not currently pregnant",
-  });
-
-  // Populate each week's option
-  for (let i = 4; i <= 42; i++) {
-    server.create('option', { value: (i) +'-weeks', text: (i) +' weeks', question: question });
-  }
 
   /*
     Seed your development database using your factories.
