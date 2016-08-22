@@ -39,7 +39,7 @@ export default Ember.Service.extend({
         // Get firstpreg answer
         firstpreg_value = firstpreg_tag.get('answer').objectAt(0);
 
-        if ((age_value === '35-44' || age_value === '45+') && firstpreg_value === 'no') {
+        if ((age_value === '35-44' || age_value === '45+') && firstpreg_value === 'yes') {
           preg35_tag.set('answer', ['yes']);
         } else {
           preg35_tag.set('answer', []);
@@ -86,6 +86,8 @@ export default Ember.Service.extend({
         });
       }
 
+      bmi_tag.set('score', 0); // Tag resets to 0 score, and updates its score from business logic
+
       // If both height and weight values are available, then set the BMI tag's answer
       if (height_value && weight_value) {
 
@@ -95,6 +97,10 @@ export default Ember.Service.extend({
         var bmi_value = Math.floor((weight_value * 703) / Math.pow(height_value, 2));
 
         bmi_tag.set('answer', [bmi_value]);
+
+        if (bmi_value > 26) {
+          bmi_tag.set('score', 1);
+        }
       } else {
 
         // The absence of a BMI value is represented by an empty array, similar to a skipped question's tag
@@ -148,71 +154,179 @@ export default Ember.Service.extend({
 
     tags.forEach(function(tag) {
       var answer = tag.get('answer') || [],
-        questionId = tag.get('questionId');
+        questionId = tag.get('questionId'),
+        question = chapter.get('questions').filterBy('id', questionId).objectAt(0);
+
+      tag.set('score', 0); // Tag resets to 0 score, and updates its score from business logic
 
       //@TODO: This is business logic, doesn't belong here
-      switch (questionId) {
+      switch (question.get('slug')) {
 
-        // Q: sex
-        case '2':
-          if (answer.contains('male')) {
+        case 'live-usa':
+          if (answer.contains('no')) {
+            forwardToResults = true;
+          }
+          break;
+
+        case 'preg-now':
+          if (answer.contains('no')) {
             forwardToResults = true;
           }
           break;
 
         // Q: age
-        case '3':
+        case 'age':
           if (answer.contains('13-')) {
             forwardToResults = true;
           }
 
           if (answer.contains('14-17')) {
             tag.set('score', 1);
-          } else {
-            tag.set('score', 0);
-          }
-          break;
-
-        // Q: preg?
-        case '4':
-          if (answer.contains('none')) {
-            forwardToResults = true;
-          }
-          break;
-
-        // Q: live in US?
-        case '1':
-          if (answer.contains('no')) {
-            forwardToResults = true;
-          }
-          break;
-
-        // conditions
-        case '5':
-          if (answer.contains('condition-B')) {
-            link = consequence_links.objectAt(5);
-
-            if (! consequences.contains(link)) {
-              consequences.pushObject(link);
-            }
-          }
-
-          if (answer.contains('condition-C')) {
-            link = consequence_links.objectAt(6);
-
-            if (! consequences.contains(link)) {
-              consequences.pushObject(link);
-            }
           }
           break;
 
         // Q: twins?
-        case '6':
+        case 'twins':
           if (answer.contains('yes')) {
             link = consequence_links.objectAt(8);
 
             if (! consequences.contains(link)) {
               consequences.pushObject(link);
+            }
+
+            tag.set('score', 1);
+          }
+          break;
+
+        case 'past-preg':
+          if (answer.contains('preeclampsia')) {
+            tag.set('score', 1);
+          }
+
+          if (answer.contains('preterm-delivery')) {
+            tag.set('score', 1);
+          }
+
+          if (answer.contains('preterm-labor')) {
+            tag.set('score', 1);
+          }
+
+          if (answer.contains('postpartum-depression')) {
+            tag.set('score', 1);
+          }
+
+          if (answer.contains('placenta')) {
+            tag.set('score', 1);
+          }
+          break;
+
+        case 'miscarriage':
+          if (answer.contains('2+')) {
+            tag.set('score', 1);
+          }
+          break;
+
+        case 'current-conditions':
+          let preg_conditions = [
+            'Anxiety',
+            'Asthma, severe (uncontrolled symptoms)',
+            'Bleeding or clotting disorder',
+            'Cardiovascular conditions (heart disease)',
+            'Depression',
+            'Diabetes (type 1 or 2)',
+            'Epilepsy or another seizure disorder',
+            'Group B streptococcus (GBS)',
+            'Gestational diabetes',
+            'Hepatitis or another liver disease',
+            'Herpes',
+            'HIV/AIDS',
+            'Hypertension (high blood pressure)',
+            'Kidney disease',
+            'Lupus',
+            'Placenta previa',
+            'Preeclampsia, eclampsia, or HELLP syndrome',
+            'Rh sensitization',
+            'Rheumatoid arthritis',
+            'Syphilis',
+            'Sickle cell disease',
+            'Thalassemia',
+            'Thyroid disease',
+            'Tuberculosis',
+            'Urinary tract infections (frequent)',
+          ];
+
+          for (let i = 0; i < preg_conditions.length; i++) {
+            if (answer.contains(preg_conditions[i].dasherize())) {
+              tag.set('score', 1);
+            }
+          }
+          break;
+
+        case 'problems':
+          let preg_problems = [
+            'A baby with a diagnosed genetic abnormality or birth defect',
+            'Morning sickness with significant weight loss',
+            'Cervical insufficiency (when the cervix dilates before a baby is full-term)',
+            'Premature rupture of membranes (PROM)',
+            'Preterm labor',
+            'Uterine abnormalities, such as fibroids or septate uterus',
+            'Vaginal bleeding after 12 weeks gestation',
+          ];
+
+          for (let i = 0; i < preg_problems.length; i++) {
+            if (answer.contains(preg_problems[i].dasherize())) {
+              tag.set('score', 1);
+            }
+          }
+          break;
+
+        case 'preterm-meds':
+          if (answer.contains('yes')) {
+            tag.set('score', 1);
+          }
+          break;
+
+        case 'smoking':
+          let smoking = [
+            'Yes, but I\'m thinking about quitting.',
+            'Yes, and I don\'t plan to quit.',
+          ];
+
+          for (let i = 0; i < smoking.length; i++) {
+            if (answer.contains(smoking[i].dasherize())) {
+              tag.set('score', 1);
+            }
+          }
+          break;
+
+        case 'drugs':
+          let drugs = [
+            'Cocaine',
+            'Heroin',
+            'Marijuana',
+            'Opioid pain medication, such as fentanyl, acetaminophen/hydrocodone, or oxycodone',
+            'Other recreational drugs',
+          ];
+
+          for (let i = 0; i < drugs.length; i++) {
+            if (answer.contains(drugs[i].dasherize())) {
+              tag.set('score', 1);
+            }
+          }
+          break;
+
+        case 'alcohol':
+          let alcohol = [
+            'Nearly every day',
+            'Three or four days a week',
+            'Two days a week',
+            'Once a month',
+            'Less than once a month',
+          ];
+
+          for (let i = 0; i < alcohol.length; i++) {
+            if (answer.contains(alcohol[i].dasherize())) {
+              tag.set('score', 1);
             }
           }
           break;
