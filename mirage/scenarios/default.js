@@ -559,6 +559,7 @@ export default function(server) {
   question = chapter.createQuestion({
     title: "Now that you're pregnant, how often do you have a drink that contains alcohol?",
     type: "select",
+    slug: "alcohol",
   });
 
   let alcohol = [

@@ -315,6 +315,22 @@ export default Ember.Service.extend({
           }
           break;
 
+        case 'alcohol':
+          let alcohol = [
+            'Nearly every day',
+            'Three or four days a week',
+            'Two days a week',
+            'Once a month',
+            'Less than once a month',
+          ];
+
+          for (let i = 0; i < alcohol.length; i++) {
+            if (answer.contains(alcohol[i].dasherize())) {
+              tag.set('score', 1);
+            }
+          }
+          break;
+
         default:
           break;
       }
