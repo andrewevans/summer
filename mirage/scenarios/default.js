@@ -105,7 +105,7 @@ export default function(server) {
 
   // Populate each week's option
   for (let i = 2; i <= 44; i++) {
-    server.create('option', { value: (i) +'-weeks', text: (i) +' weeks', question: question });
+    server.create('option', { value: (i) + '-weeks', text: (i) + ' weeks', question: question });
   }
 
   //@TODO: Add 'Not sure? Check with our due date calculator'
