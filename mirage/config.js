@@ -4,7 +4,9 @@ export default function() {
 
   this.get('/responses'); // Custom Solarium endpoint for tags
 
-  this.passthrough('/responses', ['patch', 'post']); // Custom Solarium endpoint for tags, emberx-select does a PATCH
+  this.passthrough('/responses', ['post']); // Custom Solarium endpoint for tags, emberx-select does a PATCH
+
+  //@TODO: PATCH for /responses is not handled because the server is not currently sending data to the app to be PATCH'd
 
   this.get('/consequence-links');
 
