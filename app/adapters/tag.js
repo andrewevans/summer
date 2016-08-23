@@ -17,13 +17,13 @@ export default JSONAPIAdapter.extend({
 
     return this.namespace + '/responses';
   },
-  sendTag(store, type, snapshot) {
+  sendTag(store, type, snapshot, requestType, verb) {
     var data = this.serialize(snapshot, { includeId: true }),
-      url = this.buildURL(type.modelName, null, snapshot, 'createRecord');
+      url = this.buildURL(type.modelName, null, snapshot, requestType);
 
     return new Ember.RSVP.Promise(function(resolve, reject) {
       Ember.$.ajax({
-        type: 'POST',
+        type: verb,
         url: url,
         headers: {
           'Content-Type':'application/json'
@@ -38,9 +38,9 @@ export default JSONAPIAdapter.extend({
     });
   },
   createRecord(store, type, snapshot) {
-    return this.sendTag(store, type, snapshot);
+    return this.sendTag(store, type, snapshot, 'createRecord', 'POST');
   },
   updateRecord(store, type, snapshot) {
-    return this.sendTag(store, type, snapshot);
+    return this.sendTag(store, type, snapshot, 'updateRecord', 'POST');
   },
 });
