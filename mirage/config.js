@@ -1,6 +1,6 @@
 export default function() {
 
-  this.namespace = '/ws/ajax/v1'; // summer app's external API prefix
+  this.namespace = '/ws/ajax/v1/loggedin'; // summer app's external API prefix
 
   this.get('/responses'); // Custom Solarium endpoint for tags
 
