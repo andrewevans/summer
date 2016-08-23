@@ -12,7 +12,18 @@ export default function() {
 
   this.get('/members/:id');
 
-  this.passthrough('/members/:id', ['patch']);
+  //@TODO: PATCH for /members is handled because there is a mock member loaded with the app
+  this.patch('/members/:id', function({ members }, request) {
+    let id = request.params.id,
+      attrs = request.requestBody;
+
+      members.find(id).update(attrs);
+
+    //@TODO: Return the updated object
+    return {
+      id: id
+    };
+  });
 
   this.get('/chapters');
 
