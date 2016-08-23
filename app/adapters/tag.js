@@ -17,7 +17,7 @@ export default JSONAPIAdapter.extend({
 
     return this.namespace + '/responses';
   },
-  createRecord(store, type, snapshot) {
+  sendTag(store, type, snapshot) {
     var data = this.serialize(snapshot, { includeId: true }),
       url = this.buildURL(type.modelName, null, snapshot, 'createRecord');
 
@@ -37,7 +37,10 @@ export default JSONAPIAdapter.extend({
       });
     });
   },
+  createRecord(store, type, snapshot) {
+    return this.sendTag(store, type, snapshot);
+  },
   updateRecord(store, type, snapshot) {
-    return this.createRecord(store, type, snapshot);
+    return this.sendTag(store, type, snapshot);
   },
 });
