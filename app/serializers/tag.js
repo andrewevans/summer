@@ -33,7 +33,13 @@ export default DS.JSONSerializer.extend({
     var member = snapshot.belongsTo('member'), // Get the member that the tag belongs to
       chapter_id = snapshot.attr('chapterId'),
       progress = member.attr('progresses').filterBy('chapter_id', chapter_id).objectAt(0),
+      started,
       ended;
+
+    if (progress.first_tag_sent === true) {
+      started = true;
+      delete progress.first_tag_sent; // Remove flag, because it is only to be sent once
+    }
 
     // For Solarium use only; This does not affect summer-app in any way
     // Only send 'ended=true' flag if the member is in a state of 'completed' or 'unqualified'
@@ -42,6 +48,7 @@ export default DS.JSONSerializer.extend({
     }
 
     var json = {
+      started: started,
       ended: ended,
       surveyId: parseInt(snapshot.attr('chapterId')),
       questions: [{

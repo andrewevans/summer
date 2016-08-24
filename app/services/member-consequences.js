@@ -119,7 +119,15 @@ export default Ember.Service.extend({
   calculate(member, chapter, consequence_links, route) {
 
     var progresses = member.get('progresses'),
-      chapter_progress = progresses.filterBy('chapter_id', chapter.id).objectAt(0); // Get first matching progress
+      chapter_progress = progresses.filterBy('chapter_id', chapter.id).objectAt(0), // Get first matching progress
+      potentially_first_tag_sent = false;
+
+    //@TODO: Only allow custom Solarium properties to be modified in the adapters and serializers
+    // Potentially mark this loop of calculations of the tags as the first for the chapter. This will be used to evaluate
+    // whether this loop caused the member to go from zero tags sent to more than zero tags sent.
+    if (chapter_progress.answers_set === 0) {
+      potentially_first_tag_sent = true;
+    }
 
     // answers_set resets to 0, and updates +1 for each non-empty tag that belongs to a non-hidden question
     chapter_progress.answers_set = 0;
@@ -347,6 +355,15 @@ export default Ember.Service.extend({
     this.calculatePreg35(member, chapter, tags);
 
     member.set('consequences', consequences);
+
+    //@TODO: Only allow custom Solarium properties to be modified in the adapters and serializers
+    // The first set of tags will be sent to Solarium only if
+    // 1) before these calculations were done, zero tags had been sent at that point, and
+    // 2) the # of answers that have been set at this point is now more than zero.
+    if (potentially_first_tag_sent === true && chapter_progress.answers_set > 0) {
+      chapter_progress.first_tag_sent = true; // Represents that started=true must be added to the payload of saved tags
+    }
+
     member.save();
 
     if (forwardToResults) {
