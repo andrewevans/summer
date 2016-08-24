@@ -30,12 +30,13 @@ export default DS.JSONSerializer.extend({
   // Only used for sending data, such as: tag.save() .
   serialize: function(snapshot) {
     var json = {
-      surveyId: snapshot.attr('chapterId'),
-      questions: {
-        questionId: snapshot.attr('questionId').toString(),
+      surveyId: parseInt(snapshot.attr('chapterId')),
+      questions: [{
+        questionId: snapshot.attr('questionId'),
         questionNumber: -1, //@TODO: Not yet needed in summer-app
-        response: snapshot.attr('answer'),
-      },
+        response: snapshot.attr('answer').join(), //@TODO: Revert back to an array once server is updated to accept an array
+        score: snapshot.attr('score'),
+      }],
     };
 
     return json;
