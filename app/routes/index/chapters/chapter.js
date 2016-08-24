@@ -109,6 +109,7 @@ export default Ember.Route.extend({
         chapter_tags;
 
       chapter_progress.status = 'none'; // Update progress marker's status flag as 'none'
+      chapter_progress.answers_set = 0; // Reset answers_set to 0, because they are about to be deleted
       member.save(); // Explicitly save member because status is not observable
 
       chapter_tags = member.get('tags').filterBy('chapterId', chapter.id); // Get tags for this chapter

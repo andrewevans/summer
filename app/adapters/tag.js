@@ -54,7 +54,7 @@ export default JSONAPIAdapter.extend({
 
     //@TODO: Currently only supports one record at a time
     // "Deleting" a tag on the server is represented by updating the tag with a blank response and a score of 0
-    data.questions[0].response = "";
+    data.questions[0].response = [];
     data.questions[0].score = 0;
 
     return this.sendTag(store, type, data, url, 'POST'); // Solarium cannot accept verb 'DELETE'
