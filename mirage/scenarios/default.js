@@ -4,6 +4,26 @@ export default function(server) {
 
   let member = server.schema.members.find(4); // Get member "lana"
 
+  server.create('response', {
+    memberId: 4,
+    surveyId: 102,
+    questions: {
+      questionId: '3',
+      questionNumber: -1,
+      response: ['18-34'],
+    },
+  });
+
+  server.create('response', {
+    memberId: 4,
+    surveyId: 102,
+    questions: {
+      questionId: '4',
+      questionNumber: -1,
+      response: [null],
+    },
+  });
+
   let chapter = server.schema.chapters.find(102);
 
   let question;
