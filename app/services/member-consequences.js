@@ -121,6 +121,9 @@ export default Ember.Service.extend({
     var progresses = member.get('progresses'),
       chapter_progress = progresses.filterBy('chapter_id', chapter.id).objectAt(0); // Get first matching progress
 
+    // answers_set resets to 0, and updates +1 for each non-empty tag that belongs to a non-hidden question
+    chapter_progress.answers_set = 0;
+
     if (chapter_progress.status === 'unqualified') {
 
       // An 'unqualified' member goes directly to Results page
@@ -158,6 +161,10 @@ export default Ember.Service.extend({
         question = chapter.get('questions').filterBy('id', questionId).objectAt(0);
 
       tag.set('score', 0); // Tag resets to 0 score, and updates its score from business logic
+
+      if (tag.get('answer').get('length') !== 0 && question.get('type') !== 'hidden') {
+        chapter_progress.answers_set++; // +1 to number of answers set thus far
+      }
 
       //@TODO: This is business logic, doesn't belong here
       switch (question.get('slug')) {
