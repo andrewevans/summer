@@ -12,7 +12,8 @@ export default Ember.Route.extend({
   },
   afterModel(model) {
     var member = model.member,
-      tags = model.tags;
+      tags = model.tags,
+      progresses = member.get('progresses'); // member's progress markers
 
     tags.forEach(function(tag) {
       tag.set('member', member); // Create tag/member relationship
@@ -51,17 +52,34 @@ export default Ember.Route.extend({
         }
       }
 
+      // Assign sequence numbers if the server hasn't already
       if (localStorage.key(i).indexOf('es__sequence_num') === 0){
         let sequence_nums_local = key.split(/[[\]]{1,2}/),
           chapterId = sequence_nums_local[2], // chapter ID of this progress marker
-          sequence_num = localStorage.getItem(key), // sequence_num of this progress marker
-          sequence_nums = member.get('progresses'); // member's progress markers
+          sequence_num = localStorage.getItem(key); // sequence number of this progress marker
 
-        // Check if this sequence_num already exists on the member
-        if (! sequence_nums.filterBy('chapter_id', chapterId).get('length')) {
+        for (let i = 0; i < progresses.length; i++) {
 
-          // If it is not, add it to member's sequence_num
-          sequence_nums.pushObject({ chapter_id: chapterId, sequence_num: sequence_num});
+          // Only update a sequence number if it belongs to this chapter and it is not already set by the server
+          if (progresses[i].chapter_id === chapterId && typeof progresses[i].sequence_num === 'undefined') {
+            progresses[i].sequence_num = sequence_num;
+          }
+        }
+      }
+
+      // Assign number of answers set if the server hasn't already
+      if (localStorage.key(i).indexOf('es__answers_set') === 0){
+        let answers_set_local = key.split(/[[\]]{1,2}/),
+          chapterId = answers_set_local[2], // chapter ID of this progress marker
+          answers_set = localStorage.getItem(key); // number of answers that have already been set of this progress marker
+
+        for (let i = 0; i < progresses.length; i++) {
+
+          // Only update the number of answers that have already been set if it belongs to this chapter and it is not
+          // already set by the server.
+          if (progresses[i].chapter_id === chapterId && typeof progresses[i].answers_set === 'undefined') {
+            progresses[i].answers_set = answers_set;
+          }
         }
       }
     }
