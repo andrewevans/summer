@@ -11,15 +11,11 @@ export default JSONAPIAdapter.extend({
       delete query.chapterId;
     }
 
-    if (requestType === 'deleteRecord') {
-      return this.namespace + '/responses/' + id;
-    }
+    //@TODO: Append URL with ID for deleteRecord once Solarium is ready for it
 
     return this.namespace + '/responses';
   },
-  sendTag(store, type, snapshot, requestType, verb) {
-    var data = this.serialize(snapshot, { includeId: true }),
-      url = this.buildURL(type.modelName, null, snapshot, requestType);
+  sendTag(store, type, data, url, verb) {
 
     return new Ember.RSVP.Promise(function(resolve, reject) {
       Ember.$.ajax({
@@ -38,9 +34,29 @@ export default JSONAPIAdapter.extend({
     });
   },
   createRecord(store, type, snapshot) {
-    return this.sendTag(store, type, snapshot, 'createRecord', 'POST');
+    var requestType = 'createRecord',
+      url = this.buildURL(type.modelName, null, snapshot, requestType),
+      data = this.serialize(snapshot, { includeId: true });
+
+    return this.sendTag(store, type, data, url, 'POST');
   },
   updateRecord(store, type, snapshot) {
-    return this.sendTag(store, type, snapshot, 'updateRecord', 'POST');
+    var requestType = 'updateRecord',
+      url = this.buildURL(type.modelName, null, snapshot, requestType),
+      data = this.serialize(snapshot, { includeId: true });
+
+    return this.sendTag(store, type, data, url, 'POST'); // Solarium cannot accept verb 'PATCH'
+  },
+  deleteRecord(store, type, snapshot) {
+    var requestType = 'deleteRecord',
+      url = this.buildURL(type.modelName, null, snapshot, requestType),
+      data = this.serialize(snapshot, { includeId: true });
+
+    //@TODO: Currently only supports one record at a time
+    // "Deleting" a tag on the server is represented by updating the tag with a blank response and a score of 0
+    data.questions[0].response = "";
+    data.questions[0].score = 0;
+
+    return this.sendTag(store, type, data, url, 'POST'); // Solarium cannot accept verb 'DELETE'
   },
 });
