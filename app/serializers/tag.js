@@ -29,7 +29,20 @@ export default DS.JSONSerializer.extend({
   // Modify "tag" objects to become "response" objects.
   // Only used for sending data, such as: tag.save() .
   serialize: function(snapshot) {
+
+    var member = snapshot.belongsTo('member'), // Get the member that the tag belongs to
+      chapter_id = snapshot.attr('chapterId'),
+      progress = member.attr('progresses').filterBy('chapter_id', chapter_id).objectAt(0),
+      ended;
+
+    // For Solarium use only; This does not affect summer-app in any way
+    // Only send 'ended=true' flag if the member is in a state of 'completed' or 'unqualified'
+    if (progress.status === 'completed' || progress.status === 'unqualified') {
+      ended = true;
+    }
+
     var json = {
+      ended: ended,
       surveyId: parseInt(snapshot.attr('chapterId')),
       questions: [{
         questionId: snapshot.attr('questionId'),
