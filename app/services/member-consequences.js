@@ -349,6 +349,8 @@ export default Ember.Service.extend({
         default:
           break;
       }
+
+      tag.save();
     });
 
     this.calculateBmi(member, chapter, tags);
