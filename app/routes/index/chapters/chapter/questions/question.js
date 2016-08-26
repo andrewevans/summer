@@ -22,7 +22,7 @@ export default Ember.Route.extend({
     // just that it's nth question on the current chapter.
     // And hidden questions are ignored in this flow.
       question = questions
-        .rejectBy('type', 'hidden')
+        .rejectBy('hidden', true)
         .objectAt(sequence_num - 1),
 
     // Get all of the chapter's tags

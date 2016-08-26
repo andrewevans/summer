@@ -53,7 +53,6 @@ export default Ember.Service.extend({
   calculateBmi(member, chapter, tags) {
 
     // Get BMI option, if it exists
-    //@TODO: Questions need a separate boolean property for 'hidden' so that hidden questions can also be referenced by their 'type'
     var bmi_option = this.get('store').peekAll('option').filterBy('text', '__input-bmi').objectAt(0);
 
     // Proceed to attempt to calculate BMI only if the BMI option exists
@@ -170,7 +169,7 @@ export default Ember.Service.extend({
 
       tag.set('score', 0); // Tag resets to 0 score, and updates its score from business logic
 
-      if (tag.get('answer').get('length') !== 0 && question.get('type') !== 'hidden') {
+      if (tag.get('answer').get('length') !== 0 && question.get('hidden') !== true) {
         chapter_progress.answers_set++; // +1 to number of answers set thus far
       }
 
