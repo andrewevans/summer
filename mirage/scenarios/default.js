@@ -237,6 +237,7 @@ export default function(server) {
   var question_prev_condition_extra = chapter.createQuestion({
     title: "Other conditions (Please specify.)",
     type: "hidden",
+    hidden: true,
     question: question_prev_condition,
   });
 
@@ -348,6 +349,7 @@ export default function(server) {
   var question_conditions_extra = chapter.createQuestion({
     title: "Other conditions (Please specify.)",
     type: "hidden",
+    hidden: true,
     question: question_conditions,
   });
 
@@ -392,6 +394,7 @@ export default function(server) {
   var question_problems_extra = chapter.createQuestion({
     title: "Other problems (Please specify.)",
     type: "hidden",
+    hidden: true,
     question: question_problems,
   });
 
@@ -468,6 +471,7 @@ export default function(server) {
   var question_bmi = chapter.createQuestion({
     title: "What is your BMI?",
     type: "hidden",
+    hidden: true,
   });
 
   question_bmi.createOption({
@@ -597,6 +601,7 @@ export default function(server) {
   var question_preg35 = chapter.createQuestion({
     title: "Are you 35 or older and this is your first pregnancy?",
     type: "hidden",
+    hidden: true,
     slug: "preg-35",
   });
 
