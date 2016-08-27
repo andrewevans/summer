@@ -349,6 +349,11 @@ export default Ember.Service.extend({
         default:
           break;
       }
+
+      // Don't save redacted tags
+      if (tag.get('answer').objectAt(0) !== null) {
+        tag.save(); // Persist data to API
+      }
     });
 
     this.calculateBmi(member, chapter, tags);
