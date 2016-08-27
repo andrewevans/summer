@@ -182,6 +182,22 @@ export default Ember.Service.extend({
           }
           break;
 
+        case 'first-preg':
+          if (answer.contains('yes')) {
+            question = chapter.get('questions').filterBy('slug', 'miscarriage').objectAt(0);
+            question.set('hidden', true);
+
+            question = chapter.get('questions').filterBy('slug', 'past-preg').objectAt(0);
+            question.set('hidden', true);
+          } else {
+            question = chapter.get('questions').filterBy('slug', 'miscarriage').objectAt(0);
+            question.set('hidden', false);
+
+            question = chapter.get('questions').filterBy('slug', 'past-preg').objectAt(0);
+            question.set('hidden', false);
+          }
+          break;
+
         case 'preg-now':
           if (answer.contains('no')) {
             forwardToResults = true;
