@@ -31,7 +31,7 @@ export default Ember.Service.extend({
     // Update pagination
     var next = chapter_progress.sequence_num + 1,
       prev = chapter_progress.sequence_num - 1,
-      total = chapter.get('questions').rejectBy('type', 'hidden').get('length');
+      total = chapter.get('questions').rejectBy('hidden', true).get('length');
     next = (next > total ? false : next);
     prev = (prev < 1 ? false : prev);
     member.set('pagination', {
