@@ -79,7 +79,7 @@ export default function(server) {
 
   // Create a question + its options
   question = chapter.createQuestion({
-    title: "Congratulations! How many weeks pregnant are you?",
+    title: "Congratulations! How many weeks pregnant are you? Not sure? <a target='_blank' href='/pregnancy-due-date-calculator'>Check with our due date calculator.</a>",
     type: "select-dropdown",
   });
 
