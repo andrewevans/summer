@@ -172,7 +172,7 @@ export default Ember.Route.extend({
       this.set('storage.tag[' + member.id + '][' + chapter.id + '][' + question.id +']', tag.get('answer'));
       return true;
     },
-    saveTags(member) {
+    saveTags() {
       Ember.Logger.log("Saving all tags locally goes here...");
 
       //@TODO: member-consequences service does the tags loop with tag.save(), so this route action may no longer be needed.
