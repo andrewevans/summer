@@ -4,7 +4,7 @@
             <div class="row">
                 <div class="col-xs-12 col-md-offset-3 col-md-6 col-md-offset-3">
                     <h3 class="moduleHeader">{{question.title}}</h3>
-                    <div class="questionDescription">
+                    <div class="question-description">
                       {{{question.description}}}
                     </div>
                     <div class="lock-btn" {{action (route-action "resetTag" member chapter question 'null' tag)}}>
@@ -17,7 +17,7 @@
 {{/if}}
 
 <h3 class="moduleHeader">{{question.title}}</h3>
-<div class="questionDescription">
+<div class="question-description">
     {{{question.description}}}
 </div>
 <ul class="list-unstyled" style="margin-top: 24px">
