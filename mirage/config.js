@@ -1,26 +1,37 @@
 export default function() {
 
-  // These comments are here to help you get started. Feel free to delete them.
+  this.namespace = '/ws/ajax/v1/loggedin'; // summer app's external API prefix
 
-  /*
-    Config (with defaults).
+  this.get('/responses'); // Custom Solarium endpoint for tags
 
-    Note: these only affect routes defined *after* them!
-  */
+  this.passthrough('/responses', ['post']); // Custom Solarium endpoint for tags, emberx-select does a PATCH
 
-  // this.urlPrefix = '';    // make this `http://localhost:8080`, for example, if your API is on a different server
-  // this.namespace = '';    // make this `api`, for example, if your API is namespaced
-  // this.timing = 400;      // delay for each request, automatically set to 0 during testing
+  this.passthrough('/responses/:id', ['post']); // Custom Solarium endpoint for tags
 
-  /*
-    Shorthand cheatsheet:
+  //@TODO: PATCH for /responses is not handled because the server is not currently sending data to the app to be PATCH'd
 
-    this.get('/posts');
-    this.post('/posts');
-    this.get('/posts/:id');
-    this.put('/posts/:id'); // or this.patch
-    this.del('/posts/:id');
+  this.get('/consequence-links');
 
-    http://www.ember-cli-mirage.com/docs/v0.2.0-beta.7/shorthands/
-  */
+  this.get('/members/:id');
+
+  //@TODO: PATCH for /members is handled because there is a mock member loaded with the app
+  this.patch('/members/:id', function({ members }, request) {
+    let id = request.params.id,
+      attrs = request.requestBody;
+
+      members.find(id).update(attrs);
+
+    //@TODO: Return the updated object
+    return {
+      id: id
+    };
+  });
+
+  this.get('/chapters');
+
+  this.get('/chapters/:id');
+
+  this.get('/questions/:id');
+
+  this.get('/tags/:id');
 }

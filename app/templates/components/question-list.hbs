@@ -1,0 +1,7 @@
+<ul class="list-unstyled">
+  {{#each viewable_questions as |question|}}
+      <li class="question">
+        {{question-single member=member chapter=chapter question=question tag=tag}}
+      </li>
+  {{/each}}
+</ul>

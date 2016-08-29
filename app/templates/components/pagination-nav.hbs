@@ -1,0 +1,31 @@
+{{#if member.pagination.sequence_num}}
+    <div class="row">
+        <div class="col-xs-6 col-sm-6">
+          {{#if member.pagination.prev}}
+            {{#link-to 'index.chapters.chapter.questions.question' member.pagination.prev classNames="save-and-prev"}}
+                <span aria-hidden="true" style="padding-left: 28px; font-size: 28px; font-weight: bold; color: #35a5b6" {{action "saveTags"}}>Prev</span>
+            {{/link-to}}
+          {{/if}}
+        </div>
+        <div class="col-xs-6 col-sm-6" style="text-align: right;">
+          {{#if member.pagination.next}}
+            {{#link-to 'index.chapters.chapter.questions.question' member.pagination.next classNames="save-and-next"}}
+                <span aria-hidden="true" style="font-size: 28px; font-weight: bold; color: #35a5b6; padding-right: 28px" {{action "saveTags"}}>Next</span>
+            {{/link-to}}
+          {{else}}
+            {{#link-to 'index.chapters.chapter.results' chapter.id classNames="save-and-next"}}
+                <span aria-hidden="true" style="font-size: 28px; font-weight: bold; color: #35a5b6; padding-right: 28px" {{action "saveTagsAndUpdateStatus"}}>Finish!</span>
+            {{/link-to}}
+          {{/if}}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12 col-sm-12">
+            <div class="progress">
+                <div class="progress-bar" role="progressbar" aria-valuenow="{{member.pagination.percentageComplete}}" aria-valuemin="0" aria-valuemax="100" style="height: 6px; width:{{member.pagination.percentageComplete}}%">
+                </div>
+            </div>
+            <div class="progress-text">{{member.pagination.percentageComplete}}% complete</div>
+        </div>
+    </div>
+{{/if}}

@@ -1,0 +1,26 @@
+<h1>Results for {{member.username}}</h1>
+<button {{action "showResults"}}>
+  {{#if isShowingResults}}
+      Hide results
+  {{else}}
+      Show results
+  {{/if}}
+</button>
+
+<button {{action "saveTags"}}>Save All Tags</button>
+
+{{#if isShowingResults}}
+  {{#if member.tags.length}}
+      <ul>
+        {{#each member.tags as |tag|}}
+            <li>CH{{tag.chapterId}} | Q{{tag.questionId}} |
+              {{#each tag.answer as |answer|}}
+                [{{answer}}]
+              {{/each}}
+            </li>
+        {{/each}}
+      </ul>
+  {{else}}
+      <p>You have no tags yet.</p>
+  {{/if}}
+{{/if}}
