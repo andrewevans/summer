@@ -4,7 +4,7 @@ import { belongsTo, hasMany } from 'ember-data/relationships';
 
 export default Model.extend({
   title: attr(),
-  description: attr(),
+  description: attr(), // Can have HTML, to use it don't escape tags on the template (e.g. On .hbs use "triple-slash" {{{}}})
   type: attr(),
   hidden: attr('boolean', { defaultValue: false }),
   slug: attr(), // Unique string to allow a specific question to be referenced
